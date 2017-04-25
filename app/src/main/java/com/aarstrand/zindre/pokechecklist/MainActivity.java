@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button b1,b2,b3,b4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button b1 = (Button)findViewById(R.id.button);
-        Button b2 = (Button)findViewById(R.id.button2);
-        Button b3 = (Button)findViewById(R.id.button3);
-        Button b4 = (Button)findViewById(R.id.button4);
+        b1 = (Button)findViewById(R.id.button);
+        b2 = (Button)findViewById(R.id.button2);
+        b3 = (Button)findViewById(R.id.button3);
+        b4 = (Button)findViewById(R.id.button4);
 
         PokeCheckListDbHelper dbHelper = new PokeCheckListDbHelper(this);
 
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //#TODO: change view to a list of all caught shinies
+                Intent collection = new Intent(MainActivity.this,MyShiniesActivity.class);
+                startActivity(collection);
             }
         });
 

@@ -16,7 +16,7 @@
     <string name="grayscale_pokeball_image_path">path</string>
     <string name="pokemon_list_item_image_view_description">gif/image/icon of the pokemon corresponding to list item</string>
     <string name="pokemon_list_item_image_button_description">by default it shows a grayscale pokeball and when that items pokemon is in the "catch" table it will show a colored pokeball like in the games</string>
-    <string name="pokemons">{[
+    <string name="pokemons">[
         "Bulbasaur",
         "Ivysaur",
         "Venusaur",
@@ -138,7 +138,7 @@
         "Seaking",
         "Staryu",
         "Starmie",
-        "Mr. Mime",
+        "Mr.Mime",
         "Scyther",
         "Jynx",
         "Electabuzz",
@@ -455,7 +455,7 @@
         "Bronzor",
         "Bronzong",
         "Bonsly",
-        "Mime Jr.",
+        "MimeJr.",
         "Happiny",
         "Chatot",
         "Spiritomb",
@@ -738,6 +738,6 @@
         "Diancie",
         "Hoopa",
         "Volcanion"
-        ]}
+        ]
     </string>
 </resources>
