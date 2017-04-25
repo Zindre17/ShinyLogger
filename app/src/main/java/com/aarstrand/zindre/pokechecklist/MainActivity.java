@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
         PokeCheckListDbHelper dbHelper = new PokeCheckListDbHelper(this);
 
         JSONArray pokemonArray = null;
+        //Fylle inn databasen
         try {
+            //JSONObject jsonObject = new JSONObject(getResources().getString(R.string.pokemons));
             pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
             for(int i=1; i <= pokemonArray.length();i++){
                 dbHelper.insertPokemon(pokemonArray.getString(i-1),i);
@@ -43,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Fylle inn databasen
 
 
 

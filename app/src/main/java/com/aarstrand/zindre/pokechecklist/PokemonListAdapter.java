@@ -60,9 +60,9 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         ImageButton imageButton = viewHolder.pokeball;
         ImageView imageView = viewHolder.thumbnail;
         if(pokemon.isCaught()){
-            imageButton.setImageResource(R.drawable.pokeball_48);
+            imageButton.setImageResource(R.drawable.pokeball);
         }else{
-            imageButton.setImageResource(R.drawable.pokeballGray_48);
+            imageButton.setImageResource(R.drawable.pokeball_gray);
         }
         TextView textView1 = viewHolder.pokemon_number;
         textView1.setText(pokemon.getNumber());
