@@ -2,24 +2,18 @@ package com.aarstrand.zindre.pokechecklist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button b1,b2,b3,b4;
-
+    private PokeCheckListDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +28,13 @@ public class MainActivity extends AppCompatActivity {
         b3 = (Button)findViewById(R.id.button3);
         b4 = (Button)findViewById(R.id.button4);
 
-        PokeCheckListDbHelper dbHelper = new PokeCheckListDbHelper(this);
+        dbHelper = new PokeCheckListDbHelper(this);
 
-        JSONArray pokemonArray = null;
         //Fylle inn databasen
-        try {
-            //JSONObject jsonObject = new JSONObject(getResources().getString(R.string.pokemons));
-            pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
-            for(int i=1; i <= pokemonArray.length();i++){
-                dbHelper.insertPokemon(pokemonArray.getString(i-1),i);
-            }
+        createAndFillInDB();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        System.out.println("db-check");
+        System.out.println(dbHelper.getAllData().getCount());
 
 
 
@@ -84,6 +70,27 @@ public class MainActivity extends AppCompatActivity {
                 //#TODO: change view to something else
             }
         });
+    }
+
+    private void createAndFillInDB() {
+
+        JSONArray pokemonArray = null;
+        //dbHelper.getWritableDatabase().execSQL("DROP TABLE " +PokeCheckListContract.Pokemon.TABLE_NAME);
+        //dbHelper.getWritableDatabase().execSQL("DROP TABLE " +PokeCheckListContract.Catch.TABLE_NAME);
+        //dbHelper.onCreate(dbHelper.getWritableDatabase());
+        if (dbHelper.getAllData().getCount() == 0 ){
+            try {
+                //JSONObject jsonObject = new JSONObject(getResources().getString(R.string.pokemons));
+                pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
+                for(int i=1; i <= pokemonArray.length();i++){
+                    dbHelper.insertPokemon(pokemonArray.getString(i-1),i);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     @Override

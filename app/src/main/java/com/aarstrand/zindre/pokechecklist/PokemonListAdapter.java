@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.net.ssl.SSLContextSpi;
 import java.util.List;
 /**
  * Created by Zindre on 25-Dec-16.
@@ -17,10 +18,10 @@ import java.util.List;
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView pokemon_name;
-        public TextView pokemon_number;
-        public ImageButton pokeball;
-        public ImageView thumbnail;
+        private TextView pokemon_name;
+        private TextView pokemon_number;
+        private ImageButton pokeball;
+        private ImageView thumbnail;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -37,6 +38,10 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public PokemonListAdapter(Context context, List<PokemonAsListItem> pokemons){
         adapterContext = context;
         pokemonItems = pokemons;
+    }
+
+    public PokemonListAdapter(Context context){
+        super();
     }
     private Context getContext(){
         return adapterContext;

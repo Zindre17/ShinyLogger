@@ -10,9 +10,9 @@ import java.sql.Blob;
  * Created by Zindre on 29-Dec-16.
  */
 public class PokemonAsListItem {
-    public String name;
-    public int number;
-    public boolean caught;
+    private String name;
+    private int number;
+    private boolean caught;
 
     public String getName(){
         return name;
