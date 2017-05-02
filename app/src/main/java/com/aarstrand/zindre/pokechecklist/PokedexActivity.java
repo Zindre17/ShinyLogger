@@ -24,31 +24,21 @@ public class PokedexActivity extends AppCompatActivity {
         plvAdapter = new PokemonListAdapter(this);
         pokemonListView.setAdapter(plvAdapter);
         setRecyclerViewScrollListener();
-
-        //PokemonListAdapter = new PokemonListAdapter();
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //todo: fix xml slik at listItem blir bedre
     }
 
+    //Todo: fix scrollingen og selecting av listItem
     private void setRecyclerViewScrollListener() {
         pokemonListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.d("scroll","scrolling");
+                Log.d("scroll", "scrolling");
                 System.out.println("scrolling");
             }
         });
-
-        /**public boolean onOptionsItemSelected(MenuItem item){
-            switch (item.getItemId()){
-                case android.R.id.home:
-                    NavUtils.navigateUpFromSameTask(this);
-                    return true;
-            return super.onOptionsItemSelected(item);
-            }
-        }**/
     }
 }
