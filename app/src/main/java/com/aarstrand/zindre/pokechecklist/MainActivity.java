@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         createAndFillInDB();
 
         System.out.println("db-check");
-        System.out.println(dbHelper.getAllData().getCount());
+        System.out.println(dbHelper.getAllPokemon().getCount());
 
 
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         //dbHelper.getWritableDatabase().execSQL("DROP TABLE " +PokeCheckListContract.Pokemon.TABLE_NAME);
         //dbHelper.getWritableDatabase().execSQL("DROP TABLE " +PokeCheckListContract.Catch.TABLE_NAME);
         //dbHelper.onCreate(dbHelper.getWritableDatabase());
-        if (dbHelper.getAllData().getCount() == 0 ){
+        if (dbHelper.getAllPokemon().getCount() == 0 ){
             try {
                 //JSONObject jsonObject = new JSONObject(getResources().getString(R.string.pokemons));
                 pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));

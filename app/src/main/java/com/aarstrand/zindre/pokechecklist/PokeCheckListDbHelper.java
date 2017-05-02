@@ -11,19 +11,30 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
+
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PokeCheckList.db";
 
-    public PokeCheckListDbHelper(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
-    }
 
+    /*
+    * Column 1: Number (int)
+    * Column 2: Name (String)
+    * Column 3: Gif/Image - path (String)
+    */
     private static final String CREATE_TABLE_POKEMON =
             "CREATE TABLE " + PokeCheckListContract.Pokemon.TABLE_NAME + " (" +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER + " INTEGER PRIMARY KEY," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " TEXT," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_GIF_FILE_PATH + " )";
 
+    /*
+    * Column 1: ID (autoincrement int)
+    * Column 2: Number (int)
+    * Column 3: Attempts (int)
+    * Column 4: Game (String)
+    * Column 5: Location (String)
+    * Column 6: Odds (String)
+    */
     private static final String CREATE_TABLE_CATCH =
             "CREATE TABLE " + PokeCheckListContract.Catch.TABLE_NAME + " (" +
                     PokeCheckListContract.Catch._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -39,6 +50,10 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     private static final String DELETE_TABLE_CATCH =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Catch.TABLE_NAME;
 
+    public PokeCheckListDbHelper(Context context){
+        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    }
+
     public void onCreate(SQLiteDatabase db){
         db.execSQL(CREATE_TABLE_POKEMON);
         db.execSQL(CREATE_TABLE_CATCH);
@@ -53,12 +68,12 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         //TODO: implement this method too
     }
 
-    public Cursor getData(int number){
+    public Cursor getPokemon(int number){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + PokeCheckListContract.Pokemon.TABLE_NAME + " where Number="+number+"",null);
         return cursor;
     }
-    public Cursor getAllData(){
+    public Cursor getAllPokemon(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + PokeCheckListContract.Pokemon.TABLE_NAME,null);
         return cursor;
@@ -88,5 +103,11 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         //insert row into db
         long catchId = db.insert(PokeCheckListContract.Catch.TABLE_NAME,null,values);
         return catchId;
+    }
+
+    public Cursor getCaughtPokemon() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + PokeCheckListContract.Catch.TABLE_NAME,null);
+        return cursor;
     }
 }

@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/toolbar"
             android:scrollbars="vertical"
-            android:id="@+id/pokemon_list">
+            android:id="@+id/pokemon_list" android:layout_alignParentBottom="true">
     </android.support.v7.widget.RecyclerView>
 
 
