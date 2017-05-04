@@ -25,7 +25,8 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + PokeCheckListContract.Pokemon.TABLE_NAME + " (" +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER + " INTEGER PRIMARY KEY," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " TEXT," +
-                    PokeCheckListContract.Pokemon.COLOUMN_NAME_GIF_FILE_PATH + " )";
+                    PokeCheckListContract.Pokemon.COLOUMN_NAME_ROW + " INTEGER," +
+                    PokeCheckListContract.Pokemon.COLOUMN_NAME_COL + " INTEGER)";
 
     /*
     * Column 1: ID (autoincrement int)
@@ -59,13 +60,22 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CATCH);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-        //TODO: fix this
+        //TODO: fix this and find out how/why
         db.execSQL(DELETE_TABLE_POKEMON);
         db.execSQL(DELETE_TABLE_CATCH);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion){
         //TODO: implement this method too
+    }
+
+    public void recreateDbs(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL(DELETE_TABLE_CATCH);
+        db.execSQL(DELETE_TABLE_POKEMON);
+
+        db.execSQL(CREATE_TABLE_POKEMON);
+        db.execSQL(CREATE_TABLE_CATCH);
     }
 
     public Cursor getPokemon(int number){
@@ -79,14 +89,16 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public long insertPokemon(String name, int number){
+    public long insertPokemon(String name, int number, int row, int col){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         //
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER,number);
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME,name);
-        //TODO: fix the line under
-        //values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_GIF_FILE_PATH,name+".gif");
+
+        values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_ROW,row);
+        values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_COL,col);
+
         long pokemonId = db.insert(PokeCheckListContract.Pokemon.TABLE_NAME,null, values);
         return pokemonId;
     }

@@ -9,10 +9,14 @@ import android.widget.Button;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button b1,b2,b3,b4;
+    private Button pokedexButton, caughtButton, progressButton, randomHuntButton;
     private PokeCheckListDbHelper dbHelper;
 
     @Override
@@ -23,10 +27,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        b1 = (Button)findViewById(R.id.button);
-        b2 = (Button)findViewById(R.id.button2);
-        b3 = (Button)findViewById(R.id.button3);
-        b4 = (Button)findViewById(R.id.button4);
+        pokedexButton = (Button)findViewById(R.id.button);
+        caughtButton = (Button)findViewById(R.id.button2);
+        progressButton = (Button)findViewById(R.id.button3);
+        randomHuntButton = (Button)findViewById(R.id.button4);
+
+        randomHuntButton.setEnabled(false);
+        progressButton.setEnabled(false);
 
         dbHelper = new PokeCheckListDbHelper(this);
 
@@ -38,36 +45,34 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        b1.setOnClickListener(new View.OnClickListener(){
+        pokedexButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //#TODO: change view to pokedex view
                 Intent pokedex = new Intent(MainActivity.this,PokedexActivity.class);
                 startActivity(pokedex);
 
             }
         });
 
-        b2.setOnClickListener(new View.OnClickListener(){
+        caughtButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //#TODO: change view to a list of all caught shinies
                 Intent collection = new Intent(MainActivity.this,MyShiniesActivity.class);
                 startActivity(collection);
             }
         });
 
-        b3.setOnClickListener(new View.OnClickListener(){
+        progressButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //#TODO: change view to a random pokemon page (not in already caught list)
+                //#TODO: change view to progressview
             }
         });
 
-        b4.setOnClickListener(new View.OnClickListener(){
+        randomHuntButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //#TODO: change view to something else
+                //#TODO: change view to random hunt suggestion
             }
         });
     }
@@ -75,18 +80,62 @@ public class MainActivity extends AppCompatActivity {
     private void createAndFillInDB() {
 
         JSONArray pokemonArray = null;
-        //dbHelper.getWritableDatabase().execSQL("DROP TABLE " +PokeCheckListContract.Pokemon.TABLE_NAME);
-        //dbHelper.getWritableDatabase().execSQL("DROP TABLE " +PokeCheckListContract.Catch.TABLE_NAME);
-        //dbHelper.onCreate(dbHelper.getWritableDatabase());
         if (dbHelper.getAllPokemon().getCount() == 0 ){
+            dbHelper.recreateDbs();
             try {
                 //JSONObject jsonObject = new JSONObject(getResources().getString(R.string.pokemons));
                 pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
+
+                //1 indexed matrix
+                int row = 1;
+                int col = 1;
+
+                //read where to switch files
+                /*
+                BufferedReader genSwitchReader = new BufferedReader(new FileReader("genswitch.txt"));
+                int switchpoint = Integer.parseInt(genSwitchReader.readLine());
+
+                //read where there are unused images
+                String[] offsetLine = new String[0];
+                BufferedReader br = new BufferedReader(new FileReader("image_skip_list.txt"));
+                offsetLine = br.readLine().split(" ");
+                int nextOffset = Integer.parseInt(offsetLine[0]);
+                */
+                //new attempt:
+                int genswitchpos = 0;
+                int offsetpos = 0;
+
+                String[] genswitch = getResources().getString(R.string.genswitch).split("\n");
+                String[] offsetlist = getResources().getString(R.string.image_skip_list).split("\n");
+
+                int nextOffset = Integer.parseInt(offsetlist[offsetpos].replaceFirst(" ","").split(" ")[0]);
+                int switchpoint = Integer.parseInt(genswitch[genswitchpos].replaceFirst(" ",""));
+
                 for(int i=1; i <= pokemonArray.length();i++){
-                    dbHelper.insertPokemon(pokemonArray.getString(i-1),i);
+                    if(i == switchpoint) {
+                        col = 1;
+                        row = 1;
+                        genswitchpos++;
+                        switchpoint = Integer.parseInt(genswitch[genswitchpos].replaceFirst(" ",""));
+                        //switchpoint = Integer.parseInt(genSwitchReader.readLine());
+                    }
+                    else if(i == nextOffset){
+                        col += Integer.parseInt(offsetlist[offsetpos].split(" ")[1]);
+                        offsetpos ++;
+                        nextOffset = Integer.parseInt(offsetlist[offsetpos].replaceFirst(" ","").split(" ")[0]);
+                        //col += Integer.parseInt(offsetLine[1]);
+                        //offsetLine = br.readLine().split(" ");
+                        //nextOffset = Integer.parseInt(offsetLine[0]);
+                    }
+                    if(col>10){
+                        row ++;
+                        col = col%10;
+                    }
+                    dbHelper.insertPokemon(pokemonArray.getString(i-1),i,row,col);
+                    col ++;
                 }
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

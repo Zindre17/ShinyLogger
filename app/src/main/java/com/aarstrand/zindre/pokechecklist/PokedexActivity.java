@@ -12,7 +12,6 @@ public class PokedexActivity extends AppCompatActivity {
 
     private RecyclerView pokemonListView;
     private RecyclerView.Adapter plvAdapter;
-    private RecyclerView.LayoutManager plvLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,7 @@ public class PokedexActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //todo: fix xml slik at listItem blir bedre
+        //todo: fix xml slik at listItem blir bedre og legge inn bilderesursser for hver av pokemonene
     }
 
     //Todo: fix scrollingen og selecting av listItem
@@ -36,8 +35,6 @@ public class PokedexActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.d("scroll", "scrolling");
-                System.out.println("scrolling");
             }
         });
     }
