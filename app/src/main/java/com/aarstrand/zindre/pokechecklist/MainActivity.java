@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
     private void createAndFillInDB() {
 
         JSONArray pokemonArray = null;
+        dbHelper.recreateDbs();
         if (dbHelper.getAllPokemon().getCount() == 0 ){
-            dbHelper.recreateDbs();
             try {
                 //JSONObject jsonObject = new JSONObject(getResources().getString(R.string.pokemons));
                 pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
@@ -105,24 +105,24 @@ public class MainActivity extends AppCompatActivity {
                 int genswitchpos = 0;
                 int offsetpos = 0;
 
-                String[] genswitch = getResources().getString(R.string.genswitch).split("\n");
-                String[] offsetlist = getResources().getString(R.string.image_skip_list).split("\n");
+                String[] genswitch = getResources().getString(R.string.genswitch).trim().split(" ");
+                String[] offsetlist = getResources().getString(R.string.image_skip_list).trim().split(" ");
 
-                int nextOffset = Integer.parseInt(offsetlist[offsetpos].replaceFirst(" ","").split(" ")[0]);
-                int switchpoint = Integer.parseInt(genswitch[genswitchpos].replaceFirst(" ",""));
+                int nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
+                int switchpoint = Integer.parseInt(genswitch[genswitchpos]);
 
                 for(int i=1; i <= pokemonArray.length();i++){
                     if(i == switchpoint) {
                         col = 1;
                         row = 1;
                         genswitchpos++;
-                        switchpoint = Integer.parseInt(genswitch[genswitchpos].replaceFirst(" ",""));
+                        switchpoint = Integer.parseInt(genswitch[genswitchpos]);
                         //switchpoint = Integer.parseInt(genSwitchReader.readLine());
                     }
                     else if(i == nextOffset){
-                        col += Integer.parseInt(offsetlist[offsetpos].split(" ")[1]);
+                        col += Integer.parseInt(offsetlist[offsetpos].split("-")[1]);
                         offsetpos ++;
-                        nextOffset = Integer.parseInt(offsetlist[offsetpos].replaceFirst(" ","").split(" ")[0]);
+                        nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
                         //col += Integer.parseInt(offsetLine[1]);
                         //offsetLine = br.readLine().split(" ");
                         //nextOffset = Integer.parseInt(offsetLine[0]);

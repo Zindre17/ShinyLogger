@@ -19,7 +19,8 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     /*
     * Column 1: Number (int)
     * Column 2: Name (String)
-    * Column 3: Gif/Image - path (String)
+    * Column 3: Row (int)
+    * Column 4: Col (int)
     */
     private static final String CREATE_TABLE_POKEMON =
             "CREATE TABLE " + PokeCheckListContract.Pokemon.TABLE_NAME + " (" +

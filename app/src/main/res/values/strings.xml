@@ -16,44 +16,47 @@
     <string name="grayscale_pokeball_image_path">path</string>
     <string name="pokemon_list_item_image_view_description">gif/image/icon of the pokemon corresponding to list item</string>
     <string name="pokemon_list_item_image_button_description">by default it shows a grayscale pokeball and when that items pokemon is in the "catch" table it will show a colored pokeball like in the games</string>
-    <string name="genswitch">152\n
-        252\n
-        387\n
-        495\n
-        650\n
+    <string name="genswitch">
+        152
+        252
+        387
+        495
+        650
         0
     </string>
-    <string name="image_skip_list">4 2\n
-        7 2\n
-        10 1\n
-        13 1\n
-        16 1\n
-        19 1\n
-        20 1\n
-        21 1\n
-        26 2\n
-        27 1\n
-        42 1\n
-        43 1\n
-        45 1\n
-        46 1\n
-        65 1\n
-        66 2\n
-        81 1\n
-        85 1\n
-        86 1\n
-        95 1\n
-        98 1\n
-        112 1\n
-        113 1\n
-        116 1\n
-        119 1\n
-        120 1\n
-        124 1\n
-        128 1\n
-        130 1\n
-        131 2\n
-        151 2\n
+    <string name="image_skip_list">
+        4-2
+        7-2
+        10-1
+        13-1
+        16-1
+        19-1
+        20-1
+        21-1
+        26-2
+        27-1
+        42-1
+        43-1
+        45-1
+        46-1
+        65-1
+        66-2
+        81-1
+        85-1
+        86-1
+        95-1
+        98-1
+        112-1
+        113-1
+        116-1
+        119-1
+        120-1
+        124-1
+        128-1
+        130-1
+        131-2
+        143-1
+        151-2
         0
     </string>
     <string name="pokemons">[

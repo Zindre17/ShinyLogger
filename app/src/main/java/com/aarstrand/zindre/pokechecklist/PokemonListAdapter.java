@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,8 +45,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     private PokeCheckListDbHelper dbHelper;
     private Cursor list;
     private Bitmap grid;
-    private int width;
-    private int height;
+    private int size;
     private Bitmap pokemonThumbnail;
 
     public PokemonListAdapter(Context context){
@@ -56,9 +53,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         adapterContext = context;
         dbHelper = new PokeCheckListDbHelper(context);
         list = dbHelper.getAllPokemon();
-        grid = BitmapFactory.decodeFile("C:/Users/Zindre/IntelliJIDEAProjects/ShinyLogger/app/src/main/res/drawable/gen1.png");
-        width = grid.getWidth()/10;
-        height = grid.getHeight()/19;
+        grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen1);
+        size = grid.getWidth()/10;
 
         //caught = dbHelper.getCaughtPokemon();
     }
@@ -77,9 +73,9 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         list.moveToFirst();
         list.move(position);
-        int left = (list.getInt(3)-1)*width;
-        int top = (list.getInt(2)-1)*height;
-        pokemonThumbnail = Bitmap.createBitmap(grid,left,top,left+width,top+height);
+        int left = (list.getInt(3)-1)* size;
+        int top = (list.getInt(2)-1)*size;
+        pokemonThumbnail = Bitmap.createBitmap(grid,left,top, size,size);
         TextView textView = pokemonHolder.pokemon_name;
         textView.setText(list.getString(1));
         ImageButton imageButton = pokemonHolder.pokeball;
