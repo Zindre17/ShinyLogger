@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private void createAndFillInDB() {
 
         JSONArray pokemonArray = null;
-        //dbHelper.recreateDbs();
+        dbHelper.recreateDbs();
         if (dbHelper.getAllPokemon().getCount() == 0 ){
             try {
 

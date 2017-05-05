@@ -19,16 +19,12 @@ import android.widget.TextView;
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonHolder>{
 
 
-    public void resumeDbTransaction() {
-        list = dbHelper.getAllPokemon();
-    }
-
     public static class PokemonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         private TextView pokemon_name;
         private TextView pokemon_number;
         private ImageButton pokeball;
         private ImageView thumbnail;
-
         public PokemonHolder(View itemView) {
             super(itemView);
             pokemon_name = (TextView) itemView.findViewById(R.id.pokemon_name);
@@ -49,20 +45,21 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     private PokeCheckListDbHelper dbHelper;
     private Cursor list;
 
-
-
     public PokemonListAdapter(Context context){
         super();
         adapterContext = context;
         dbHelper = new PokeCheckListDbHelper(context);
         list = dbHelper.getAllPokemon();
-
-
-        //caught = dbHelper.getCaughtPokemon();
     }
+
+    public void resumeDbTransaction() {
+        list = dbHelper.getAllPokemon();
+    }
+
     private Context getContext(){
         return adapterContext;
     }
+
     @Override
     public PokemonHolder onCreateViewHolder(ViewGroup parent, int viewType){
         Context context = parent.getContext();
@@ -70,6 +67,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         View pokemonListView = inflater.inflate(R.layout.pokemon_list_item, parent, false);
         return new PokemonHolder(pokemonListView);
     }
+
     @Override
     public void onBindViewHolder(PokemonHolder pokemonHolder, int position){
 
