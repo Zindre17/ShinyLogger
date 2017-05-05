@@ -75,6 +75,26 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         list.move(position);
         int left = (list.getInt(3)-1)* size;
         int top = (list.getInt(2)-1)*size;
+        if(position+1 == 151)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen1);
+        if(position+1 == 152)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen2);
+        if(position+1 == 251)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen2);
+        if(position+1 == 252)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen3);
+        if(position+1 == 386)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen3);
+        if(position+1 == 387)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen4);
+        if(position+1 == 493)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen4);
+        if(position+1 == 494)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen5);
+        if(position+1 == 649)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen5);
+        if(position+1 == 650)
+            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen6);
         pokemonThumbnail = Bitmap.createBitmap(grid,left,top, size,size);
         TextView textView = pokemonHolder.pokemon_name;
         textView.setText(list.getString(1));
