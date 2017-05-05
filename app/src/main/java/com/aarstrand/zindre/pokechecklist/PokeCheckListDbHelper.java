@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Zindre on 29-Dec-16.
@@ -15,19 +19,21 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PokeCheckList.db";
 
+    private Context context;
 
+    private Bitmap grid;
+    private Bitmap pokemonThumbnail;
+    private int size;
     /*
     * Column 1: Number (int)
     * Column 2: Name (String)
-    * Column 3: Row (int)
-    * Column 4: Col (int)
+    * Column 3: Image (Blob)
     */
     private static final String CREATE_TABLE_POKEMON =
             "CREATE TABLE " + PokeCheckListContract.Pokemon.TABLE_NAME + " (" +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER + " INTEGER PRIMARY KEY," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " TEXT," +
-                    PokeCheckListContract.Pokemon.COLOUMN_NAME_ROW + " INTEGER," +
-                    PokeCheckListContract.Pokemon.COLOUMN_NAME_COL + " INTEGER)";
+                    PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG + " BLOB)";
 
     /*
     * Column 1: ID (autoincrement int)
@@ -48,12 +54,14 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
     private static final String DELETE_TABLE_POKEMON =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Pokemon.TABLE_NAME;
-
     private static final String DELETE_TABLE_CATCH =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Catch.TABLE_NAME;
 
     public PokeCheckListDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
+        this.context = context;
+        grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen1);
+        size = grid.getWidth()/10;
     }
 
     public void onCreate(SQLiteDatabase db){
@@ -97,11 +105,35 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER,number);
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME,name);
 
-        values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_ROW,row);
-        values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_COL,col);
+        chechIfTimeToChangeGrid(number);
+
+        values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG,getByteArrayImage(row,col));
 
         long pokemonId = db.insert(PokeCheckListContract.Pokemon.TABLE_NAME,null, values);
         return pokemonId;
+    }
+
+    private byte[] getByteArrayImage(int row, int col) {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        int left = (col-1) * size;
+        int top = (row-1) * size;
+        pokemonThumbnail = Bitmap.createBitmap(grid,left,top,size,size);
+        pokemonThumbnail.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
+    }
+
+    private void chechIfTimeToChangeGrid(int number) {
+        if(number == 152)
+            grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen2);
+        if(number == 252)
+            grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen3);
+        if(number == 387)
+            grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen4);
+        if(number == 494)
+            grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen5);
+        if(number == 650)
+            grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen6);
     }
 
     public long registerCatch(Catch c){

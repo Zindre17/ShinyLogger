@@ -80,27 +80,15 @@ public class MainActivity extends AppCompatActivity {
     private void createAndFillInDB() {
 
         JSONArray pokemonArray = null;
-        dbHelper.recreateDbs();
         if (dbHelper.getAllPokemon().getCount() == 0 ){
             try {
-                //JSONObject jsonObject = new JSONObject(getResources().getString(R.string.pokemons));
+
                 pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
 
                 //1 indexed matrix
                 int row = 1;
                 int col = 1;
 
-                //read where to switch files
-                /*
-                BufferedReader genSwitchReader = new BufferedReader(new FileReader("genswitch.txt"));
-                int switchpoint = Integer.parseInt(genSwitchReader.readLine());
-
-                //read where there are unused images
-                String[] offsetLine = new String[0];
-                BufferedReader br = new BufferedReader(new FileReader("image_skip_list.txt"));
-                offsetLine = br.readLine().split(" ");
-                int nextOffset = Integer.parseInt(offsetLine[0]);
-                */
                 //new attempt:
                 int genswitchpos = 0;
                 int offsetpos = 0;
@@ -117,15 +105,16 @@ public class MainActivity extends AppCompatActivity {
                         row = 1;
                         genswitchpos++;
                         switchpoint = Integer.parseInt(genswitch[genswitchpos]);
-                        //switchpoint = Integer.parseInt(genSwitchReader.readLine());
                     }
                     else if(i == nextOffset){
+
                         col += Integer.parseInt(offsetlist[offsetpos].split("-")[1]);
                         offsetpos ++;
                         nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
-                        //col += Integer.parseInt(offsetLine[1]);
-                        //offsetLine = br.readLine().split(" ");
-                        //nextOffset = Integer.parseInt(offsetLine[0]);
+                        while(col >= 20){
+                            row += (col/10)-1;
+                            col -= 10;
+                        }
                     }
                     if(col>10){
                         row ++;

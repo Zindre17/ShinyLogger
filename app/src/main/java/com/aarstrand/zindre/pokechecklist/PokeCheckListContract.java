@@ -12,7 +12,7 @@ public final class PokeCheckListContract {
         public static String TABLE_NAME = "Pokémon";
         public static String COLOUMN_NAME_NUMBER = "Number";
         public static String COLOUMN_NAME_NAME = "Name";
-        public static String COLOUMN_NAME_GIF_FILE_PATH = "gif";
+        public static String COLOUMN_NAME_PNG = "gif";
         public static String COLOUMN_NAME_ROW = "row";
         public static String COLOUMN_NAME_COL = "col";
 

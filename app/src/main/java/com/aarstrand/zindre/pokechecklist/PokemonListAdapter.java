@@ -44,17 +44,15 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     private Context adapterContext;
     private PokeCheckListDbHelper dbHelper;
     private Cursor list;
-    private Bitmap grid;
-    private int size;
-    private Bitmap pokemonThumbnail;
+
+
 
     public PokemonListAdapter(Context context){
         super();
         adapterContext = context;
         dbHelper = new PokeCheckListDbHelper(context);
         list = dbHelper.getAllPokemon();
-        grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen1);
-        size = grid.getWidth()/10;
+
 
         //caught = dbHelper.getCaughtPokemon();
     }
@@ -71,31 +69,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     @Override
     public void onBindViewHolder(PokemonHolder pokemonHolder, int position){
 
-        list.moveToFirst();
-        list.move(position);
-        int left = (list.getInt(3)-1)* size;
-        int top = (list.getInt(2)-1)*size;
-        if(position+1 == 151)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen1);
-        if(position+1 == 152)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen2);
-        if(position+1 == 251)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen2);
-        if(position+1 == 252)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen3);
-        if(position+1 == 386)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen3);
-        if(position+1 == 387)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen4);
-        if(position+1 == 493)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen4);
-        if(position+1 == 494)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen5);
-        if(position+1 == 649)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen5);
-        if(position+1 == 650)
-            grid = BitmapFactory.decodeResource(adapterContext.getResources(),R.drawable.gen6);
-        pokemonThumbnail = Bitmap.createBitmap(grid,left,top, size,size);
+        list.move(position-list.getPosition());
+
         TextView textView = pokemonHolder.pokemon_name;
         textView.setText(list.getString(1));
         ImageButton imageButton = pokemonHolder.pokeball;
@@ -103,9 +78,14 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         TextView textView1 = pokemonHolder.pokemon_number;
         textView1.setText(String.valueOf(list.getInt(0)));
         //TODO: fix this: imageView.setImageDrawable(pokemon.getImage());
-        imageView.setImageBitmap(pokemonThumbnail);
+        imageView.setImageBitmap(convertFromBlobToBitmap(list.getBlob(2)));
 
     }
+
+    private Bitmap convertFromBlobToBitmap(byte[] blob) {
+        return BitmapFactory.decodeByteArray(blob,0,blob.length);
+    }
+
     @Override
     public int getItemCount(){
         return list.getCount();
