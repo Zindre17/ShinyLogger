@@ -1,5 +1,6 @@
 package com.aarstrand.zindre.pokechecklist;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,7 @@ import android.util.Log;
 public class PokedexActivity extends AppCompatActivity {
 
     private RecyclerView pokemonListView;
-    private RecyclerView.Adapter plvAdapter;
+    private PokemonListAdapter plvAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +27,10 @@ public class PokedexActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //todo: fix xml slik at listItem blir bedre og legge inn bilderesursser for hver av pokemonene
+        //todo: fix xml slik at listItem blir bedre
     }
 
-    //Todo: fix scrollingen og selecting av listItem
+    //Todo: fix selecting av listItem
     private void setRecyclerViewScrollListener() {
         pokemonListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -38,4 +39,23 @@ public class PokedexActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("nå ble jeg drept");
+        plvAdapter.closeDbTransaction();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
 }

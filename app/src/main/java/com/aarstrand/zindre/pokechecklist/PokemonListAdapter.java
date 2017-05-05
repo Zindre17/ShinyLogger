@@ -19,6 +19,10 @@ import android.widget.TextView;
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonHolder>{
 
 
+    public void resumeDbTransaction() {
+        list = dbHelper.getAllPokemon();
+    }
+
     public static class PokemonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView pokemon_name;
         private TextView pokemon_number;
@@ -91,6 +95,10 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         return list.getCount();
     }
 
+    public void closeDbTransaction(){
+        list.close();
+        dbHelper.close();
+    }
 
 }
 

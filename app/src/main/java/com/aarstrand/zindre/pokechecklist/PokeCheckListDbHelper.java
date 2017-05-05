@@ -60,8 +60,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     public PokeCheckListDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
         this.context = context;
-        grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen1);
-        size = grid.getWidth()/10;
+        size = 0;
     }
 
     public void onCreate(SQLiteDatabase db){
@@ -116,6 +115,9 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     private byte[] getByteArrayImage(int row, int col) {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        if(size==0) {
+            size = grid.getWidth() / 10;
+        }
         int left = (col-1) * size;
         int top = (row-1) * size;
         pokemonThumbnail = Bitmap.createBitmap(grid,left,top,size,size);
@@ -124,6 +126,8 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     }
 
     private void chechIfTimeToChangeGrid(int number) {
+        if(number == 1)
+            grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen1);
         if(number == 152)
             grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen2);
         if(number == 252)

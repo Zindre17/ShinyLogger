@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         randomHuntButton.setEnabled(false);
         progressButton.setEnabled(false);
+        pokedexButton.setEnabled(false);
+        caughtButton.setEnabled(false);
 
         dbHelper = new PokeCheckListDbHelper(this);
 
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("db-check");
         System.out.println(dbHelper.getAllPokemon().getCount());
 
-
+        pokedexButton.setEnabled(true);
 
         pokedexButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private void createAndFillInDB() {
 
         JSONArray pokemonArray = null;
+        //dbHelper.recreateDbs();
         if (dbHelper.getAllPokemon().getCount() == 0 ){
             try {
 
@@ -130,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            dbHelper.close();
 
         }
     }
@@ -153,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        System.out.println("nå ble jeg også drept");
     }
 
 }
