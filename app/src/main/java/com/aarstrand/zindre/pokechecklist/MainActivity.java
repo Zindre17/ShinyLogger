@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //todo: gjør slik at screenen med knappene kommer opp først og deretter en lag en progressbar for oppsett av db i en popup, og lag en sjekk for om den allerede er laget og er korrekt
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -65,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
         progressButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //#TODO: change view to progressview
+                //TODO: change view to progressview
             }
         });
 
         randomHuntButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //#TODO: change view to random hunt suggestion
+                //TODO: change view to random hunt suggestion
             }
         });
     }
