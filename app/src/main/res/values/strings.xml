@@ -6,11 +6,11 @@
     <string name="button3">Progress</string>
     <string name="button4">Random hunt suggestion</string>
     <string name="textview">Developed by Zindre</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="title_activity_pokedex">Pokédex</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_my_shinies">MyShiniesActivity</string>
-    <string name="title_activity_progress">ProgressActivity</string>
-    <string name="title_activity_pokemon">PokemonActivity</string>
+    <string name="title_activity_my_shinies">My Shinies</string>
+    <string name="title_activity_progress">Progress</string>
+    <string name="title_activity_pokemon">Pokemon</string>
     <string name="large_text"/>
     <string name="colored_pokeball_image_path">path</string>
     <string name="grayscale_pokeball_image_path">path</string>
@@ -220,10 +220,10 @@
         "Raichu",
         "Sandshrew",
         "Sandslash",
-        "Nidoran?",
+        "Nidoran♀",
         "Nidorina",
         "Nidoqueen",
-        "Nidoran?",
+        "Nidoran♂",
         "Nidorino",
         "Nidoking",
         "Clefairy",

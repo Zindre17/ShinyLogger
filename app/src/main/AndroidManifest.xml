@@ -21,7 +21,7 @@
         </activity>
         <activity
                 android:name=".PokedexActivity"
-                android:label="@string/title_activity_scrolling"
+                android:label="@string/title_activity_pokedex"
                 android:parentActivityName=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
 

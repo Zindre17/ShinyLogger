@@ -10,9 +10,7 @@ import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
 
-/**
- * Created by Zindre on 29-Dec-16.
- */
+
 public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
 
@@ -33,7 +31,8 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + PokeCheckListContract.Pokemon.TABLE_NAME + " (" +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER + " INTEGER PRIMARY KEY," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " TEXT," +
-                    PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG + " BLOB)";
+                    PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG + " BLOB," +
+                    PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT + " INTEGER)";
 
     /**
      * SQL for å opprette caught-tabellen
@@ -122,13 +121,13 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     public void insertPokemon(String name, int number, int row, int col){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        //
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER,number);
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME,name);
 
         chechIfTimeToChangeGrid(number);
 
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG,getByteArrayImage(row,col));
+        values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT,0);
 
         db.insert(PokeCheckListContract.Pokemon.TABLE_NAME,null, values);
     }

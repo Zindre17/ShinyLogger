@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by Zindre on 25-Dec-16.
- */
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonHolder>{
 
 
@@ -71,17 +69,28 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     @Override
     public void onBindViewHolder(PokemonHolder pokemonHolder, int position){
 
+        //move the cursor to the correct row
         list.move(position-list.getPosition());
 
-        TextView textView = pokemonHolder.pokemon_name;
-        textView.setText(list.getString(1));
-        ImageButton imageButton = pokemonHolder.pokeball;
+        //retrieve the image from the database and put it in the image view
         ImageView imageView = pokemonHolder.thumbnail;
-        TextView textView1 = pokemonHolder.pokemon_number;
-        textView1.setText(String.valueOf(list.getInt(0)));
-        //TODO: fix this: imageView.setImageDrawable(pokemon.getImage());
         imageView.setImageBitmap(convertFromBlobToBitmap(list.getBlob(2)));
 
+        //set the name of the pokemon to one of the textviews
+        TextView textView = pokemonHolder.pokemon_name;
+        textView.setText(list.getString(1));
+
+        //set the number of the pokemon to the other textview
+        TextView textView1 = pokemonHolder.pokemon_number;
+        textView1.setText(String.valueOf(list.getInt(0)));
+
+        //set the imagebutton based on the boolean(int) "caught" column
+        ImageButton imageButton = pokemonHolder.pokeball;
+        if(list.getInt(3)==1){
+            imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball));
+        }else {
+            imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball_gray));
+        }
     }
 
     private Bitmap convertFromBlobToBitmap(byte[] blob) {

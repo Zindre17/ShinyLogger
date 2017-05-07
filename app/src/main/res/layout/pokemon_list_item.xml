@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent" android:id="@+id/list_item"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:id="@+id/list_item"
+              android:background="@color/backgroundGrey"
               android:layout_height="wrap_content">
-    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/pokemon_image"
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/pokemon_image"
+               android:background="@color/pokemonBackground"
+               android:foreground="@drawable/border"
+               android:scaleX="0.8"
+               android:scaleY="0.8"
+
                android:contentDescription="@string/pokemon_list_item_image_view_description"/>
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"  android:id="@+id/pokemon_number"
-              android:layout_toRightOf="@+id/pokemon_image" android:layout_toEndOf="@+id/pokemon_image"/>
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/pokemon_name"
-              android:layout_toEndOf="@+id/pokemon_number" android:layout_toRightOf="@+id/pokemon_number"/>
-    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/pokeball"
-                 android:contentDescription="@string/pokemon_list_item_image_button_description"
-                 android:layout_toEndOf="@+id/pokemon_name" android:layout_toRightOf="@+id/pokemon_name"/>
-</RelativeLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="horizontal">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_weight="0.5"
+                      android:orientation="vertical">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/pokemon_number"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/pokemon_name"/>
+        </LinearLayout>
+
+        <ImageButton android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_weight="0.5"
+                     android:id="@+id/pokeball"
+                     android:contentDescription="@string/pokemon_list_item_image_button_description"/>
+    </LinearLayout>
+
+</LinearLayout>

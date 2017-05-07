@@ -1,12 +1,10 @@
 package com.aarstrand.zindre.pokechecklist;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 
 public class PokedexActivity extends AppCompatActivity {
@@ -19,13 +17,14 @@ public class PokedexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokedex);
         pokemonListView = (RecyclerView) findViewById(R.id.pokemon_list);
-        //pokemonListView.setHasFixedSize(true);
         pokemonListView.setLayoutManager(new LinearLayoutManager(this));
         plvAdapter = new PokemonListAdapter(this);
         pokemonListView.setAdapter(plvAdapter);
         setRecyclerViewScrollListener();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        pokemonListView.addItemDecoration(new SimpleDivider(this));
+
 
         //todo: fix xml slik at listItem blir bedre
     }

@@ -3,5 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="backgroundGrey">#444444</color>
+    <color name="backgroundGrey">#555</color>
+    <color name="pokemonBackground">#FFF</color>
+    <color name="pokemonBorder">#000</color>
+    <color name="listItemSeparator">#222</color>
 </resources>
