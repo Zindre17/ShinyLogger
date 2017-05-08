@@ -81,7 +81,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
      * denne funksjonen brukes når man vil lage pokedexdatabasen på nytt.
      * Den sletter pokemontabellen og oppretter den på nytt
      */
-    public void recreateDbs(){
+    public void recreateDb(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL(DELETE_TABLE_POKEMON);
 

@@ -1,6 +1,8 @@
 package com.aarstrand.zindre.pokechecklist;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //todo: gjør slik at screenen med knappene kommer opp først og deretter en lag en progressbar for oppsett av db i en popup, og lag en sjekk for om den allerede er laget og er korrekt
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -36,13 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new PokeCheckListDbHelper(this);
 
-        //Fylle inn databasen
-        createAndFillInDB();
-
-        System.out.println("db-check");
-        System.out.println(dbHelper.getAllPokemon().getCount());
-
-        pokedexButton.setEnabled(true);
+        new SetupPokedex().execute();
 
         pokedexButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -57,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent collection = new Intent(MainActivity.this,MyShiniesActivity.class);
-                startActivity(collection);
+
+                //todo: this is just for making testing easier. The line below will need to be removed at some point
+                dbHelper.recreateDb();
+                //todo: uncomment the line below when testing is done
+                //startActivity(collection);
             }
         });
 
@@ -76,59 +74,98 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void createAndFillInDB() {
+    private class SetupPokedex extends AsyncTask<Void,Integer,Void>{
 
-        JSONArray pokemonArray = null;
-        dbHelper.recreateDbs();
-        if (dbHelper.getAllPokemon().getCount() == 0 ){
-            try {
+        ProgressDialog progressDialog;
 
-                pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
+        @Override
+        protected void onPreExecute() {
+            //todo: decide if progressdialog is the right view here. if one clicks the view goes away, but the process does keep going. This might be counter intuitive
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage(getResources().getString(R.string.db_dialog));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
 
-                //1 indexed matrix
-                int row = 1;
-                int col = 1;
+        private void createAndFillInDB() {
 
-                //new attempt:
-                int genswitchpos = 0;
-                int offsetpos = 0;
+            JSONArray pokemonArray = null;
+            if (dbHelper.getAllPokemon().getCount() != 721 ){
+                dbHelper.recreateDb();
+                try {
 
-                String[] genswitch = getResources().getString(R.string.genswitch).trim().split(" ");
-                String[] offsetlist = getResources().getString(R.string.image_skip_list).trim().split(" ");
+                    pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
 
-                int nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
-                int switchpoint = Integer.parseInt(genswitch[genswitchpos]);
+                    //1 indexed matrix
+                    int row = 1;
+                    int col = 1;
 
-                for(int i=1; i <= pokemonArray.length();i++){
-                    if(i == switchpoint) {
-                        col = 1;
-                        row = 1;
-                        genswitchpos++;
-                        switchpoint = Integer.parseInt(genswitch[genswitchpos]);
-                    }
-                    else if(i == nextOffset){
+                    //new attempt:
+                    int genswitchpos = 0;
+                    int offsetpos = 0;
 
-                        col += Integer.parseInt(offsetlist[offsetpos].split("-")[1]);
-                        offsetpos ++;
-                        nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
-                        while(col >= 20){
-                            row += (col/10)-1;
-                            col -= 10;
+                    String[] genswitch = getResources().getString(R.string.genswitch).trim().split(" ");
+                    String[] offsetlist = getResources().getString(R.string.image_skip_list).trim().split(" ");
+
+                    int nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
+                    int switchpoint = Integer.parseInt(genswitch[genswitchpos]);
+
+                    int size = pokemonArray.length();
+                    progressDialog.setMax(size);
+
+                    for(int i=1; i <= size ;i++){
+                        if(i == switchpoint) {
+                            col = 1;
+                            row = 1;
+                            genswitchpos++;
+                            switchpoint = Integer.parseInt(genswitch[genswitchpos]);
                         }
+                        else if(i == nextOffset){
+
+                            col += Integer.parseInt(offsetlist[offsetpos].split("-")[1]);
+                            offsetpos ++;
+                            nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
+                            while(col >= 20){
+                                row += (col/10)-1;
+                                col -= 10;
+                            }
+                        }
+                        if(col>10){
+                            row ++;
+                            col = col%10;
+                        }
+                        dbHelper.insertPokemon(pokemonArray.getString(i-1),i,row,col);
+                        col ++;
+                        publishProgress(i);
                     }
-                    if(col>10){
-                        row ++;
-                        col = col%10;
-                    }
-                    dbHelper.insertPokemon(pokemonArray.getString(i-1),i,row,col);
-                    col ++;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                dbHelper.close();
 
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            dbHelper.close();
+        }
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            createAndFillInDB();
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            progressDialog.setProgress(values[0]);
+        }
+
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            pokedexButton.setEnabled(true);
+            caughtButton.setEnabled(true);
+            System.out.println("db-check");
+            System.out.println(dbHelper.getAllPokemon().getCount());
         }
     }
 
