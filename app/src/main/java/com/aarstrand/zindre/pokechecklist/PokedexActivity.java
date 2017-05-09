@@ -25,11 +25,8 @@ public class PokedexActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         pokemonListView.addItemDecoration(new SimpleDivider(this));
 
-
-        //todo: fix xml slik at listItem blir bedre
     }
 
-    //Todo: fix selecting av listItem
     private void setRecyclerViewScrollListener() {
         pokemonListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

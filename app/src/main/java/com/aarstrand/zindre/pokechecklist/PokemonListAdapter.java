@@ -82,15 +82,22 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         //set the number of the pokemon to the other textview
         TextView textView1 = pokemonHolder.pokemon_number;
-        textView1.setText(String.valueOf(list.getInt(0)));
+        textView1.setText(adapterContext.getResources().getString(R.string.numbersign)+String.valueOf(list.getInt(0)));
 
         //set the imagebutton based on the boolean(int) "caught" column
-        ImageButton imageButton = pokemonHolder.pokeball;
+        final ImageButton imageButton = pokemonHolder.pokeball;
         if(list.getInt(3)==1){
             imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball));
         }else {
             imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball_gray));
         }
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo: open a fragment with the option of adding a pokemon to your caught db. Also update the pokedex db
+            }
+        });
     }
 
     private Bitmap convertFromBlobToBitmap(byte[] blob) {

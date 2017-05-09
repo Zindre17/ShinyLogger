@@ -57,7 +57,7 @@
         131-2
         143-1
         151-2
-        156-1
+        155-1
         166-1
         167-1
         179-1
@@ -192,6 +192,7 @@
         0
     </string>
     <string name="db_dialog">Creating and filling in the pokedex database.\n\nThis is a one-time-operation, so please be patient this one time!</string>
+    <string name="numbersign">#</string>
     <string name="pokemons">[
         "Bulbasaur",
         "Ivysaur",

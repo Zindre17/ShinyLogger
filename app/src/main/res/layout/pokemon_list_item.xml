@@ -27,11 +27,16 @@
 
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:id="@+id/pokemon_number"/>
+                      android:paddingTop="15dp"
+                      android:textSize="20sp"
+                      android:textColor="@color/orangeText"
+                      android:id="@+id/pokemon_name"/>
 
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:id="@+id/pokemon_name"/>
+                      android:textColor="@color/orangeText"
+                      android:id="@+id/pokemon_number"/>
+
         </LinearLayout>
 
         <ImageButton android:layout_width="match_parent"

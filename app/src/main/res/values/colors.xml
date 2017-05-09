@@ -7,4 +7,5 @@
     <color name="pokemonBackground">#FFF</color>
     <color name="pokemonBorder">#000</color>
     <color name="listItemSeparator">#222</color>
+    <color name="orangeText">#d2633a</color>
 </resources>
