@@ -917,4 +917,11 @@
         "Volcanion"
         ]
     </string>
+    <string name="registerButton">Register Catch!</string>
+    <string name="game">Game:</string>
+    <string name="encounters">Encounters:</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_tag">Shiny Registration</string>
+    <string name="register_dialog_title">Register Catch!</string>
+    <string name="title_activity_hunt">Hunt!</string>
 </resources>

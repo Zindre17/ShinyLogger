@@ -29,12 +29,12 @@
                       android:layout_height="wrap_content"
                       android:paddingTop="15dp"
                       android:textSize="20sp"
-                      android:textColor="@color/orangeText"
+                      android:textColor="@color/nameText"
                       android:id="@+id/pokemon_name"/>
 
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:textColor="@color/orangeText"
+                      android:textColor="@color/numberText"
                       android:id="@+id/pokemon_number"/>
 
         </LinearLayout>

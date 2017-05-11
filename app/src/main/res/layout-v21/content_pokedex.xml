@@ -9,23 +9,24 @@
         android:layout_height="match_parent"
         tools:context="com.aarstrand.zindre.pokechecklist.PokedexActivity">
 
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:scrollbars="vertical"
+            android:id="@+id/pokemon_list"
+            android:layout_alignParentBottom="true">
+    </android.support.v7.widget.RecyclerView>
+
+
     <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/toolbarBackground"
+            android:theme="?attr/actionBarTheme"
+            android:elevation="4dp"
             app:titleTextColor="@color/TitleTextColor"
+            
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:id="@+id/pokedex_toolbar"/>
-
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/pokedex_toolbar"
-            android:scrollbars="vertical"
-            android:id="@+id/pokemon_list">
-    </android.support.v7.widget.RecyclerView>
-
-
+            android:id="@+id/toolbar"/>
 </RelativeLayout>

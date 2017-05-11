@@ -12,7 +12,7 @@
         <activity
                 android:name=".MainActivity"
                 android:label="@string/title_activity_main"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -23,7 +23,7 @@
                 android:name=".PokedexActivity"
                 android:label="@string/title_activity_pokedex"
                 android:parentActivityName=".MainActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -33,7 +33,7 @@
                 android:name=".MyShiniesActivity"
                 android:label="@string/title_activity_my_shinies"
                 android:parentActivityName=".MainActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.aarstrand.zindre.pokechecklist.MainActivity"/>
@@ -42,7 +42,7 @@
                 android:name=".PokemonActivity"
                 android:label="@string/title_activity_pokemon"
                 android:parentActivityName=".PokedexActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -52,10 +52,18 @@
                 android:name=".ProgressActivity"
                 android:label="@string/title_activity_progress"
                 android:parentActivityName=".MainActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.aarstrand.zindre.pokechecklist.MainActivity"/>
+        </activity>
+        <activity android:name=".HuntActivity"
+                  android:label="@string/title_activity_hunt"
+                  android:parentActivityName=".PokedexActivity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aarstrand.zindre.pokechecklist.HuntActivity"/>
         </activity>
     </application>
 

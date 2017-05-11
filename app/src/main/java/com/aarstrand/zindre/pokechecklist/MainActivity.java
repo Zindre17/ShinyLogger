@@ -80,11 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //todo: decide if progressdialog is the right view here. if one clicks the view goes away, but the process does keep going. This might be counter intuitive
+            //todo: decide if progressdialog is the right view here.
             progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setMessage(getResources().getString(R.string.db_dialog));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setProgress(0);
+            progressDialog.setCancelable(false);
             progressDialog.show();
         }
 

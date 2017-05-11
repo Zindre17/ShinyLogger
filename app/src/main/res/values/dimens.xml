@@ -5,4 +5,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="dialog_horizontal_padding">24dp</dimen>
+    <dimen name="dialog_vertical_padding">24dp</dimen>
+    <dimen name="dialog_title_to_content_padding">20dp</dimen>
+    <dimen name="dialog_content_to_button_padding">24dp</dimen>
+    <item name="pokemon_image_y_scale" type="dimen" format="float">0.8</item>
+    <item name="pokemon_image_x_scale" type="dimen" format="float">0.8</item>
 </resources>

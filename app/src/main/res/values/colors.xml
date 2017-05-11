@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="backgroundGrey">#555</color>
+    <color name="backgroundGrey">#000</color>
     <color name="pokemonBackground">#FFF</color>
-    <color name="pokemonBorder">#000</color>
+    <color name="pokemonBorder">@color/nameText</color>
     <color name="listItemSeparator">#222</color>
-    <color name="orangeText">#d2633a</color>
+    <color name="nameText">#fb5a1f</color>
+    <color name="numberText">@color/nameText</color>
+    <color name="toolbarBackground">@color/nameText</color>
+    <color name="buttonColor">@color/nameText</color>
+    <color name="buttonTextColor">@color/pokemonBackground</color>
+    <color name="fragmentBackground">#e3000000</color>
+    <color name="fragmentTextColor">@color/nameText</color>
+    <color name="braggingText">#c5fb5a1f</color>
+    <color name="TitleTextColor">#000</color>
 </resources>

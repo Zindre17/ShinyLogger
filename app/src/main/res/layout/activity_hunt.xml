@@ -6,8 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.aarstrand.zindre.pokechecklist.PokedexActivity">
+        tools:context="com.aarstrand.zindre.pokechecklist.HuntActivity">
 
-    <include layout="@layout/content_pokedex"/>
+    <include layout="@layout/content_hunt"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -34,6 +34,11 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG + " BLOB," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT + " INTEGER)";
 
+    public static final int POKEMON_NUMBER =0;
+    public static final int POKEMON_NAME =1;
+    public static final int POKEMON_IMAGE =2;
+    public static final int POKEMON_CAUGHT =3;
+
     /**
      * SQL for å opprette caught-tabellen
     * Column 1: ID (autoincrement int)
@@ -51,6 +56,13 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Catch.COLOUMN_NAME_GAME + " TEXT," +
                     PokeCheckListContract.Catch.COLOUMN_NAME_LOCATION + " TEXT," +
                     PokeCheckListContract.Catch.COLOUMN_NAME_ODDS + " TEXT)";
+
+    public static final int CAUGHT_ID =0;
+    public static final int CAUGHT_NUMBER =0;
+    public static final int CAUGHT_ATTEMPTS =0;
+    public static final int CAUGHT_GAME =0;
+    public static final int CAUGHT_LOCATION =0;
+    public static final int CAUGHT_ODDS =0;
 
     private static final String DELETE_TABLE_POKEMON =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Pokemon.TABLE_NAME;
@@ -86,6 +98,10 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         db.execSQL(DELETE_TABLE_POKEMON);
 
         db.execSQL(CREATE_TABLE_POKEMON);
+    }
+
+    public static Bitmap convertFromBlobToBitmap(byte[] blob) {
+        return BitmapFactory.decodeByteArray(blob,0,blob.length);
     }
 
     /**

@@ -18,6 +18,7 @@
 
     <Button
             android:text="@string/button1"
+            android:background="@color/buttonColor"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -25,6 +26,7 @@
             android:onClick=""/>
     <Button
             android:text="@string/button2"
+            android:background="@color/buttonColor"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/button"
@@ -32,6 +34,7 @@
             android:id="@+id/button2"/>
     <Button
             android:text="@string/button3"
+            android:background="@color/buttonColor"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/button2"
@@ -39,6 +42,7 @@
             android:id="@+id/button3"/>
     <Button
             android:text="@string/button4"
+            android:background="@color/buttonColor"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -46,6 +50,7 @@
             android:layout_below="@+id/button3"/>
     <TextView
             android:text="@string/textview"
+            android:textColor="@color/braggingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
