@@ -3,7 +3,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:id="@+id/list_item"
-              android:background="@color/backgroundGrey"
+              android:background="@color/shinydexBackground"
               android:layout_height="wrap_content">
 
     <ImageView android:layout_width="wrap_content"

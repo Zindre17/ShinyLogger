@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
         new SetupPokedex().execute();
 
+        setButtonListeners();
+    }
+
+    private void setButtonListeners() {
+
         pokedexButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

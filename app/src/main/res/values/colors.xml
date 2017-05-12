@@ -16,4 +16,6 @@
     <color name="fragmentTextColor">@color/nameText</color>
     <color name="braggingText">#c5fb5a1f</color>
     <color name="TitleTextColor">#000</color>
+    <color name="spinnerBackground">@color/nameText</color>
+    <color name="shinydexBackground">#000</color>
 </resources>

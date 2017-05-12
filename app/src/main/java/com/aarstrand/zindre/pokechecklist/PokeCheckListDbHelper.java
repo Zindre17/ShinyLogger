@@ -26,6 +26,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     * Column 1: Number (int)
     * Column 2: Name (String)
     * Column 3: Image (Blob)
+     * Column 4: Caught (int /Boolean)
     */
     private static final String CREATE_TABLE_POKEMON =
             "CREATE TABLE " + PokeCheckListContract.Pokemon.TABLE_NAME + " (" +
@@ -58,11 +59,11 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Catch.COLOUMN_NAME_ODDS + " TEXT)";
 
     public static final int CAUGHT_ID =0;
-    public static final int CAUGHT_NUMBER =0;
-    public static final int CAUGHT_ATTEMPTS =0;
-    public static final int CAUGHT_GAME =0;
-    public static final int CAUGHT_LOCATION =0;
-    public static final int CAUGHT_ODDS =0;
+    public static final int CAUGHT_NUMBER =1;
+    public static final int CAUGHT_ATTEMPTS =2;
+    public static final int CAUGHT_GAME =3;
+    public static final int CAUGHT_LOCATION =4;
+    public static final int CAUGHT_ODDS =5;
 
     private static final String DELETE_TABLE_POKEMON =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Pokemon.TABLE_NAME;

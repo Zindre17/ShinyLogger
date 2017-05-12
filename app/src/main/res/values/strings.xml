@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Pokechecklist</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="button1">Pokedex</string>
-    <string name="button2">My shinies</string>
+    <string name="button1">Shinydex</string>
+    <string name="button2">My Shinies</string>
     <string name="button3">Progress</string>
     <string name="button4">Random hunt suggestion</string>
     <string name="textview">Developed by Zindre</string>
