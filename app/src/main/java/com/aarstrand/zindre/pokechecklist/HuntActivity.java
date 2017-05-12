@@ -1,14 +1,11 @@
 package com.aarstrand.zindre.pokechecklist;
 
-import android.database.Cursor;
+
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 
 public class HuntActivity extends FragmentActivity {
@@ -26,6 +23,9 @@ public class HuntActivity extends FragmentActivity {
         viewPager = (ViewPager)findViewById(R.id.hunt_pager);
         huntPagerAdapter = new HuntPagerAdapter(getSupportFragmentManager(),i);
         viewPager.setAdapter(huntPagerAdapter);
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.hunt_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     @Override

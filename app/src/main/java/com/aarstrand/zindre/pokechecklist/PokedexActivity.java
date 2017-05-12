@@ -25,7 +25,9 @@ public class PokedexActivity extends AppCompatActivity implements PokemonListAda
         pokemonListView.setAdapter(plvAdapter);
         setRecyclerViewScrollListener();
         Toolbar toolbar = (Toolbar) findViewById(R.id.pokedex_toolbar);
+        toolbar.setTitle(R.string.title_activity_pokedex);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pokemonListView.addItemDecoration(new SimpleDivider(this));
 
 
