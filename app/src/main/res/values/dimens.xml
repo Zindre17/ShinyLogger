@@ -11,6 +11,7 @@
     <dimen name="dialog_content_to_button_padding">24dp</dimen>
     <dimen name="menu_button_bottom_padding">24dp</dimen>
     <dimen name="menu_button_top_padding">24dp</dimen>
+    <dimen name="menu_top_margin">30dp</dimen>
     <item name="pokemon_image_y_scale" type="dimen" format="float">0.8</item>
     <item name="pokemon_image_x_scale" type="dimen" format="float">0.8</item>
 </resources>
