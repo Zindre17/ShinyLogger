@@ -11,7 +11,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonHolder>{
+public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonHolder> implements PokeCheckListDbHelper.DbListener{
+
+    @Override
+    public void onDataChanged() {
+       //refresh();
+    }
 
     public interface PokemonListListener{
         public void OnButtonClicked(int pos);
@@ -25,7 +30,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public PokemonListAdapter(Context context){
         super();
         adapterContext = context;
-        dbHelper = new PokeCheckListDbHelper(context);
+        dbHelper = PokeCheckListDbHelper.getInstance(context);
+        dbHelper.setListener(this);
         try{
             mListener = (PokemonListListener)context;
         }catch (ClassCastException e){
@@ -115,6 +121,10 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     }
 
 
+    public void refresh(){
+        list = dbHelper.getAllPokemon();
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount(){
@@ -123,7 +133,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     public void closeDbTransaction(){
         list.close();
-        dbHelper.close();
     }
 
 }

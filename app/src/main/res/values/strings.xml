@@ -924,4 +924,6 @@
     <string name="dialog_tag">Shiny Registration</string>
     <string name="register_dialog_title">Register Catch!</string>
     <string name="title_activity_hunt">Hunt!</string>
+    <string name="shared_preferences">prefs</string>
+    <string name="first">first</string>
 </resources>
