@@ -16,10 +16,10 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PokeCheckList.db";
-
     private Context context;
 
     private Bitmap grid;
+
     private int size;
     /**
      * SQL for å opprette pokemon-tabellen
@@ -27,19 +27,21 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     * Column 2: Name (String)
     * Column 3: Image (Blob)
      * Column 4: Caught (int /Boolean)
+     * Column 5: Gen (int)
     */
     private static final String CREATE_TABLE_POKEMON =
             "CREATE TABLE " + PokeCheckListContract.Pokemon.TABLE_NAME + " (" +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER + " INTEGER PRIMARY KEY," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " TEXT," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG + " BLOB," +
-                    PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT + " INTEGER)";
-
+                    PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT + " INTEGER," +
+                    PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN + " INTEGER)";
     public static final int POKEMON_NUMBER =0;
+
     public static final int POKEMON_NAME =1;
     public static final int POKEMON_IMAGE =2;
     public static final int POKEMON_CAUGHT =3;
-
+    public static final int POKEMON_GEN =4;
     /**
      * SQL for å opprette caught-tabellen
     * Column 1: ID (autoincrement int)
@@ -59,16 +61,35 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Catch.COLOUMN_NAME_ODDS + " TEXT)";
 
     public static final int CAUGHT_ID =0;
+
     public static final int CAUGHT_NUMBER =1;
     public static final int CAUGHT_ATTEMPTS =2;
     public static final int CAUGHT_GAME =3;
     public static final int CAUGHT_LOCATION =4;
     public static final int CAUGHT_ODDS =5;
+    private static final String CREATE_TABLE_METHOD =
+            "CREATE TABLE " + PokeCheckListContract.Method.TABLE_NAME + " (" +
+            PokeCheckListContract.Method._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            PokeCheckListContract.Method.COLOUMN_NAME_METHOD + " TEXT,"+
+            PokeCheckListContract.Method.COLOUMN_NAME_GENS + " TEXT)";
+
+
+    private static final String CREATE_TABLE_GAME =
+            "CREATE TABLE " + PokeCheckListContract.Game.TABLE_NAME + " (" +
+            PokeCheckListContract.Game._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            PokeCheckListContract.Game.COLOUMN_NAME_GAME + " TEXT," +
+            PokeCheckListContract.Game.COLOUMN_NAME_GEN + " INTEGER)";
+
+    public static final int GAME_GEN = 2;
 
     private static final String DELETE_TABLE_POKEMON =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Pokemon.TABLE_NAME;
     private static final String DELETE_TABLE_CATCH =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Catch.TABLE_NAME;
+    private static final String DELETE_TABLE_GAME =
+            "DROP TABLE IF EXISTS " + PokeCheckListContract.Game.TABLE_NAME;
+    private static final String DELETE_TABLE_METHOD =
+            "DROP TABLE IF EXISTS " + PokeCheckListContract.Method.TABLE_NAME;
 
     public PokeCheckListDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -79,11 +100,15 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db){
         db.execSQL(CREATE_TABLE_POKEMON);
         db.execSQL(CREATE_TABLE_CATCH);
+        db.execSQL(CREATE_TABLE_GAME);
+        db.execSQL(CREATE_TABLE_METHOD);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         //TODO: fix this and find out how/why
         db.execSQL(DELETE_TABLE_POKEMON);
         db.execSQL(DELETE_TABLE_CATCH);
+        db.execSQL(DELETE_TABLE_GAME);
+        db.execSQL(DELETE_TABLE_METHOD);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion){
@@ -97,8 +122,11 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     public void recreateDb(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL(DELETE_TABLE_POKEMON);
-
         db.execSQL(CREATE_TABLE_POKEMON);
+        db.execSQL(DELETE_TABLE_METHOD);
+        db.execSQL(CREATE_TABLE_METHOD);
+        db.execSQL(DELETE_TABLE_GAME);
+        db.execSQL(CREATE_TABLE_GAME);
     }
 
     public static Bitmap convertFromBlobToBitmap(byte[] blob) {
@@ -135,12 +163,12 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
      * @param row er hvilken rad på bildearket man finner dens bilde
      * @param col er hvilken kollonne man finner den bilde
      */
-    public void insertPokemon(String name, int number, int row, int col){
+    public void insertPokemon(String name, int number, int row, int col, int gen){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER,number);
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME,name);
-
+        values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN, gen);
         chechIfTimeToChangeGrid(number);
 
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG,getByteArrayImage(row,col));
@@ -211,5 +239,42 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + PokeCheckListContract.Catch.TABLE_NAME,null);
         return cursor;
+    }
+
+    public void insertMethod(String method,String gens) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PokeCheckListContract.Method.COLOUMN_NAME_METHOD,method);
+        values.put(PokeCheckListContract.Method.COLOUMN_NAME_GENS,gens);
+        db.insert(PokeCheckListContract.Method.TABLE_NAME,null,values);
+    }
+
+    public Cursor getAllMethods(){
+        return getReadableDatabase().rawQuery("select * from " + PokeCheckListContract.Method.TABLE_NAME,null);
+    }
+
+    public Cursor getMethods(int gen){
+        return getWritableDatabase().rawQuery(
+                "select * from " + PokeCheckListContract.Method.TABLE_NAME +
+                        " where " + PokeCheckListContract.Method.COLOUMN_NAME_GENS + " like '%"+ String.valueOf(gen) +"%'" +
+                        " or " + PokeCheckListContract.Method.COLOUMN_NAME_GENS+ " = 0",null);
+    }
+
+    public void insertGame(String game,int gen) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PokeCheckListContract.Game.COLOUMN_NAME_GAME,game);
+        values.put(PokeCheckListContract.Game.COLOUMN_NAME_GEN,gen);
+        db.insert(PokeCheckListContract.Game.TABLE_NAME,null,values);
+    }
+
+    public Cursor getGames(int gen){
+        return getWritableDatabase().rawQuery(
+                "select * from " + PokeCheckListContract.Game.TABLE_NAME +
+                " where " + PokeCheckListContract.Game.COLOUMN_NAME_GEN + " >= "+gen+"",null);
+    }
+
+    public Cursor getAllGames(){
+        return getReadableDatabase().rawQuery("select * from " + PokeCheckListContract.Game.TABLE_NAME,null);
     }
 }

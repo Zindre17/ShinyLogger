@@ -79,7 +79,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(PokemonHolder pokemonHolder, final int position){
+    public void onBindViewHolder(final PokemonHolder pokemonHolder, int position){
 
         //move the cursor to the correct row
         list.move(position-list.getPosition());
@@ -109,7 +109,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
             @Override
             public void onClick(View v) {
                 //todo: open a fragment with the option of adding a pokemon to your caught db. Also update the pokedex db
-                mListener.OnButtonClicked(position);
+                mListener.OnButtonClicked(pokemonHolder.getAdapterPosition());
             }
         });
     }

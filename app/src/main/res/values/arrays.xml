@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="game_array">
-        <item>Gold</item>
-        <item>Silver</item>
-        <item>Crystal</item>
-        <item>Ruby</item>
-        <item>Sapphire</item>
-        <item>Emerald</item>
-        <item>Fire Red</item>
-        <item>Leaf Green</item>
-        <item>Diamond</item>
-        <item>Pearl</item>
-        <item>Platinum</item>
-        <item>Black</item>
-        <item>White</item>
-        <item>Black 2</item>
-        <item>White 2</item>
-        <item>X</item>
-        <item>Y</item>
-        <item>Omega Ruby</item>
-        <item>Alpha Sapphire</item>
-        <item>Sun</item>
-        <item>Moon</item>
+        <item>Gold-21</item>
+        <item>Silver-21</item>
+        <item>Crystal-22</item>
+        <item>Ruby-31</item>
+        <item>Sapphire-31</item>
+        <item>Emerald-32</item>
+        <item>FireRed-33</item>
+        <item>LeafGreen-33</item>
+        <item>Diamond-41</item>
+        <item>Pearl-41</item>
+        <item>Platinum-42</item>
+        <item>HeartGold-43</item>
+        <item>SoulSilver-43</item>
+        <item>Black-51</item>
+        <item>White-51</item>
+        <item>Black 2-52</item>
+        <item>White 2-52</item>
+        <item>X-61</item>
+        <item>Y-61</item>
+        <item>Omega Ruby-62</item>
+        <item>Alpha Sapphire-62</item>
+        <item>Sun-71</item>
+        <item>Moon-71</item>
+    </string-array>
+    <string-array name="method_array">
+        <item>Random Encounter-0</item>
+        <item>Chain Fishing-61 62 71</item>
+        <item>DexNav-62</item>
+        <item>Pokéradar-41 42 43 61</item>
+        <item>Horde Hunting-61 62</item>
+        <item>Breeding-0</item>
+        <item>Fossil Revival-31 32 33 41 42 43 51 52 61 62 71</item>
     </string-array>
 </resources>

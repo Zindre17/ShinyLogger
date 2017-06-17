@@ -9,8 +9,9 @@ public final class PokeCheckListContract {
         public static String TABLE_NAME = "Pokémon";
         public static String COLOUMN_NAME_NUMBER = "Number";
         public static String COLOUMN_NAME_NAME = "Name";
-        public static String COLOUMN_NAME_PNG = "gif";
-        public static String COLOUMN_NAME_CAUGHT = "caught";
+        public static String COLOUMN_NAME_PNG = "Gif";
+        public static String COLOUMN_NAME_CAUGHT = "Caught";
+        public static String COLOUMN_NAME_GEN = "Gen";
     }
     public static class Catch implements BaseColumns{
         public static String TABLE_NAME = "Catch";
@@ -19,5 +20,15 @@ public final class PokeCheckListContract {
         public static String COLOUMN_NAME_ODDS = "Odds";
         public static String COLOUMN_NAME_GAME = "Game";
         public static String COLOUMN_NAME_LOCATION = "Location";
+    }
+    public static class Method implements BaseColumns{
+        public static String TABLE_NAME = "Method";
+        public static String COLOUMN_NAME_METHOD = "Method";
+        public static String COLOUMN_NAME_GENS = "Gens";
+    }
+    public static class Game implements BaseColumns{
+        public static String TABLE_NAME = "Game";
+        public static String COLOUMN_NAME_GAME = "Game";
+        public static String COLOUMN_NAME_GEN = "Gen";
     }
 }

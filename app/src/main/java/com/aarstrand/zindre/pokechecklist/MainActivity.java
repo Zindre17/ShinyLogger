@@ -2,8 +2,10 @@ package com.aarstrand.zindre.pokechecklist;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -36,9 +38,8 @@ public class MainActivity extends AppCompatActivity {
         caughtButton.setEnabled(false);
 
         dbHelper = new PokeCheckListDbHelper(this);
-
         new SetupPokedex().execute();
-
+        new SetupOtherDbStuff().execute();
         setButtonListeners();
     }
 
@@ -120,12 +121,14 @@ public class MainActivity extends AppCompatActivity {
 
                     int size = pokemonArray.length();
                     progressDialog.setMax(size);
+                    int gen = 10;
 
                     for(int i=1; i <= size ;i++){
                         if(i == switchpoint) {
                             col = 1;
                             row = 1;
                             genswitchpos++;
+                            gen +=10;
                             switchpoint = Integer.parseInt(genswitch[genswitchpos]);
                         }
                         else if(i == nextOffset){
@@ -142,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                             row ++;
                             col = col%10;
                         }
-                        dbHelper.insertPokemon(pokemonArray.getString(i-1),i,row,col);
+                        dbHelper.insertPokemon(pokemonArray.getString(i-1),i,row,col,gen);
                         col ++;
                         publishProgress(i);
                     }
@@ -198,4 +201,24 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("nå ble jeg også drept");
     }
 
+    private class SetupOtherDbStuff extends AsyncTask<Void,Void,Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(dbHelper.getAllMethods().getCount()!= getResources().getStringArray(R.array.method_array).length){
+                String[] methods = getResources().getStringArray(R.array.method_array);
+                for (String method:methods) {
+                    String[] s = method.split("-");
+                    dbHelper.insertMethod(s[0],s[1]);
+                }
+
+            }if(dbHelper.getAllGames().getCount() != getResources().getStringArray(R.array.game_array).length){
+                String[] games = getResources().getStringArray(R.array.game_array);
+                for (String game:games){
+                    String[] s = game.split("-");
+                    dbHelper.insertGame(s[0],Integer.parseInt(s[1]));
+                }
+            }
+            return null;
+        }
+    }
 }

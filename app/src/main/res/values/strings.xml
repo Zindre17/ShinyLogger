@@ -924,4 +924,8 @@
     <string name="dialog_tag">Shiny Registration</string>
     <string name="register_dialog_title">Register Catch!</string>
     <string name="title_activity_hunt">Hunt!</string>
+    <string name="method">Method:</string>
+    <string name="shiny_charm">With Shiny Charm?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

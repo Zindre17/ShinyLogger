@@ -18,4 +18,8 @@
     <color name="TitleTextColor">#000</color>
     <color name="spinnerBackground">@color/nameText</color>
     <color name="shinydexBackground">#000</color>
+    <color name="switch_thumb_top">#222</color>
+    <color name="switch_on_color">@color/nameText</color>
+    <color name="switch_thumb_sides">@android:color/darker_gray</color>
+
 </resources>
