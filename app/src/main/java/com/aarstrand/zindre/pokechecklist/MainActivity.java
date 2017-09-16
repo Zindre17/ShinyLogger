@@ -1,9 +1,12 @@
 package com.aarstrand.zindre.pokechecklist;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button pokedexButton, caughtButton, progressButton, randomHuntButton;
     private PokeCheckListDbHelper dbHelper;
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -34,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
         randomHuntButton.setEnabled(false);
         progressButton.setEnabled(false);
-        pokedexButton.setEnabled(false);
-        caughtButton.setEnabled(false);
+        pokedexButton.setEnabled(true);
+        caughtButton.setEnabled(true);
 
-        dbHelper = new PokeCheckListDbHelper(this);
-        new SetupPokedex().execute();
-        new SetupOtherDbStuff().execute();
+
+        dbHelper = PokeCheckListDbHelper.getInstance(this);
+
         setButtonListeners();
     }
 
@@ -61,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //todo: this is just for making testing easier. The line below will need to be removed at some point
                 dbHelper.recreateDb();
+                getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE)
+                        .edit().putBoolean(getString(R.string.first),true).apply();
                 //todo: uncomment the line below when testing is done
                 //startActivity(collection);
             }
@@ -81,103 +87,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private class SetupPokedex extends AsyncTask<Void,Integer,Void>{
 
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            //todo: decide if progressdialog is the right view here.
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setMessage(getResources().getString(R.string.db_dialog));
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setProgress(0);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        private void createAndFillInDB() {
-
-            JSONArray pokemonArray = null;
-            if (dbHelper.getAllPokemon().getCount() != 721 ){
-                dbHelper.recreateDb();
-                try {
-
-                    pokemonArray = new JSONArray(getResources().getString(R.string.pokemons));
-
-                    //1 indexed matrix
-                    int row = 1;
-                    int col = 1;
-
-                    //new attempt:
-                    int genswitchpos = 0;
-                    int offsetpos = 0;
-
-                    String[] genswitch = getResources().getString(R.string.genswitch).trim().split(" ");
-                    String[] offsetlist = getResources().getString(R.string.image_skip_list).trim().split(" ");
-
-                    int nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
-                    int switchpoint = Integer.parseInt(genswitch[genswitchpos]);
-
-                    int size = pokemonArray.length();
-                    progressDialog.setMax(size);
-                    int gen = 10;
-
-                    for(int i=1; i <= size ;i++){
-                        if(i == switchpoint) {
-                            col = 1;
-                            row = 1;
-                            genswitchpos++;
-                            gen +=10;
-                            switchpoint = Integer.parseInt(genswitch[genswitchpos]);
-                        }
-                        else if(i == nextOffset){
-
-                            col += Integer.parseInt(offsetlist[offsetpos].split("-")[1]);
-                            offsetpos ++;
-                            nextOffset = Integer.parseInt(offsetlist[offsetpos].split("-")[0]);
-                            while(col >= 20){
-                                row += (col/10)-1;
-                                col -= 10;
-                            }
-                        }
-                        if(col>10){
-                            row ++;
-                            col = col%10;
-                        }
-                        dbHelper.insertPokemon(pokemonArray.getString(i-1),i,row,col,gen);
-                        col ++;
-                        publishProgress(i);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                dbHelper.close();
-
-            }
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            createAndFillInDB();
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            progressDialog.setProgress(values[0]);
-        }
-
-        protected void onPostExecute(Void aVoid) {
-            progressDialog.dismiss();
-            pokedexButton.setEnabled(true);
-            caughtButton.setEnabled(true);
-            System.out.println("db-check");
-            System.out.println(dbHelper.getAllPokemon().getCount());
-        }
-    }
 
     @Override
     protected void onStart(){

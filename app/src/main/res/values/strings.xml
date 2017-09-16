@@ -928,4 +928,6 @@
     <string name="shiny_charm">With Shiny Charm?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="shared_preferences">prefs</string>
+    <string name="first">first</string>
 </resources>

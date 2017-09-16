@@ -13,6 +13,19 @@ import java.io.ByteArrayOutputStream;
 
 public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
+    public interface DbListener{
+        void onDataChanged();
+    }
+
+    private DbListener listener;
+
+    public DbListener getListener() {
+        return listener;
+    }
+
+    public void setListener(DbListener listener) {
+        this.listener = listener;
+    }
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PokeCheckList.db";
@@ -91,7 +104,16 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     private static final String DELETE_TABLE_METHOD =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Method.TABLE_NAME;
 
-    public PokeCheckListDbHelper(Context context){
+    private static PokeCheckListDbHelper instance;
+
+    public static PokeCheckListDbHelper getInstance(Context context){
+        if(instance==null){
+            instance = new PokeCheckListDbHelper(context);
+        }
+        return instance;
+    }
+
+    private PokeCheckListDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
         this.context = context;
         size = 0;
@@ -175,6 +197,9 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT,0);
 
         db.insert(PokeCheckListContract.Pokemon.TABLE_NAME,null, values);
+        if(listener!=null){
+            listener.onDataChanged();
+        }
     }
 
     /** Denne funksjonen tar inn rad og kolonne til hvor spriten til pokemonen ligger på arket,
@@ -229,6 +254,9 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         values.put(PokeCheckListContract.Catch.COLOUMN_NAME_ODDS,c.getOdds());
         //insert row into db
         db.insert(PokeCheckListContract.Catch.TABLE_NAME,null,values);
+        if (listener!=null){
+            listener.onDataChanged();
+        }
     }
 
     /**

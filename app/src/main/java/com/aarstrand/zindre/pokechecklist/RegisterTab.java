@@ -24,7 +24,7 @@ public class RegisterTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.register_tab,container,false);
-        final PokeCheckListDbHelper dbHelper = new PokeCheckListDbHelper(getContext());
+        final PokeCheckListDbHelper dbHelper = PokeCheckListDbHelper.getInstance(getContext());
         Cursor pokemon = dbHelper.getPokemon(getArguments().getInt(HuntPagerAdapter.ARG_NUMBER));
         pokemon.moveToFirst();
         ((ImageView)view.findViewById(R.id.register_image)).setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(pokemon.getBlob(PokeCheckListDbHelper.POKEMON_IMAGE)));
@@ -87,6 +87,11 @@ public class RegisterTab extends Fragment {
             }
         });
 
+        Cursor c = dbHelper.getPokemon(getArguments().getInt(HuntPagerAdapter.ARG_NUMBER));
+        c.moveToFirst();
+        ((ImageView)view.findViewById(R.id.register_image)).setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(c.getBlob(PokeCheckListDbHelper.POKEMON_IMAGE)));
+        ((TextView)view.findViewById(R.id.register_name)).setText(c.getString(PokeCheckListDbHelper.POKEMON_NAME));
+        ((TextView)view.findViewById(R.id.register_number)).setText("#"+c.getInt(PokeCheckListDbHelper.POKEMON_NUMBER));
         return view;
     }
 
