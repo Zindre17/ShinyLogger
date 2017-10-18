@@ -29,7 +29,6 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PokeCheckList.db";
-    private Context context;
 
     private Bitmap grid;
 
@@ -49,12 +48,6 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG + " BLOB," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT + " INTEGER," +
                     PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN + " INTEGER)";
-    public static final int POKEMON_NUMBER =0;
-
-    public static final int POKEMON_NAME =1;
-    public static final int POKEMON_IMAGE =2;
-    public static final int POKEMON_CAUGHT =3;
-    public static final int POKEMON_GEN =4;
     /**
      * SQL for å opprette caught-tabellen
     * Column 1: ID (autoincrement int)
@@ -73,13 +66,6 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Catch.COLOUMN_NAME_LOCATION + " TEXT," +
                     PokeCheckListContract.Catch.COLOUMN_NAME_ODDS + " TEXT)";
 
-    public static final int CAUGHT_ID =0;
-
-    public static final int CAUGHT_NUMBER =1;
-    public static final int CAUGHT_ATTEMPTS =2;
-    public static final int CAUGHT_GAME =3;
-    public static final int CAUGHT_LOCATION =4;
-    public static final int CAUGHT_ODDS =5;
     private static final String CREATE_TABLE_METHOD =
             "CREATE TABLE " + PokeCheckListContract.Method.TABLE_NAME + " (" +
             PokeCheckListContract.Method._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -93,8 +79,6 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
             PokeCheckListContract.Game.COLOUMN_NAME_GAME + " TEXT," +
             PokeCheckListContract.Game.COLOUMN_NAME_GEN + " INTEGER)";
 
-    public static final int GAME_GEN = 2;
-
     private static final String DELETE_TABLE_POKEMON =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Pokemon.TABLE_NAME;
     private static final String DELETE_TABLE_CATCH =
@@ -104,7 +88,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     private static final String DELETE_TABLE_METHOD =
             "DROP TABLE IF EXISTS " + PokeCheckListContract.Method.TABLE_NAME;
 
-    private static PokeCheckListDbHelper instance;
+    private static PokeCheckListDbHelper instance = null;
 
     public static PokeCheckListDbHelper getInstance(Context context){
         if(instance==null){
@@ -115,7 +99,6 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
     private PokeCheckListDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
-        this.context = context;
         size = 0;
     }
 
@@ -185,13 +168,13 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
      * @param row er hvilken rad på bildearket man finner dens bilde
      * @param col er hvilken kollonne man finner den bilde
      */
-    public void insertPokemon(String name, int number, int row, int col, int gen){
+    public void insertPokemon(String name, int number, int row, int col, int gen,Context context){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER,number);
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME,name);
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN, gen);
-        chechIfTimeToChangeGrid(number);
+        chechIfTimeToChangeGrid(context,number);
 
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG,getByteArrayImage(row,col));
         values.put(PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT,0);
@@ -224,7 +207,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
      *
      * @param number er nummeret til pokemonen som skal settes inn
      */
-    private void chechIfTimeToChangeGrid(int number) {
+    private void chechIfTimeToChangeGrid(Context context,int number) {
         if(number == 1)
             grid = BitmapFactory.decodeResource(context.getResources(),R.drawable.gen1);
         if(number == 152)

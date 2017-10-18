@@ -92,20 +92,20 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         //retrieve the image from the database and put it in the image view
         ImageView imageView = pokemonHolder.thumbnail;
-        imageView.setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(list.getBlob(PokeCheckListDbHelper.POKEMON_IMAGE)));
+        imageView.setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(list.getBlob(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
 
         //set the name of the pokemon to one of the textviews
         TextView textView = pokemonHolder.pokemon_name;
-        textView.setText(list.getString(PokeCheckListDbHelper.POKEMON_NAME));
+        textView.setText(list.getString(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
 
         //set the number of the pokemon to the other textview
         TextView textView1 = pokemonHolder.pokemon_number;
-        String s = "#"+String.valueOf(list.getInt(PokeCheckListDbHelper.POKEMON_NUMBER));
+        String s = "#"+String.valueOf(list.getInt(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER)));
         textView1.setText(s);
 
         //set the imagebutton based on the boolean(int) "caught" column
         final ImageButton imageButton = pokemonHolder.pokeball;
-        if(list.getInt(PokeCheckListDbHelper.POKEMON_CAUGHT)==1){
+        if(list.getInt(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT))==1){
             imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball));
         }else {
             imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball_gray));

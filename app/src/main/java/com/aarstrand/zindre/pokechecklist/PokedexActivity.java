@@ -168,7 +168,7 @@ public class PokedexActivity extends AppCompatActivity implements PokemonListAda
                     row ++;
                     col = col%10;
                 }try {
-                    dbHelper.insertPokemon(pokemonArray.getString(i - 1), i, row, col);
+                    dbHelper.insertPokemon(pokemonArray.getString(i - 1), i, row, col,genswitchpos,PokedexActivity.this);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }

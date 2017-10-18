@@ -27,11 +27,11 @@ public class RegisterTab extends Fragment {
         final PokeCheckListDbHelper dbHelper = PokeCheckListDbHelper.getInstance(getContext());
         Cursor pokemon = dbHelper.getPokemon(getArguments().getInt(HuntPagerAdapter.ARG_NUMBER));
         pokemon.moveToFirst();
-        ((ImageView)view.findViewById(R.id.register_image)).setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(pokemon.getBlob(PokeCheckListDbHelper.POKEMON_IMAGE)));
-        ((TextView)view.findViewById(R.id.register_name)).setText(pokemon.getString(PokeCheckListDbHelper.POKEMON_NAME));
-        ((TextView)view.findViewById(R.id.register_number)).setText("#"+pokemon.getInt(PokeCheckListDbHelper.POKEMON_NUMBER));
+        ((ImageView)view.findViewById(R.id.register_image)).setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(pokemon.getBlob(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
+        ((TextView)view.findViewById(R.id.register_name)).setText(pokemon.getString(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
+        ((TextView)view.findViewById(R.id.register_number)).setText("#"+pokemon.getInt(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER)));
 
-        Cursor games = dbHelper.getGames(pokemon.getInt(PokeCheckListDbHelper.POKEMON_GEN));
+        Cursor games = dbHelper.getGames(pokemon.getInt(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN)));
         SimpleCursorAdapter gamesSpinnerAdapter = new SimpleCursorAdapter(getContext(),android.R.layout.simple_spinner_item,games,new String[]{PokeCheckListContract.Game.COLOUMN_NAME_GAME},new int[]{android.R.id.text1},0);
         gamesSpinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         Spinner gameSpinner = (Spinner)view.findViewById(R.id.register_game_spinner);
@@ -40,7 +40,8 @@ public class RegisterTab extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 view.requestFocus();
-                methods = dbHelper.getMethods(((Cursor)(parent.getSelectedItem())).getInt(PokeCheckListDbHelper.GAME_GEN));
+                Cursor a = (Cursor)(parent.getSelectedItem());
+                methods = dbHelper.getMethods(a.getInt(a.getColumnIndex(PokeCheckListContract.Game.COLOUMN_NAME_GEN)));
                 methodSpinnerAdapter = new SimpleCursorAdapter(getContext(),android.R.layout.simple_spinner_item,methods,new String[]{PokeCheckListContract.Method.COLOUMN_NAME_METHOD},new int[]{android.R.id.text1},0);
                 methodSpinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 methodSpinner.setAdapter(methodSpinnerAdapter);
@@ -52,7 +53,8 @@ public class RegisterTab extends Fragment {
             }
         });
 
-        methods = dbHelper.getMethods(((Cursor)(gameSpinner.getSelectedItem())).getInt(PokeCheckListDbHelper.GAME_GEN));
+        Cursor s = (Cursor)(gameSpinner.getSelectedItem());
+        methods = dbHelper.getMethods(s.getInt(s.getColumnIndex(PokeCheckListContract.Game.COLOUMN_NAME_GEN)));
         methodSpinnerAdapter = new SimpleCursorAdapter(getContext(),android.R.layout.simple_spinner_item,methods,new String[]{PokeCheckListContract.Method.COLOUMN_NAME_METHOD},new int[]{android.R.id.text1},0);
         methodSpinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         methodSpinner = (Spinner)view.findViewById(R.id.register_method_spinner);
@@ -68,16 +70,6 @@ public class RegisterTab extends Fragment {
             }
         });
 
-        encounters.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId== EditorInfo.IME_ACTION_DONE){
-                    //Clear focus here from edittext
-                    encounters.clearFocus();
-                }
-                return false;
-            }
-        });
 
         (view.findViewById(R.id.register_switch)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -89,9 +81,9 @@ public class RegisterTab extends Fragment {
 
         Cursor c = dbHelper.getPokemon(getArguments().getInt(HuntPagerAdapter.ARG_NUMBER));
         c.moveToFirst();
-        ((ImageView)view.findViewById(R.id.register_image)).setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(c.getBlob(PokeCheckListDbHelper.POKEMON_IMAGE)));
-        ((TextView)view.findViewById(R.id.register_name)).setText(c.getString(PokeCheckListDbHelper.POKEMON_NAME));
-        ((TextView)view.findViewById(R.id.register_number)).setText("#"+c.getInt(PokeCheckListDbHelper.POKEMON_NUMBER));
+        ((ImageView)view.findViewById(R.id.register_image)).setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(c.getBlob(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
+        ((TextView)view.findViewById(R.id.register_name)).setText(c.getString(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
+        ((TextView)view.findViewById(R.id.register_number)).setText("#"+c.getInt(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER)));
         return view;
     }
 
