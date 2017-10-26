@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonHolder> implements PokeCheckListDbHelper.DbListener{
 
     @Override
@@ -27,6 +29,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     private PokemonListListener mListener;
     private PokeCheckListDbHelper dbHelper;
     private Cursor list;
+    private ArrayList<Integer> caught;
     public PokemonListAdapter(Context context){
         super();
         adapterContext = context;
@@ -38,6 +41,14 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         }
         list = dbHelper.getAllPokemon();
+        caught = new ArrayList<>();
+        Cursor c = dbHelper.getCaughtNumbers();
+        for(int i = 0;i < c.getCount();i++){
+            c.moveToNext();
+            caught.add(c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER)));
+        }
+        c.close();
+
     }
 
     public static class PokemonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -92,7 +103,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         //retrieve the image from the database and put it in the image view
         ImageView imageView = pokemonHolder.thumbnail;
-        imageView.setImageBitmap(PokeCheckListDbHelper.convertFromBlobToBitmap(list.getBlob(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
+        imageView.setImageBitmap(Tools.convertFromBlobToBitmap(list.getBlob(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
 
         //set the name of the pokemon to one of the textviews
         TextView textView = pokemonHolder.pokemon_name;
@@ -105,7 +116,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         //set the imagebutton based on the boolean(int) "caught" column
         final ImageButton imageButton = pokemonHolder.pokeball;
-        if(list.getInt(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_CAUGHT))==1){
+        if(caught.contains(position+1)){
             imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball));
         }else {
             imageButton.setImageDrawable(ContextCompat.getDrawable(adapterContext,R.drawable.pokeball_gray));

@@ -1,26 +1,25 @@
 package com.aarstrand.zindre.pokechecklist;
 
-import android.annotation.TargetApi;
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ArrayRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import org.json.JSONArray;
 
+import java.io.ByteArrayOutputStream;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button pokedexButton, caughtButton, progressButton, randomHuntButton;
     private PokeCheckListDbHelper dbHelper;
 
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,11 +39,12 @@ public class MainActivity extends AppCompatActivity {
         progressButton.setEnabled(false);
         pokedexButton.setEnabled(true);
         caughtButton.setEnabled(true);
-
-
-        dbHelper = PokeCheckListDbHelper.getInstance(this);
+        dbHelper = PokeCheckListDbHelper.getInstance(this.getApplicationContext());
 
         setButtonListeners();
+        if(dbHelper.getPokemonCount()!= Tools.DEX_COUNT && !dbHelper.isWorking()){
+            new SetupPokedex(this.getApplicationContext()).execute();
+        }
     }
 
     private void setButtonListeners() {
@@ -62,13 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent collection = new Intent(MainActivity.this,MyShiniesActivity.class);
-
-                //todo: this is just for making testing easier. The line below will need to be removed at some point
-                dbHelper.recreateDb();
-                getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE)
-                        .edit().putBoolean(getString(R.string.first),true).apply();
-                //todo: uncomment the line below when testing is done
-                //startActivity(collection);
+                startActivity(collection);
             }
         });
 
@@ -111,24 +105,116 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("nå ble jeg også drept");
     }
 
-    private class SetupOtherDbStuff extends AsyncTask<Void,Void,Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if(dbHelper.getAllMethods().getCount()!= getResources().getStringArray(R.array.method_array).length){
-                String[] methods = getResources().getStringArray(R.array.method_array);
-                for (String method:methods) {
-                    String[] s = method.split("-");
-                    dbHelper.insertMethod(s[0],s[1]);
-                }
+    public class SetupPokedex extends AsyncTask<Void,Integer,Void> {
 
-            }if(dbHelper.getAllGames().getCount() != getResources().getStringArray(R.array.game_array).length){
-                String[] games = getResources().getStringArray(R.array.game_array);
-                for (String game:games){
-                    String[] s = game.split("-");
-                    dbHelper.insertGame(s[0],Integer.parseInt(s[1]));
+        private String[] offsetList;
+        private String[] genSwitchList;
+        private JSONArray pokemonArray;
+        private PokeCheckListDbHelper dbHelper;
+
+        public SetupPokedex(Context context) {
+            this.dbHelper = PokeCheckListDbHelper.getInstance(context);
+            dbHelper.setWorking(true);
+            try {
+                pokemonArray = new JSONArray(context.getResources().getString(R.string.pokemons));
+            }catch (Exception e) {
+            }
+            genSwitchList = context.getString(R.string.genswitch).trim().split(" ");
+            offsetList = context.getString(R.string.image_skip_list).trim().split(" ");
+        }
+
+        private void createAndFillInDB() {
+
+            Bitmap spriteSheet = BitmapFactory.decodeResource(
+                    getApplicationContext().getResources(),
+                    R.drawable.gen1);
+
+            int row = 0;
+            int col = 0;
+
+            int genSwitchListPos = 0;
+            int offsetListPos = 0;
+
+
+            int nextOffset = Integer.parseInt(offsetList[offsetListPos].split("-")[0]);
+            int genSwitchPoint = Integer.parseInt(genSwitchList[genSwitchListPos]);
+
+            int size = pokemonArray.length();
+
+            for(int dexNumber=1; dexNumber <= size ;dexNumber++){
+                if(dexNumber == genSwitchPoint) {
+                    col = 0;
+                    row = 0;
+                    genSwitchListPos++;
+                    genSwitchPoint = Integer.parseInt(genSwitchList[genSwitchListPos]);
+                    spriteSheet = switchSpriteSheet(getApplicationContext(),genSwitchListPos+1);
+
                 }
+                else if(dexNumber == nextOffset){
+
+                    col += Integer.parseInt(offsetList[offsetListPos].split("-")[1]);
+                    offsetListPos ++;
+                    nextOffset = Integer.parseInt(offsetList[offsetListPos].split("-")[0]);
+                }
+                if(col>9){
+                    row += Math.floor(col/10);
+                    col = col%10;
+                }try {
+                    dbHelper.insertPokemon(
+                            pokemonArray.getString(dexNumber - 1),
+                            dexNumber,
+                            genSwitchListPos+1,
+                            getByteArrayImage(row,col,spriteSheet)
+                    );
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+                publishProgress(dexNumber);
+                col++;
+            }
+        }
+
+        private Bitmap switchSpriteSheet(Context context, int gen){
+            switch (gen){
+                case 1:
+                    return BitmapFactory.decodeResource(context.getResources(),R.drawable.gen1);
+                case 2:
+                    return BitmapFactory.decodeResource(context.getResources(),R.drawable.gen2);
+                case 3:
+                    return BitmapFactory.decodeResource(context.getResources(),R.drawable.gen3);
+                case 4:
+                    return BitmapFactory.decodeResource(context.getResources(),R.drawable.gen4);
+                case 5:
+                    return BitmapFactory.decodeResource(context.getResources(),R.drawable.gen5);
+                case 6:
+                    return BitmapFactory.decodeResource(context.getResources(),R.drawable.gen6);
             }
             return null;
+        }
+
+
+        private byte[] getByteArrayImage(int row, int col, Bitmap bitmap) {
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            int size = bitmap.getWidth() / 10;
+            int left = (col) * size;
+            int top = (row) * size;
+            Bitmap pokemonThumbnail = Bitmap.createBitmap(bitmap,left,top,size,size);
+            pokemonThumbnail.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+            return outputStream.toByteArray();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            createAndFillInDB();
+            return null;
+        }
+
+        protected void onPostExecute(Void aVoid) {
+            dbHelper.setWorking(false);
+            System.out.println("db-check");
+            System.out.println(dbHelper.getAllPokemon().getCount());
         }
     }
 }

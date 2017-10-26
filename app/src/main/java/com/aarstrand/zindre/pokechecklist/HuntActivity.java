@@ -1,7 +1,6 @@
 package com.aarstrand.zindre.pokechecklist;
 
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
@@ -10,10 +9,10 @@ import android.support.v4.view.ViewPager;
 
 public class HuntActivity extends FragmentActivity {
 
-    public static final int NUMBER_OF_TABS = 2;
+    static final int NUMBER_OF_TABS = 2;
 
-    ViewPager viewPager;
-    HuntPagerAdapter huntPagerAdapter;
+    private ViewPager viewPager;
+    private HuntPagerAdapter huntPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +25,7 @@ public class HuntActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout)findViewById(R.id.hunt_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        //todo: lag en dictionary med games og methods i sammenheng med gen osv
     }
 
     @Override
