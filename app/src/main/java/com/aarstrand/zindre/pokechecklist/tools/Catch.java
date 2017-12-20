@@ -1,28 +1,23 @@
-package com.aarstrand.zindre.pokechecklist;
+package com.aarstrand.zindre.pokechecklist.tools;
 
-/**
- * Created by Zindre on 29-Dec-16.
- */
+
 public class Catch {
-    String odds,location,game;
+    String game;
     int number, attempts;
+    boolean odds;
+    private String method;
 
     public Catch(){
     }
-    public Catch(int number,int attempts,String odds, String game,String location){
+    public Catch(int number,int attempts,boolean odds, String game){
         this.number = number;
         this.attempts = attempts;
         this.odds = odds;
         this.game = game;
-        this.location = location;
     }
 
-    public String getOdds() {
+    public boolean getOdds() {
         return this.odds;
-    }
-
-    public String getLocation() {
-        return this.location;
     }
 
     public String getGame() {
@@ -37,12 +32,8 @@ public class Catch {
         return this.attempts;
     }
 
-    public void setOdds(String odds) {
+    public void setOdds(boolean odds) {
         this.odds = odds;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public void setGame(String game) {
@@ -55,5 +46,12 @@ public class Catch {
 
     public void setAttempts(int attempts) {
         this.attempts = attempts;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+    public void setMethod(String method){
+        this.method = method;
     }
 }

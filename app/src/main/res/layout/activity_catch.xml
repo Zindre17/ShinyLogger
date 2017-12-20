@@ -5,8 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.aarstrand.zindre.pokechecklist.PokedexActivity">
-
-    <include layout="@layout/content_my_shinies"/>
+        tools:context=".CatchActivity">
+    <include layout="@layout/content_catch"/>
 
 </android.support.design.widget.CoordinatorLayout>

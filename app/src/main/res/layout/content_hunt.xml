@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v4.view.ViewPager
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="match_parent"
+        android:id="@+id/hunt_layout"
         android:layout_width="match_parent"
-        android:id="@+id/hunt_pager"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/shinydexBackground"
 >
     <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
@@ -12,10 +13,33 @@
             android:id="@+id/hunt_toolbar"
     />
 
-    <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:id="@+id/hunt_tabs"
+    <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/hunt_game"
+            android:background="@android:drawable/btn_dropdown"
+            android:backgroundTintMode="multiply"
+            android:backgroundTint="@color/spinnerBackground"
+            android:layout_centerHorizontal="true"
     />
 
-</android.support.v4.view.ViewPager>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hunt_method"
+            android:layout_below="@id/hunt_game"
+            android:background="@android:drawable/btn_dropdown"
+            android:backgroundTintMode="multiply"
+            android:backgroundTint="@color/spinnerBackground"
+            android:layout_centerHorizontal="true"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hunt_name"
+            android:layout_below="@id/hunt_method"
+    />
+
+</RelativeLayout>

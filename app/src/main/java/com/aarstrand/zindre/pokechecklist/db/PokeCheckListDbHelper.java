@@ -1,14 +1,11 @@
-package com.aarstrand.zindre.pokechecklist;
+package com.aarstrand.zindre.pokechecklist.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import java.io.ByteArrayOutputStream;
+import com.aarstrand.zindre.pokechecklist.tools.Catch;
 
 
 public class PokeCheckListDbHelper extends SQLiteOpenHelper {
@@ -42,6 +39,14 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
 
     public void setWorking(boolean working) {
         this.working = working;
+    }
+
+    public int getGen(int number) {
+        Cursor c = getPokemon(number);
+        c.moveToFirst();
+        int i = c.getInt(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN));
+        c.close();
+        return i;
     }
 
     public interface DbListener{
@@ -203,6 +208,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         values.put(PokeCheckListContract.Catch.COLOUMN_NAME_ATTEMPTS, c.getAttempts());
         values.put(PokeCheckListContract.Catch.COLOUMN_NAME_GAME,c.getGame());
         values.put(PokeCheckListContract.Catch.COLOUMN_NAME_ODDS,c.getOdds());
+        values.put(PokeCheckListContract.Catch.COLOUMN_NAME_METHOD,c.getMethod());
         //insert row into db
         db.insert(PokeCheckListContract.Catch.TABLE_NAME,null,values);
         if (listener!=null){

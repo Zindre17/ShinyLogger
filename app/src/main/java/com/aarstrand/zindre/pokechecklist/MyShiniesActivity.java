@@ -8,19 +8,29 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import com.aarstrand.zindre.pokechecklist.adapters.GridViewAdapter;
 
 public class MyShiniesActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_shinies);
 
-        recyclerView = (RecyclerView) findViewById(R.id.shinies_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        gridView = (GridView)findViewById(R.id.my_shinies_grid);
+        gridView.setAdapter(new GridViewAdapter(this));
 
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //todo: make something happen
+            }
+        });
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

@@ -1,4 +1,4 @@
-package com.aarstrand.zindre.pokechecklist;
+package com.aarstrand.zindre.pokechecklist.db;
 
 import android.provider.BaseColumns;
 

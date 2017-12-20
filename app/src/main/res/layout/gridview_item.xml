@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/pokemonBackground"
+>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/gridview_img"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gridview_encounters"
+            android:layout_alignBottom="@id/gridview_img"
+            android:layout_alignTop="@id/gridview_img"
+            android:layout_alignLeft="@id/gridview_img"
+            android:layout_alignStart="@id/gridview_img"
+            android:layout_alignEnd="@id/gridview_img"
+            android:layout_alignRight="@id/gridview_img"
+            android:gravity="bottom"
+            android:textAlignment="center"
+
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gridview_method"
+            android:layout_alignTop="@id/gridview_img"
+            android:layout_alignBottom="@id/gridview_img"
+            android:layout_alignStart="@id/gridview_img"
+            android:layout_alignLeft="@id/gridview_img"
+            android:layout_alignRight="@id/gridview_img"
+            android:layout_alignEnd="@id/gridview_img"
+            android:textAlignment="center"
+
+    />
+
+</RelativeLayout>

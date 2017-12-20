@@ -8,7 +8,6 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
         <activity
                 android:name=".MainActivity"
                 android:label="@string/title_activity_main"
@@ -24,7 +23,6 @@
                 android:label="@string/title_activity_pokedex"
                 android:parentActivityName=".MainActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.aarstrand.zindre.pokechecklist.MainActivity"/>
@@ -39,16 +37,6 @@
                     android:value="com.aarstrand.zindre.pokechecklist.MainActivity"/>
         </activity>
         <activity
-                android:name=".PokemonActivity"
-                android:label="@string/title_activity_pokemon"
-                android:parentActivityName=".PokedexActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.aarstrand.zindre.pokechecklist.PokedexActivity"/>
-        </activity>
-        <activity
                 android:name=".ProgressActivity"
                 android:label="@string/title_activity_progress"
                 android:parentActivityName=".MainActivity"
@@ -57,13 +45,23 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.aarstrand.zindre.pokechecklist.MainActivity"/>
         </activity>
-        <activity android:name=".HuntActivity"
-                  android:label="@string/title_activity_hunt"
-                  android:parentActivityName=".PokedexActivity"
-                  android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+                android:name=".HuntActivity"
+                android:label="@string/title_activity_hunt"
+                android:parentActivityName=".MainActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.aarstrand.zindre.pokechecklist.HuntActivity"/>
+        </activity>
+        <activity
+                android:name=".RegisterActivity"
+                android:label="@string/title_activity_register"
+                android:parentActivityName=".PokedexActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aarstrand.zindre.pokechecklist.HuntActivity"/>
+                android:value="com.aarstrand.zindre.pokechecklist.RegisterActivity"/>
         </activity>
     </application>
 

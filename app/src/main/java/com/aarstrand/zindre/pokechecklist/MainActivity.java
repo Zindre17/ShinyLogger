@@ -11,13 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
+import com.aarstrand.zindre.pokechecklist.tools.Tools;
 import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button pokedexButton, caughtButton, progressButton, randomHuntButton;
+    private Button pokedexButton, huntButton, caughtButton, progressButton;
     private PokeCheckListDbHelper dbHelper;
 
     @Override
@@ -31,11 +33,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         pokedexButton = (Button)findViewById(R.id.button);
+        huntButton = (Button)findViewById(R.id.button5);
         caughtButton = (Button)findViewById(R.id.button2);
         progressButton = (Button)findViewById(R.id.button3);
-        randomHuntButton = (Button)findViewById(R.id.button4);
 
-        randomHuntButton.setEnabled(false);
         progressButton.setEnabled(false);
         pokedexButton.setEnabled(true);
         caughtButton.setEnabled(true);
@@ -58,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        huntButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent hunt = new Intent(MainActivity.this,HuntActivity.class);
+                startActivity(hunt);
+            }
+        });
+
         caughtButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -73,12 +82,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        randomHuntButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //TODO: change view to random hunt suggestion
-            }
-        });
     }
 
 

@@ -1,4 +1,4 @@
-package com.aarstrand.zindre.pokechecklist;
+package com.aarstrand.zindre.pokechecklist.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.aarstrand.zindre.pokechecklist.PokedexActivity;
+import com.aarstrand.zindre.pokechecklist.R;
+import com.aarstrand.zindre.pokechecklist.tools.Tools;
+import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
+import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
 
 import java.util.ArrayList;
 
@@ -20,8 +25,12 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
        //refresh();
     }
 
+    public void setListener(PokedexActivity listener) {
+        this.mListener = listener;
+    }
+
     public interface PokemonListListener{
-        public void OnButtonClicked(int pos);
+        void OnButtonClicked(int pos);
     }
 
     private Context adapterContext;
@@ -41,6 +50,10 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         }
         list = dbHelper.getAllPokemon();
+        updateCaughtList();
+    }
+
+    private void updateCaughtList() {
         caught = new ArrayList<>();
         Cursor c = dbHelper.getCaughtNumbers();
         for(int i = 0;i < c.getCount();i++){
@@ -48,7 +61,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
             caught.add(c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER)));
         }
         c.close();
-
     }
 
     public static class PokemonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -79,13 +91,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     }
 
-    public void resumeDbTransaction() {
-        list = dbHelper.getAllPokemon();
-    }
-
-    private Context getContext(){
-        return adapterContext;
-    }
 
     @Override
     public PokemonHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -111,8 +116,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         //set the number of the pokemon to the other textview
         TextView textView1 = pokemonHolder.pokemon_number;
-        String s = "#"+String.valueOf(list.getInt(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER)));
-        textView1.setText(s);
+        int nr = list.getInt(list.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER));
+        textView1.setText(String.format("#%03d",nr));
 
         //set the imagebutton based on the boolean(int) "caught" column
         final ImageButton imageButton = pokemonHolder.pokeball;
@@ -134,6 +139,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     public void refresh(){
         list = dbHelper.getAllPokemon();
+        updateCaughtList();
         notifyDataSetChanged();
     }
 

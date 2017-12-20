@@ -2,31 +2,29 @@ package com.aarstrand.zindre.pokechecklist;
 
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import org.w3c.dom.Text;
 
 
-public class HuntActivity extends FragmentActivity {
+public class HuntActivity extends FragmentActivity{
 
-    static final int NUMBER_OF_TABS = 2;
-
-    private ViewPager viewPager;
-    private HuntPagerAdapter huntPagerAdapter;
+    private TextView method,game;
+    private RelativeLayout layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hunt);
-        int i = getIntent().getExtras().getInt("number");
-        viewPager = (ViewPager)findViewById(R.id.hunt_pager);
-        huntPagerAdapter = new HuntPagerAdapter(getSupportFragmentManager(),i);
-        viewPager.setAdapter(huntPagerAdapter);
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.hunt_tabs);
-        tabLayout.setupWithViewPager(viewPager);
 
-        //todo: lag en dictionary med games og methods i sammenheng med gen osv
+        method = (TextView)findViewById(R.id.hunt_method);
+        game = (TextView)findViewById(R.id.hunt_game);
+        layout = (RelativeLayout)findViewById(R.id.hunt_layout);
+
     }
+
 
     @Override
     protected void onResume() {
@@ -42,4 +40,5 @@ public class HuntActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

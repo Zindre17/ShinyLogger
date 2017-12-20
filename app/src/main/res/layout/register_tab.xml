@@ -63,15 +63,13 @@
                   android:paddingRight="40dp"
         />
 
-        <Spinner android:layout_width="match_parent"
+        <TextView android:layout_width="match_parent"
                  android:textAlignment="center"
-                 android:id="@+id/register_game_spinner"
+                 android:id="@+id/register_game"
                  android:layout_height="wrap_content"
                  android:background="@android:drawable/btn_dropdown"
-                 android:popupBackground="@color/spinnerBackground"
                  android:backgroundTintMode="multiply"
                  android:backgroundTint="@color/spinnerBackground"
-                 android:focusableInTouchMode="true"
                  android:clickable="true"
         />
 
@@ -92,17 +90,15 @@
                   android:paddingRight="40dp"
         />
 
-        <Spinner android:layout_width="match_parent"
+        <TextView android:layout_width="match_parent"
                  android:textAlignment="center"
-                 android:id="@+id/register_method_spinner"
+                 android:id="@+id/register_method"
                  android:layout_height="wrap_content"
                  android:background="@android:drawable/btn_dropdown"
                  android:popupBackground="@color/spinnerBackground"
                  android:backgroundTintMode="multiply"
                  android:backgroundTint="@color/spinnerBackground"
-                 android:focusableInTouchMode="true"
                  android:clickable="true"
-                 android:focusable="true"
         />
 
 
@@ -160,6 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/buttonColor"
+            android:id="@+id/register_button"
             android:text="@string/registerButton"
     />
 

@@ -34,4 +34,30 @@
         <item>Breeding-0</item>
         <item>Fossil Revival-31 32 33 41 42 43 51 52 61 62 71</item>
     </string-array>
+
+    <string-array name="games_array">
+        <item>Gold</item>
+        <item>Silver</item>
+        <item>Crystal</item>
+        <item>Ruby</item>
+        <item>Sapphire</item>
+        <item>Emerald</item>
+        <item>FireRed</item>
+        <item>LeafGreen</item>
+        <item>Diamond</item>
+        <item>Pearl</item>
+        <item>Platinum</item>
+        <item>HeartGold</item>
+        <item>SoulSilver</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Black 2</item>
+        <item>White 2</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Omega Ruby</item>
+        <item>Alpha Sapphire</item>
+        <item>Sun</item>
+        <item>Moon</item>
+    </string-array>
 </resources>

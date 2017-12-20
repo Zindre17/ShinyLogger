@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/register_tab"
+        android:orientation="vertical"
+        android:background="@color/fragmentBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RegisterActivity"
+>
+
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/register_toolbar"
+            android:background="@color/toolbarBackground"
+    />
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dialog_horizontal_padding"
+            android:paddingRight="@dimen/dialog_horizontal_padding"
+            android:paddingTop="@dimen/dialog_vertical_padding"
+            android:paddingBottom="@dimen/dialog_vertical_padding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    >
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:layout_gravity="center"
+        >
+
+            <TextView android:layout_width="wrap_content"
+                      android:id="@+id/register_number"
+                      android:textColor="@color/fragmentTextColor"
+                      android:layout_height="wrap_content"
+                      android:textSize="25sp"
+                      android:padding="5dp"
+            />
+
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/fragmentTextColor"
+                      android:id="@+id/register_name"
+                      android:layout_height="wrap_content"
+                      android:textSize="25sp"
+                      android:padding="5dp"
+            />
+
+        </LinearLayout>
+
+        <ImageView android:layout_width="wrap_content"
+                   android:background="@color/pokemonBackground"
+                   android:id="@+id/register_image"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="8dp"
+                   android:layout_marginBottom="20dp"
+                   android:foreground="@drawable/border"
+        />
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="40dp"
+                      android:layout_marginBottom="10dp"
+        >
+
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/fragmentTextColor"
+                      android:text="@string/game"
+                      android:layout_height="wrap_content"
+                      android:paddingTop="10dp"
+                      android:paddingRight="40dp"
+            />
+
+            <TextView android:layout_width="match_parent"
+                      android:textAlignment="center"
+                      android:id="@+id/register_game"
+                      android:layout_height="wrap_content"
+                      android:background="@android:drawable/btn_dropdown"
+                      android:backgroundTintMode="multiply"
+                      android:backgroundTint="@color/spinnerBackground"
+                      android:clickable="true"
+            />
+
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="40dp"
+                      android:layout_marginBottom="10dp"
+        >
+
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/fragmentTextColor"
+                      android:text="@string/method"
+                      android:layout_height="wrap_content"
+                      android:paddingTop="10dp"
+                      android:paddingRight="40dp"
+            />
+
+            <TextView android:layout_width="match_parent"
+                      android:textAlignment="center"
+                      android:id="@+id/register_method"
+                      android:layout_height="wrap_content"
+                      android:background="@android:drawable/btn_dropdown"
+                      android:popupBackground="@color/spinnerBackground"
+                      android:backgroundTintMode="multiply"
+                      android:backgroundTint="@color/spinnerBackground"
+                      android:clickable="true"
+            />
+
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="40dp"
+                      android:layout_marginBottom="10dp"
+        >
+
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/fragmentTextColor"
+                      android:text="@string/shiny_charm"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:id="@+id/textView2"/>
+
+            <android.support.v7.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/register_switch"
+                    style="@style/custom_switch_theme"
+                    android:focusableInTouchMode="true"
+            />
+
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="40dp"
+                      android:layout_marginBottom="30dp"
+        >
+
+            <TextView android:layout_width="0dp"
+                      android:textColor="@color/fragmentTextColor"
+                      android:layout_weight="0.5"
+                      android:text="@string/encounters"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/register_encounters"
+            />
+
+            <EditText android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="0.5"
+                      android:id="@+id/register_edit_encounters"
+                      android:background="@android:drawable/editbox_background"
+                      android:backgroundTint="@color/spinnerBackground"
+                      android:inputType="number"
+            />
+
+        </LinearLayout>
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/buttonColor"
+                android:id="@+id/register_button"
+                android:text="@string/registerButton"
+        />
+
+    </LinearLayout>
+</LinearLayout>

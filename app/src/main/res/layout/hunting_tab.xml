@@ -1,8 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:id="@+id/hunting_tab"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/hunting_tab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/shinydexBackground"
+>
 
-</LinearLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hunt_game"
+            android:background="@android:drawable/btn_dropdown"
+            android:backgroundTintMode="multiply"
+            android:backgroundTint="@color/spinnerBackground"
+    />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hunt_method"
+            android:layout_below="@id/hunt_game"
+            android:background="@android:drawable/btn_dropdown"
+            android:backgroundTintMode="multiply"
+            android:backgroundTint="@color/spinnerBackground"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hunt_name"
+            android:layout_below="@id/hunt_method"
+    />
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hunt_img"
+            android:layout_below="@id/hunt_name"
+    />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>
