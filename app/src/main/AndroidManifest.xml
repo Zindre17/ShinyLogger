@@ -63,6 +63,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aarstrand.zindre.pokechecklist.RegisterActivity"/>
         </activity>
+        <activity android:name=".CatchActivity"
+                  android:label="@string/title_activity_catch"
+                  android:parentActivityName=".MyShiniesActivity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aarstrand.zindre.pokechecklist.CatchActivity"/>
+        </activity>
     </application>
 
 </manifest>
