@@ -944,4 +944,9 @@
     <string name="title_activity_register">Register</string>
     <string name="name">name</string>
     <string name="title_activity_catch">Catch</string>
+    <string name="action_search">Search</string>
+    <string name="title_activity_search">search</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_text">Generation:</string>
+    <string name="id">id</string>
 </resources>

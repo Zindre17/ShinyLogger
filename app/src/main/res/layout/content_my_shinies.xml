@@ -28,6 +28,7 @@
             android:horizontalSpacing="@dimen/gridview_spacing"
             android:stretchMode="columnWidth"
             android:gravity="center"
+            android:layout_marginTop="10dp"
     />
 
 </RelativeLayout>

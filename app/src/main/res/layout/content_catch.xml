@@ -6,6 +6,148 @@
         android:layout_height="match_parent"
         tools:showIn="@layout/activity_catch"
         tools:context=".CatchActivity"
+        android:background="@color/backgroundGrey"
 >
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_name"
+            android:textColor="@color/nameText"
+            android:layout_centerHorizontal="true"
+    />
+
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_edit_name"
+            android:layout_toEndOf="@id/catch_name"
+            android:layout_toRightOf="@id/catch_name"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_alignBottom="@id/catch_name"
+            android:layout_alignTop="@id/catch_name"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_number"
+            android:textColor="@color/numberText"
+            android:layout_below="@id/catch_name"
+            android:layout_centerHorizontal="true"
+    />
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_img"
+            android:foreground="@drawable/border"
+            android:background="@color/pokemonBackground"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/catch_number"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_game_text"
+            android:text="@string/game"
+            android:textColor="@color/numberText"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_below="@id/catch_img"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_game"
+            android:textColor="@color/numberText"
+            android:layout_below="@id/catch_img"
+            android:layout_toRightOf="@id/catch_game_text"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginLeft="@dimen/text_margin"
+    />
+
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_edit_game"
+            android:layout_toEndOf="@id/catch_game"
+            android:layout_toRightOf="@id/catch_game"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_alignBottom="@id/catch_game"
+            android:layout_alignTop="@id/catch_game"
+    />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_encounters_text"
+            android:text="@string/encounters"
+            android:textColor="@color/numberText"
+            android:layout_below="@id/catch_game"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginStart="@dimen/text_margin"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_encounters"
+            android:layout_toRightOf="@id/catch_encounters_text"
+            android:layout_toEndOf="@id/catch_encounters_text"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_below="@id/catch_game"
+            android:textColor="@color/numberText"
+    />
+
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_edit_encounters"
+            android:layout_toEndOf="@id/catch_encounters"
+            android:layout_toRightOf="@id/catch_encounters"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_alignBottom="@id/catch_encounters"
+            android:layout_alignTop="@id/catch_encounters"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_method_text"
+            android:textColor="@color/numberText"
+            android:text="@string/method"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_below="@id/catch_encounters"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_method"
+            android:textColor="@color/numberText"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_below="@id/catch_encounters"
+            android:layout_toEndOf="@id/catch_method_text"
+            android:layout_toRightOf="@id/catch_method_text"
+    />
+
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/catch_edit_method"
+            android:layout_toEndOf="@id/catch_method"
+            android:layout_toRightOf="@id/catch_method"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_alignBottom="@id/catch_method"
+            android:layout_alignTop="@id/catch_method"
+    />
+
+
 
 </RelativeLayout>

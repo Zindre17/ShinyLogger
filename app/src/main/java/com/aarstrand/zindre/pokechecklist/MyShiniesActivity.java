@@ -1,5 +1,6 @@
 package com.aarstrand.zindre.pokechecklist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,11 +30,19 @@ public class MyShiniesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //todo: make something happen
+                System.out.println("hallo");
+                System.out.println(gridView.getAdapter().getItemId(position));
+                System.out.println(((GridViewAdapter)gridView.getAdapter()).getItemId(position));
+                Intent intent = new Intent(MyShiniesActivity.this,CatchActivity.class);
+                intent.putExtra(getString(R.string.id), gridView.getAdapter().getItemId(position));
+                startActivity(intent);
             }
         });
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.my_shinies_toolbar);
+        toolbar.setTitle(R.string.title_activity_my_shinies);
         setSupportActionBar(toolbar);
 
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

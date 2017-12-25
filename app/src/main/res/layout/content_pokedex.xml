@@ -5,6 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_pokedex"
+        android:background="@color/shinydexBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.aarstrand.zindre.pokechecklist.PokedexActivity">
@@ -14,15 +15,23 @@
             android:layout_height="wrap_content"
             android:background="@color/toolbarBackground"
             app:titleTextColor="@color/TitleTextColor"
+
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
             android:id="@+id/pokedex_toolbar"/>
 
+    <include
+            android:id="@+id/pokedex_filter"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@id/pokedex_toolbar"
+            layout="@layout/filter_layout"
+    />
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/pokedex_toolbar"
+            android:layout_below="@id/pokedex_filter"
             android:scrollbars="vertical"
             android:id="@+id/pokemon_list">
     </android.support.v7.widget.RecyclerView>

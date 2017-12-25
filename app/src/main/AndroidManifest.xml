@@ -26,6 +26,9 @@
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.aarstrand.zindre.pokechecklist.MainActivity"/>
+            <meta-data
+                    android:name="android.app.searchable"
+                    android:resource="@xml/searchable"/>
         </activity>
         <activity
                 android:name=".MyShiniesActivity"
@@ -52,7 +55,7 @@
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.aarstrand.zindre.pokechecklist.HuntActivity"/>
+                    android:value="com.aarstrand.zindre.pokechecklist.MainActivity"/>
         </activity>
         <activity
                 android:name=".RegisterActivity"
@@ -61,7 +64,7 @@
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aarstrand.zindre.pokechecklist.RegisterActivity"/>
+                android:value="com.aarstrand.zindre.pokechecklist.PokedexActivity"/>
         </activity>
         <activity android:name=".CatchActivity"
                   android:label="@string/title_activity_catch"
@@ -69,7 +72,16 @@
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aarstrand.zindre.pokechecklist.CatchActivity"/>
+                android:value="com.aarstrand.zindre.pokechecklist.MyShiniesActivity"/>
+        </activity>
+        <activity
+                android:name=".SearchResultActivity"
+                android:label="@string/title_activity_search"
+
+        >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
         </activity>
     </application>
 

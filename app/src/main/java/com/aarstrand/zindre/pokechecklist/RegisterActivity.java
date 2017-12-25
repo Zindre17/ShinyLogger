@@ -1,14 +1,17 @@
 package com.aarstrand.zindre.pokechecklist;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
@@ -32,6 +35,12 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.register_toolbar);
+        toolbar.setTitle(R.string.title_activity_register);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         nr = getIntent().getExtras().getInt(getString(R.string.number));
 
@@ -105,6 +114,17 @@ public class RegisterActivity extends AppCompatActivity {
                 if(hasFocus){
                     v.performClick();
                 }
+            }
+        });
+
+        encounters.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+
             }
         });
 
