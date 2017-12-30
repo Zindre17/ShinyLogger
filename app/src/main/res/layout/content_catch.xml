@@ -10,21 +10,24 @@
 >
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/name_height"
             android:id="@+id/catch_name"
             android:textColor="@color/nameText"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
     />
 
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/catch_edit_button_width"
+            android:layout_height="0dp"
             android:id="@+id/catch_edit_name"
             android:layout_toEndOf="@id/catch_name"
             android:layout_toRightOf="@id/catch_name"
             android:src="@android:drawable/ic_menu_edit"
             android:layout_alignBottom="@id/catch_name"
             android:layout_alignTop="@id/catch_name"
+            android:tint="@color/backgroundGrey"
+            android:backgroundTint="@color/buttonColor"
     />
 
     <TextView
@@ -34,6 +37,8 @@
             android:textColor="@color/numberText"
             android:layout_below="@id/catch_name"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
     />
 
     <ImageView
@@ -44,56 +49,66 @@
             android:background="@color/pokemonBackground"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/catch_number"
+            android:layout_marginBottom="15dp"
     />
 
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:id="@+id/catch_game_text"
             android:text="@string/game"
             android:textColor="@color/numberText"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginStart="@dimen/text_margin"
             android:layout_below="@id/catch_img"
+            android:paddingTop="15dp"
+            android:layout_marginTop="10dp"
     />
 
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/catch_game"
             android:textColor="@color/numberText"
             android:layout_below="@id/catch_img"
             android:layout_toRightOf="@id/catch_game_text"
             android:layout_marginStart="@dimen/text_margin"
             android:layout_marginLeft="@dimen/text_margin"
+            android:layout_alignTop="@id/catch_game_text"
+            android:layout_alignBottom="@id/catch_game_text"
+            android:paddingTop="15dp"
     />
 
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/catch_edit_button_width"
+            android:layout_height="0dp"
             android:id="@+id/catch_edit_game"
             android:layout_toEndOf="@id/catch_game"
             android:layout_toRightOf="@id/catch_game"
             android:src="@android:drawable/ic_menu_edit"
             android:layout_alignBottom="@id/catch_game"
             android:layout_alignTop="@id/catch_game"
+            android:backgroundTint="@color/buttonColor"
+            android:tint="@color/backgroundGrey"
     />
 
 
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:id="@+id/catch_encounters_text"
             android:text="@string/encounters"
             android:textColor="@color/numberText"
             android:layout_below="@id/catch_game"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginStart="@dimen/text_margin"
+            android:paddingTop="15dp"
+            android:layout_marginTop="10dp"
     />
 
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/catch_encounters"
             android:layout_toRightOf="@id/catch_encounters_text"
             android:layout_toEndOf="@id/catch_encounters_text"
@@ -101,28 +116,35 @@
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_below="@id/catch_game"
             android:textColor="@color/numberText"
+            android:layout_alignBottom="@id/catch_encounters_text"
+            android:layout_alignTop="@id/catch_encounters_text"
+            android:paddingTop="15dp"
     />
 
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/catch_edit_button_width"
+            android:layout_height="0dp"
             android:id="@+id/catch_edit_encounters"
             android:layout_toEndOf="@id/catch_encounters"
             android:layout_toRightOf="@id/catch_encounters"
             android:src="@android:drawable/ic_menu_edit"
             android:layout_alignBottom="@id/catch_encounters"
             android:layout_alignTop="@id/catch_encounters"
+            android:backgroundTint="@color/buttonColor"
+            android:tint="@color/backgroundGrey"
     />
 
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:id="@+id/catch_method_text"
             android:textColor="@color/numberText"
             android:text="@string/method"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginStart="@dimen/text_margin"
             android:layout_below="@id/catch_encounters"
+            android:paddingTop="15dp"
+            android:layout_marginTop="10dp"
     />
 
     <TextView
@@ -135,19 +157,35 @@
             android:layout_below="@id/catch_encounters"
             android:layout_toEndOf="@id/catch_method_text"
             android:layout_toRightOf="@id/catch_method_text"
+            android:layout_alignTop="@id/catch_method_text"
+            android:layout_alignBottom="@id/catch_method_text"
+            android:paddingTop="15dp"
     />
 
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/catch_edit_button_width"
+            android:layout_height="0dp"
             android:id="@+id/catch_edit_method"
             android:layout_toEndOf="@id/catch_method"
             android:layout_toRightOf="@id/catch_method"
             android:src="@android:drawable/ic_menu_edit"
             android:layout_alignBottom="@id/catch_method"
             android:layout_alignTop="@id/catch_method"
+            android:backgroundTint="@color/buttonColor"
+            android:tint="@color/backgroundGrey"
     />
 
+    <Button
+            android:layout_width="@dimen/evolve_button_width"
+            android:layout_height="@dimen/evolve_button_height"
+            android:layout_below="@id/catch_method_text"
+            android:layout_marginTop="30dp"
+            android:text="@string/evolve"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/buttonColor"
+            android:visibility="gone"
+            android:id="@+id/catch_evolve_button"
+    />
 
 
 </RelativeLayout>

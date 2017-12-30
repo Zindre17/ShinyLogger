@@ -23,6 +23,7 @@
             android:layout_alignStart="@id/gridview_img"
             android:layout_alignEnd="@id/gridview_img"
             android:layout_alignRight="@id/gridview_img"
+            android:paddingBottom="5dp"
             android:gravity="bottom"
             android:textAlignment="center"
 
@@ -38,6 +39,7 @@
             android:layout_alignLeft="@id/gridview_img"
             android:layout_alignRight="@id/gridview_img"
             android:layout_alignEnd="@id/gridview_img"
+            android:paddingTop="5dp"
             android:textAlignment="center"
 
     />

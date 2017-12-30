@@ -52,7 +52,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     public Cursor getSearch(String newText) {
         return db.rawQuery(
                 "select * from "+ PokeCheckListContract.Pokemon.TABLE_NAME+
-                        " where " + PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " like "+"'%"+newText+"%'",
+                        " where " + PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " like "+"'"+newText+"%'",
                 null
         );
     }
@@ -65,7 +65,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     public Cursor getFilteredSearch(String query, int filter) {
         return db.rawQuery("select * from " + PokeCheckListContract.Pokemon.TABLE_NAME +
                 " where " + PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN + " = " + filter +
-                " and " + PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " like " + "'%" + query + "%'", null);
+                " and " + PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME + " like " + "'" + query + "%'", null);
     }
 
     public Cursor getFilteredSearch(int query, int filter) {

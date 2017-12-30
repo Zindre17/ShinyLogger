@@ -949,4 +949,5 @@
     <string name="action_filter">Filter</string>
     <string name="filter_text">Generation:</string>
     <string name="id">id</string>
+    <string name="evolve">Evolve</string>
 </resources>
