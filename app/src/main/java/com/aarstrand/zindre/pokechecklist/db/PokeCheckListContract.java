@@ -21,6 +21,6 @@ public final class PokeCheckListContract {
         public static String COLOUMN_NAME_ODDS = "Odds";
         public static String COLOUMN_NAME_GAME = "Game";
         public static String COLOUMN_NAME_METHOD = "Method";
-        public static String COLOUMN_NAME_LOCATION = "Location";
+        public static String COLOUMN_NAME_NICKNAME = "Nickname";
     }
 }

@@ -2,18 +2,26 @@ package com.aarstrand.zindre.pokechecklist.tools;
 
 
 public class Catch {
-    String game;
     int number, attempts;
     boolean odds;
-    private String method;
+    private String method, game, nickname;
 
     public Catch(){
     }
-    public Catch(int number,int attempts,boolean odds, String game){
+    public Catch(int number,int attempts,boolean odds, String game, String nickname){
         this.number = number;
         this.attempts = attempts;
         this.odds = odds;
         this.game = game;
+        this.nickname = nickname;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public boolean getOdds() {

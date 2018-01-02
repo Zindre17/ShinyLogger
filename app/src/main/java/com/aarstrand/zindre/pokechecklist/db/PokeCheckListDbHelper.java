@@ -136,8 +136,8 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Catch.COLOUMN_NAME_ATTEMPTS + " INTEGER," +
                     PokeCheckListContract.Catch.COLOUMN_NAME_GAME + " TEXT," +
                     PokeCheckListContract.Catch.COLOUMN_NAME_METHOD + " TEXT," +
-                    PokeCheckListContract.Catch.COLOUMN_NAME_LOCATION + " TEXT,"+
-                    PokeCheckListContract.Catch.COLOUMN_NAME_ODDS + " TEXT)";
+                    PokeCheckListContract.Catch.COLOUMN_NAME_NICKNAME + " TEXT,"+
+                    PokeCheckListContract.Catch.COLOUMN_NAME_ODDS + " INTEGER)";
 
 
     private static final String DELETE_TABLE_POKEMON =
@@ -247,6 +247,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         values.put(PokeCheckListContract.Catch.COLOUMN_NAME_GAME,c.getGame());
         values.put(PokeCheckListContract.Catch.COLOUMN_NAME_ODDS,c.getOdds());
         values.put(PokeCheckListContract.Catch.COLOUMN_NAME_METHOD,c.getMethod());
+        values.put(PokeCheckListContract.Catch.COLOUMN_NAME_NICKNAME,c.getNickname());
         //insert row into db
         db.insert(PokeCheckListContract.Catch.TABLE_NAME,null,values);
         if (listener!=null){

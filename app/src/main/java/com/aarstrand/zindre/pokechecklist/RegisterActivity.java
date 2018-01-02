@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
@@ -27,9 +28,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText encounters;
     private SwitchCompat shinyCharm;
     private int nr;
-    PokeCheckListDbHelper dbHelper;
-    ArrayAdapter<String> methods;
-    ArrayAdapter<String> games;
+    private PokeCheckListDbHelper dbHelper;
+    private ArrayAdapter<String> methods;
+    private ArrayAdapter<String> games;
+    private String pName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,8 @@ public class RegisterActivity extends AppCompatActivity {
         shinyCharm = (SwitchCompat)findViewById(R.id.register_switch);
         enc = (TextView)findViewById(R.id.register_encounters);
 
-        name.setText(pokemon.getString(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
+        pName = pokemon.getString(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME));
+        name.setText(pName);
         number.setText(String.format("#%03d",nr));
         img.setImageBitmap(Tools.convertFromBlobToBitmap(pokemon.getBlob(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
 
@@ -88,27 +91,12 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Catch c = new Catch();
-                if(!encounters.getText().toString().equals("")){
-                    c.setAttempts(Integer.parseInt(encounters.getText().toString()));
-                }else{
-                    c.setAttempts(0);
-                }
-                c.setGame(game.getText().toString());
-                c.setNumber(nr);
-                c.setOdds(shinyCharm.isChecked());
-                c.setMethod(method.getText().toString());
-                dbHelper.registerCatch(c);
-                Intent i = new Intent();
-                Cursor cur = dbHelper.getPokemon(nr);
-                cur.moveToFirst();
-                i.putExtra(getString(R.string.name),cur.getString(cur.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
-                setResult(Activity.RESULT_OK,i);
-                onBackPressed();
+                register();
+                returnResults();
             }
         });
 
-        shinyCharm.setOnFocusChangeListener(new SwitchCompat.OnFocusChangeListener() {
+        shinyCharm.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
@@ -117,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        encounters.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        encounters.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
@@ -130,6 +118,32 @@ public class RegisterActivity extends AppCompatActivity {
 
         shinyCharmCheck(game.getText().toString());
         evolutionCheck(method.getText().toString());
+    }
+
+    private void returnResults() {
+        Intent i = new Intent();
+        i.putExtra(getString(R.string.name),pName);
+        setResult(Activity.RESULT_OK,i);
+        onBackPressed();
+    }
+
+    private void register() {
+        Catch c = new Catch();
+        if(!encounters.getText().toString().equals("")){
+            c.setAttempts(Integer.parseInt(encounters.getText().toString()));
+        }else{
+            c.setAttempts(0);
+        }
+        if(pName.equals(name.getText().toString())){
+            c.setNickname("");
+        }else{
+            c.setNickname(name.getText().toString());
+        }
+        c.setGame(game.getText().toString());
+        c.setNumber(nr);
+        c.setOdds(shinyCharm.isChecked());
+        c.setMethod(method.getText().toString());
+        dbHelper.registerCatch(c);
     }
 
     private void evolutionCheck(String s) {

@@ -46,6 +46,14 @@ public class CatchActivity extends AppCompatActivity{
 
         Cursor c = dbHelper.getCatch(id);
         c.moveToFirst();
+        String nick = c.getString(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NICKNAME));
+        int nr = c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER));
+        if(nick.equals("")){
+            Cursor a = dbHelper.getPokemon(nr);
+            nickname.setText(a.getString(a.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
+        }else{
+            nickname.setText(nick);
+        }
 
         encounters.setText(
                 String.valueOf(c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_ATTEMPTS)))
@@ -57,7 +65,7 @@ public class CatchActivity extends AppCompatActivity{
                 c.getString(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_GAME))
         );
         number.setText(
-                String.format("#%03d",c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER)))
+                String.format("#%03d",nr)
         );
 
         img.setImageBitmap(
