@@ -169,7 +169,7 @@
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@color/buttonColor"
+                android:backgroundTint="@color/buttonColor"
                 android:id="@+id/register_button"
                 android:text="@string/registerButton"
         />

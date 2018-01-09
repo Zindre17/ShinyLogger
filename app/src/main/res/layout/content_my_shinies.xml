@@ -24,11 +24,10 @@
             android:numColumns="auto_fit"
             android:id="@+id/my_shinies_grid"
             android:columnWidth="@dimen/gridview_width"
-            android:verticalSpacing="@dimen/gridview_spacing"
             android:horizontalSpacing="@dimen/gridview_spacing"
+
             android:stretchMode="columnWidth"
             android:gravity="center"
-            android:paddingTop="10dp"
     />
 
 </RelativeLayout>

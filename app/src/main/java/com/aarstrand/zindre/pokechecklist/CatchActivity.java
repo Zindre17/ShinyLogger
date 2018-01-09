@@ -50,6 +50,7 @@ public class CatchActivity extends AppCompatActivity{
         int nr = c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER));
         if(nick.equals("")){
             Cursor a = dbHelper.getPokemon(nr);
+            a.moveToFirst();
             nickname.setText(a.getString(a.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
         }else{
             nickname.setText(nick);

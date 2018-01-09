@@ -116,8 +116,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        shinyCharmCheck(game.getText().toString());
         evolutionCheck(method.getText().toString());
+        shinyCharmCheck(game.getText().toString());
     }
 
     private void returnResults() {

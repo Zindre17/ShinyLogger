@@ -35,7 +35,7 @@
 
         <Button
                 android:text="@string/button1"
-                android:background="@color/buttonColor"
+                android:backgroundTint="@color/buttonColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/menu_button_bottom_padding"
@@ -48,14 +48,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/button5"
-                android:background="@color/buttonColor"
+                android:backgroundTint="@color/buttonColor"
                 android:layout_marginBottom="24dp"
                 android:layout_marginTop="24dp"
         />
 
         <Button
                 android:text="@string/button2"
-                android:background="@color/buttonColor"
+                android:backgroundTint="@color/buttonColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/menu_button_bottom_padding"
@@ -65,7 +65,7 @@
 
         <Button
                 android:text="@string/button3"
-                android:background="@color/buttonColor"
+                android:backgroundTint="@color/buttonColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/menu_button_bottom_padding"

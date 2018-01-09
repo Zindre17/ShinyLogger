@@ -950,4 +950,5 @@
     <string name="filter_text">Generation:</string>
     <string name="id">id</string>
     <string name="evolve">Evolve</string>
+    <string name="save">Save changes</string>
 </resources>
