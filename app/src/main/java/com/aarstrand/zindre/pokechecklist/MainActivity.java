@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         setButtonListeners();
         if(dbHelper.getPokemonCount()!= Tools.DEX_COUNT && !dbHelper.isWorking()){
-            new SetupPokedex(this.getApplicationContext()).execute();
+            new SetupPokedex(this.getApplicationContext()).execute(this);
         }
     }
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("nå ble jeg også drept");
     }
 
-    public class SetupPokedex extends AsyncTask<Void,Integer,Void> {
+    public static class SetupPokedex extends AsyncTask<Context,Integer,Void> {
 
         private String[] offsetList;
         private String[] genSwitchList;
@@ -129,10 +129,10 @@ public class MainActivity extends AppCompatActivity {
             offsetList = context.getString(R.string.image_skip_list).trim().split(" ");
         }
 
-        private void createAndFillInDB() {
+        private void createAndFillInDB(Context context) {
 
             Bitmap spriteSheet = BitmapFactory.decodeResource(
-                    getApplicationContext().getResources(),
+                    context.getApplicationContext().getResources(),
                     R.drawable.gen1);
 
             int row = 0;
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     row = 0;
                     genSwitchListPos++;
                     genSwitchPoint = Integer.parseInt(genSwitchList[genSwitchListPos]);
-                    spriteSheet = switchSpriteSheet(getApplicationContext(),genSwitchListPos+1);
+                    spriteSheet = switchSpriteSheet(context.getApplicationContext(),genSwitchListPos+1);
 
                 }
                 else if(dexNumber == nextOffset){
@@ -211,9 +211,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-
-            createAndFillInDB();
+        protected Void doInBackground(Context... context) {
+            createAndFillInDB(context[0]);
             return null;
         }
 
