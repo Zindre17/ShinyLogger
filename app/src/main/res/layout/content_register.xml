@@ -11,7 +11,7 @@
         tools:context=".RegisterActivity"
 >
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/register_toolbar"
@@ -130,7 +130,7 @@
                       android:layout_weight="1"
                       android:id="@+id/textView2"/>
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/register_switch"

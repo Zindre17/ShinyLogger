@@ -2,14 +2,14 @@ package com.aarstrand.zindre.pokechecklist;
 
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.View;
+
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import org.w3c.dom.Text;
+
+import androidx.fragment.app.FragmentActivity;
 
 
-public class HuntActivity extends FragmentActivity{
+public class HuntActivity extends FragmentActivity {
 
     private TextView method,game;
     private RelativeLayout layout;

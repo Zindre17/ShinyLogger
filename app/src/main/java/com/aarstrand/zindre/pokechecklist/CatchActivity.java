@@ -1,19 +1,20 @@
 package com.aarstrand.zindre.pokechecklist;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
 import com.aarstrand.zindre.pokechecklist.tools.Tools;
 
-public class CatchActivity extends AppCompatActivity{
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CatchActivity extends AppCompatActivity {
 
     private TextView nickname, number, method, game, encounters;
     private ImageButton editName, editMethod, editGame, editEncounters;
