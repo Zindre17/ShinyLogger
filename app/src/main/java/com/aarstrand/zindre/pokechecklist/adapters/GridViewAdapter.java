@@ -2,6 +2,7 @@ package com.aarstrand.zindre.pokechecklist.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,7 @@ import android.widget.TextView;
 import com.aarstrand.zindre.pokechecklist.R;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
-import com.aarstrand.zindre.pokechecklist.tools.Catch;
 import com.aarstrand.zindre.pokechecklist.tools.Tools;
-import org.w3c.dom.Text;
 
 public class GridViewAdapter extends BaseAdapter {
     private PokeCheckListDbHelper dbHelper;
@@ -56,16 +55,10 @@ public class GridViewAdapter extends BaseAdapter {
             ImageView img = (ImageView)gridview.findViewById(R.id.gridview_img);
 
             caught.moveToPosition(position);
-            Cursor c = dbHelper.getPokemon(caught.getInt(caught.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER)));
-            c.moveToFirst();
-            img.setImageBitmap(
-                    Tools.convertFromBlobToBitmap(
-                            c.getBlob(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
+            img.setImageBitmap(dbHelper.getPokemonImage(caught.getInt(caught.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER))));
             encounters.setText(String.valueOf(caught.getInt(caught.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_ATTEMPTS))));
             System.out.println(caught.getString(caught.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_METHOD)));
             method.setText(caught.getString(caught.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_METHOD)));
-
-
 
         }else{
             gridview = convertView;

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
+import com.aarstrand.zindre.pokechecklist.db.models.Catch;
+import com.aarstrand.zindre.pokechecklist.db.models.Pokemon;
 import com.aarstrand.zindre.pokechecklist.tools.Tools;
 
 import androidx.annotation.Nullable;
@@ -45,37 +47,31 @@ public class CatchActivity extends AppCompatActivity {
 
         Long id = getIntent().getLongExtra(getString(R.string.id),0);
 
-        Cursor c = dbHelper.getCatch(id);
-        c.moveToFirst();
-        String nick = c.getString(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NICKNAME));
-        int nr = c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER));
+        Catch c = dbHelper.getCatch(id);
+        String nick = c.getNickname();
+        int nr = c.getNumber();
         if(nick.equals("")){
-            Cursor a = dbHelper.getPokemon(nr);
-            a.moveToFirst();
-            nickname.setText(a.getString(a.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
+            Pokemon a = dbHelper.getPokemon(nr);
+            nickname.setText(a.getName());
         }else{
             nickname.setText(nick);
         }
 
         encounters.setText(
-                String.valueOf(c.getInt(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_ATTEMPTS)))
+                String.valueOf(c.getAttempts())
         );
         method.setText(
-                c.getString(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_METHOD))
+                c.getMethod()
         );
         game.setText(
-                c.getString(c.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_GAME))
+                c.getGame()
         );
         number.setText(
                 String.format("#%03d",nr)
         );
 
         img.setImageBitmap(
-                Tools.convertFromBlobToBitmap(
-                        dbHelper.getPokemonImage(
-                                Integer.parseInt(number.getText().toString().substring(1))
-                        )
-                )
+                c.getImage()
         );
     }
 

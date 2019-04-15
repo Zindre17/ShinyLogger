@@ -17,7 +17,8 @@ import android.widget.TextView;
 
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
-import com.aarstrand.zindre.pokechecklist.tools.Catch;
+import com.aarstrand.zindre.pokechecklist.db.models.Catch;
+import com.aarstrand.zindre.pokechecklist.db.models.Pokemon;
 import com.aarstrand.zindre.pokechecklist.tools.Tools;
 
 import androidx.appcompat.app.AlertDialog;
@@ -53,8 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         nr = getIntent().getExtras().getInt(getString(R.string.number));
 
         dbHelper = PokeCheckListDbHelper.getInstance(getApplicationContext());
-        Cursor pokemon = dbHelper.getPokemon(nr);
-        pokemon.moveToFirst();
+        Pokemon pokemon = dbHelper.getPokemon(nr);
 
         name = (TextView)findViewById(R.id.register_name);
         number = (TextView)findViewById(R.id.register_number);
@@ -67,12 +67,12 @@ public class RegisterActivity extends AppCompatActivity {
         shinyCharm = (SwitchCompat)findViewById(R.id.register_switch);
         enc = (TextView)findViewById(R.id.register_encounters);
 
-        pName = pokemon.getString(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME));
+        pName = pokemon.getName();
         name.setText(pName);
         number.setText(String.format("#%03d",nr));
-        img.setImageBitmap(Tools.convertFromBlobToBitmap(pokemon.getBlob(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
+        img.setImageBitmap(pokemon.getImage());
 
-        String[] gamestrings = Tools.getAvailableGames(pokemon.getInt(pokemon.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN)));
+        String[] gamestrings = Tools.getAvailableGames(pokemon.getGeneration());
         games = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,gamestrings);
 
         game.setText(games.getItem(0));
@@ -147,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         c.setGame(game.getText().toString());
         c.setNumber(nr);
-        c.setOdds(shinyCharm.isChecked());
+        c.setShinyCharm(shinyCharm.isChecked());
         c.setMethod(method.getText().toString());
         dbHelper.registerCatch(c);
     }

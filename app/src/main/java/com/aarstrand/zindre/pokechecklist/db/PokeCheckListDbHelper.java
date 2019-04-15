@@ -5,7 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.aarstrand.zindre.pokechecklist.tools.Catch;
+import android.graphics.Bitmap;
+import android.widget.Toolbar;
+
+import com.aarstrand.zindre.pokechecklist.db.models.Catch;
+import com.aarstrand.zindre.pokechecklist.db.models.Pokemon;
+import com.aarstrand.zindre.pokechecklist.tools.Tools;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PokeCheckListDbHelper extends SQLiteOpenHelper {
@@ -13,6 +21,9 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     private final SQLiteDatabase db;
 
     private boolean working;
+
+    public static final int DATABASE_VERSION = 2;
+    public static final String DATABASE_NAME = "PokeCheckList.db";
 
     public Cursor getCaughtNumbers() {
         return db.query(
@@ -33,6 +44,21 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         return a;
     }
 
+    public List<Pokemon> getAll(){
+        Cursor c = getAllPokemon();
+        List<Pokemon> l = new ArrayList<>(c.getCount());
+        for(int i = 0; i < c.getCount(); i++){
+            c.moveToPosition(i);
+            Pokemon p = new Pokemon();
+            p.setNumber(c.getInt(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER)));
+            p.setName(c.getString(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
+            p.setImage(Tools.convertFromBlobToBitmap(c.getBlob(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
+            p.setGeneration(c.getInt(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN)));
+            l.add(p);
+        }
+        return l;
+    }
+
     public boolean isWorking() {
         return working;
     }
@@ -42,7 +68,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     }
 
     public int getGen(int number) {
-        Cursor c = getPokemon(number);
+        Cursor c = getPokemonCursor(number);
         c.moveToFirst();
         int i = c.getInt(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN));
         c.close();
@@ -74,17 +100,43 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         " and " + PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER + " = " + query, null);
     }
 
-    public Cursor getCatch(Long id) {
-        return db.rawQuery("select * from " + PokeCheckListContract.Catch.TABLE_NAME +
+    public Catch getCatch(Long id) {
+        Cursor a = db.rawQuery("select * from " + PokeCheckListContract.Catch.TABLE_NAME +
         " where " + PokeCheckListContract.Catch._ID + " = " + id, null);
+        a.moveToFirst();
+        int nr = a.getInt(a.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER));
+        Catch c = new Catch();
+        c.setNickname(a.getString(a.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_NICKNAME)));
+        c.setNumber(nr);
+        c.set_id(a.getInt(a.getColumnIndex(PokeCheckListContract.Catch._ID)));
+        c.setGame(a.getInt(a.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_GAME)));
+        c.setAttempts(a.getInt(a.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_ATTEMPTS)));
+        c.setChain(a.getInt(a.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_CHAIN)));
+        c.setShinyCharm(a.getInt(a.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_SHINY))==1);
+        c.setOdds(a.getDouble(a.getColumnIndex(PokeCheckListContract.Catch.COLOUMN_NAME_ODDS)));
+        c.setImage(getPokemonImage(nr));
+        a.close();
+        return c;
     }
 
-    public byte[] getPokemonImage(int i) {
-        Cursor c = getPokemon(i);
+    public Cursor getPokemonCursor(int i){
+        return db.query(
+                PokeCheckListContract.Pokemon.TABLE_NAME,
+                null,
+                PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER+" = ?",
+                new String[]{String.valueOf(i)},
+                null,
+                null,
+                null
+        );
+    }
+
+    public Bitmap getPokemonImage(int i) {
+        Cursor c = getPokemonCursor(i);
         c.moveToFirst();
         byte[] a = c.getBlob(c.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG));
         c.close();
-        return a;
+        return Tools.convertFromBlobToBitmap(a);
     }
 
     public interface DbListener{
@@ -102,8 +154,7 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
         this.listener = listener;
     }
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "PokeCheckList.db";
+
 
 
 
@@ -134,9 +185,11 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
                     PokeCheckListContract.Catch._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PokeCheckListContract.Catch.COLOUMN_NAME_NUMBER + " INTEGER," +
                     PokeCheckListContract.Catch.COLOUMN_NAME_ATTEMPTS + " INTEGER," +
-                    PokeCheckListContract.Catch.COLOUMN_NAME_GAME + " TEXT," +
-                    PokeCheckListContract.Catch.COLOUMN_NAME_METHOD + " TEXT," +
+                    PokeCheckListContract.Catch.COLOUMN_NAME_GAME + " INTEGER," +
+                    PokeCheckListContract.Catch.COLOUMN_NAME_METHOD + " INTEGER," +
                     PokeCheckListContract.Catch.COLOUMN_NAME_NICKNAME + " TEXT,"+
+                    PokeCheckListContract.Catch.COLOUMN_NAME_SHINY+ " INTEGER,"+
+                    PokeCheckListContract.Catch.COLOUMN_NAME_CHAIN+ " INTEGER,"+
                     PokeCheckListContract.Catch.COLOUMN_NAME_ODDS + " INTEGER)";
 
 
@@ -190,18 +243,18 @@ public class PokeCheckListDbHelper extends SQLiteOpenHelper {
     /**
      * henter ut én spesifik pokemon ut fra databasen
      * @param number er nummeret til pokemonen man vil ha ut
-     * @return returnerer en Cursor
+     * @return returnerer et Pokemon-object
      */
-    public Cursor getPokemon(int number){
-        return db.query(
-                PokeCheckListContract.Pokemon.TABLE_NAME,
-                null,
-                PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER+" = ?",
-                new String[]{String.valueOf(number)},
-                null,
-                null,
-                null
-        );
+    public Pokemon getPokemon(int number){
+        Cursor a = getPokemonCursor(number);
+        a.moveToFirst();
+        Pokemon p = new Pokemon();
+        p.setNumber(a.getInt(a.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NUMBER)));
+        p.setName(a.getString(a.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_NAME)));
+        p.setImage(Tools.convertFromBlobToBitmap(a.getBlob(a.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_PNG))));
+        p.setGeneration(a.getInt(a.getColumnIndex(PokeCheckListContract.Pokemon.COLOUMN_NAME_GEN)));
+        a.close();
+        return p;
     }
 
     /**

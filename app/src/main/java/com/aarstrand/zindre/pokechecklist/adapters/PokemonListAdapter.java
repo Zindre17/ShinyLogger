@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.aarstrand.zindre.pokechecklist.PokedexActivity;
 import com.aarstrand.zindre.pokechecklist.R;
+import com.aarstrand.zindre.pokechecklist.db.models.Pokemon;
 import com.aarstrand.zindre.pokechecklist.tools.Tools;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +33,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     private PokeCheckListDbHelper dbHelper;
     private Cursor list;
     private ArrayList<Integer> caught;
+    private List<Pokemon> pokes;
 
     public PokemonListAdapter(Context context){
         super();
@@ -42,6 +45,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         }
         list = dbHelper.getAllPokemon();
+        //pokes = dbHelper.getAll();
         updateCaughtList();
     }
 
@@ -65,7 +69,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     }
 
     private void search(int nr){
-        list = dbHelper.getPokemon(nr);
+        list = dbHelper.getPokemonCursor(nr);
         notifyDataSetChanged();
     }
 

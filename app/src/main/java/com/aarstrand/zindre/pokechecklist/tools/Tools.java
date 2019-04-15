@@ -207,4 +207,15 @@ public class Tools {
         methodMap.put(62, "re b e fr dn cf hh");
         methodMap.put(71, "re b e fr cf");
     }
+
+    public static String translateGame(int game) {
+        switch(game){
+            case 0:
+                return "Gold";
+            case 1:
+                return "Silver";
+
+        }
+        return "";
+    }
 }
