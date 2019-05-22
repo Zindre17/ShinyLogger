@@ -100,7 +100,7 @@ public class MainTextView extends View {
                 mImage = BitmapFactory.decodeResource(context.getResources(), a.getResourceId(R.styleable.MainTextView_imageSrc, R.drawable.pokeball));
 
                 mTextColor = a.getColor(R.styleable.MainTextView_textColor, Color.BLACK);
-                mText = a.getString(R.styleable.MainTextView_text);
+                mText = a.getString(R.styleable.MainTextView_textt);
                 if(mText ==null) mText = "default";
                 mTextSize = a.getDimension(R.styleable.MainTextView_textSize, 30f);
                 int align = a.getInt(R.styleable.MainTextView_textAlign, 0);
@@ -111,7 +111,7 @@ public class MainTextView extends View {
                 else
                     mTextAlign = Paint.Align.RIGHT;
 
-                mFlipped = a.getBoolean(R.styleable.MainTextView_flipped, false);
+                mFlipped = a.getBoolean(R.styleable.MainTextView_flippedd, false);
             }
             finally{
                 a.recycle();

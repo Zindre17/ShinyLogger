@@ -8,7 +8,7 @@
             <enum name="right" value="2"/>
         </attr>
         <attr name="textSize" format="dimension"/>
-        <attr name="text" format="string|reference"/>
+        <attr name="textt" format="string|reference"/>
 
         <attr name="textBoxColor" format="color"/>
         <attr name="textBoxBorderColor" format="color"/>
@@ -17,6 +17,11 @@
         <attr name="ImageBackgroundColor" format="color"/>
         <attr name="imageSrc" format="reference"/>
 
+        <attr name="flippedd" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="MainButton">
+        <attr name="text" format="string"/>
+        <attr name="image" format="reference"/>
         <attr name="flipped" format="boolean"/>
     </declare-styleable>
 </resources>

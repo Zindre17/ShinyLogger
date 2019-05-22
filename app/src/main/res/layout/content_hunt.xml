@@ -1,45 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/hunt_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:background="@color/shinydexBackground"
->
-    <androidx.appcompat.widget.Toolbar
+        >
+
+        <com.aarstrand.zindre.pokechecklist.custom.MainButton
+            android:id="@+id/top"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:text="Hello"
+            />
+        <com.aarstrand.zindre.pokechecklist.custom.MainButton
+            android:id="@+id/bot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/hunt_toolbar"
-    />
+            app:layout_constraintTop_toBottomOf="@id/top"
+            app:text="hello"
+            app:flipped="true"
+            />
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/hunt_game"
-            android:background="@android:drawable/btn_dropdown"
-            android:backgroundTintMode="multiply"
-            android:backgroundTint="@color/spinnerBackground"
-            android:layout_centerHorizontal="true"
-    />
-
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/hunt_method"
-            android:layout_below="@id/hunt_game"
-            android:background="@android:drawable/btn_dropdown"
-            android:backgroundTintMode="multiply"
-            android:backgroundTint="@color/spinnerBackground"
-            android:layout_centerHorizontal="true"
-    />
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/hunt_name"
-            android:layout_below="@id/hunt_method"
-    />
-
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

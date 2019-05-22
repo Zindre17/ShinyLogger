@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout">
+
+    <data>
+        <import type="com.aarstrand.zindre.pokechecklist.data.Launch"/>
+        <variable
+            name="main"
+            type="com.aarstrand.zindre.pokechecklist.data.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:srcCompat="@drawable/collection"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/dex"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/dex"
+            android:onClick="@{() -> main.onClick(Launch.DEX)}"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            app:layout_constraintBottom_toTopOf="@id/hunt"
+            >
+
+            <TextView
+                android:id="@+id/dexBut"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{main.button1}"
+                android:textAlignment="center"
+                android:background="@drawable/button_right"
+                android:layout_margin="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/dexImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:minHeight="90dp"
+                android:maxHeight="140dp"
+                android:background="@drawable/img_background"
+                android:padding="7dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="20dp"
+                app:srcCompat="@drawable/pokedex"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/hunt"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> main.onClick(Launch.HUNT)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dex"
+            app:layout_constraintBottom_toTopOf="@id/coll"
+            >
+
+            <TextView
+                android:id="@+id/huntBut"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:stateListAnimator="@null"
+                android:minHeight="50dp"
+                android:maxHeight="100dp"
+                android:text="@{main.button2}"
+                android:background="@drawable/button_left"
+                android:layout_margin="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/huntImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:minHeight="90dp"
+                android:maxHeight="140dp"
+                android:background="@drawable/img_background"
+                android:padding="7dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="20dp"
+                app:srcCompat="@drawable/hunt"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/coll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> main.onClick(Launch.COLL)}"
+            app:layout_constraintTop_toBottomOf="@id/hunt"
+            app:layout_constraintBottom_toTopOf="@id/prog"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <TextView
+                android:id="@+id/collBut"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:stateListAnimator="@null"
+                android:minHeight="50dp"
+                android:maxHeight="100dp"
+                android:text="@{main.button3}"
+                android:background="@drawable/button_right"
+                android:layout_margin="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/collImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:minHeight="90dp"
+                android:maxHeight="140dp"
+                android:background="@drawable/img_background"
+                android:padding="7dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="20dp"
+                app:srcCompat="@drawable/collection"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/prog"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> main.onClick(Launch.PROG)}"
+            app:layout_constraintTop_toBottomOf="@id/coll"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <TextView
+                android:id="@+id/progBut"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:minHeight="100dp"
+                android:maxHeight="200dp"
+                android:text="@{main.button4}"
+                android:background="@drawable/button_left"
+                android:layout_margin="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/progImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:minHeight="90dp"
+                android:maxHeight="140dp"
+                android:background="@drawable/img_background"
+                android:padding="7dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="20dp"
+                app:srcCompat="@drawable/pokeball"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
