@@ -25,6 +25,8 @@
             app:layout_constraintVertical_weight="2"
             />
 
+
+
         <com.aarstrand.zindre.pokechecklist.custom.MainButton
             android:id="@+id/dex"
             android:layout_width="0dp"
