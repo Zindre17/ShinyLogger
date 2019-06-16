@@ -6,7 +6,7 @@
         <import type="com.aarstrand.zindre.pokechecklist.data.Launch"/>
         <variable
             name="main"
-            type="com.aarstrand.zindre.pokechecklist.data.MainViewModel"/>
+            type="com.aarstrand.zindre.pokechecklist.data.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,9 +29,10 @@
             android:id="@+id/dex"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:onClick="@{() -> main.onClick(Launch.DEX)}"
             app:flipped="false"
-            app:image="@drawable/pokedex"
-            app:text="Shinydex"
+            app:image="@{main.b1Image}"
+            app:text="@{main.b1Text}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/logo"
@@ -44,8 +45,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:flipped="true"
-            app:image="@drawable/hunt"
-            app:text="Hunt"
+            app:image="@{main.b2Image}"
+            app:text="@{main.b2Text}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dex"
@@ -59,8 +60,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:flipped="false"
-            app:image="@drawable/collection"
-            app:text="Collection"
+            app:image="@{main.b3Image}"
+            app:text="@{main.b3Text}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/hunt"
@@ -74,8 +75,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:flipped="true"
-            app:image="@drawable/pokeball"
-            app:text="Progress"
+            app:image="@{main.b4Image}"
+            app:text="@{main.b4Text}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/collection"

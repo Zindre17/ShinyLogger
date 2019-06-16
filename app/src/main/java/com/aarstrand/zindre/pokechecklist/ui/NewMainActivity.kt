@@ -13,6 +13,7 @@ import com.aarstrand.zindre.pokechecklist.PokedexActivity
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.data.Launch
 import com.aarstrand.zindre.pokechecklist.data.MainViewModel
+import com.aarstrand.zindre.pokechecklist.databinding.MainBinding
 import com.aarstrand.zindre.pokechecklist.databinding.NewMainBinding
 
 class NewMainActivity: AppCompatActivity() {
@@ -22,7 +23,7 @@ class NewMainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding : NewMainBinding = DataBindingUtil.setContentView(this, R.layout.new_main)
+        val binding : MainBinding = DataBindingUtil.setContentView(this, R.layout.main)
 
         val context = this
         binding.main = viewModel

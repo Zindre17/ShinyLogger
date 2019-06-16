@@ -62,11 +62,11 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
         requestLayout()
     }
 
-    public fun getImageId():Int{
+    public fun getImage():Int{
         return mImage
     }
 
-    public fun setImageId(imageId:Int){
+    public fun setImage(imageId:Int){
         mImage = imageId
         setupImage()
         invalidate()
@@ -75,12 +75,15 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
 
     private fun setupImage(){
-        if(mImage !=0)
+        if(mImage !=0) {
             mBitmap = BitmapFactory.decodeResource(resources, mImage)
+            mBitmap = RescaleImage(mBitmap, imageSize, imageSize)
+        }
     }
 
     private fun RescaleImage(im: Bitmap?, newWidth: Float, newHeight: Float ): Bitmap?{
         im?: return null
+        if(newWidth == 0f || newHeight == 0f) return im
         val matrix = Matrix()
 
         val src = RectF(0f,0f,im.width.toFloat(), im.height.toFloat())
@@ -108,6 +111,7 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var imageX: Float = 0f
     private var imageY: Float = 0f
+    private var imageSize: Float = 0f
 
     //path for the box with semi-circle at the end
     private var path: Path = Path()
@@ -192,7 +196,7 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
         bt = cy - circleRadius / 2f
         bb = bt + circleRadius
 
-        val imageSize: Float = circleRadius * mRoot2.toFloat()
+        imageSize = circleRadius * mRoot2.toFloat()
         mBitmap = RescaleImage(mBitmap, imageSize, imageSize)
 
         textX = if(mFlipped){
