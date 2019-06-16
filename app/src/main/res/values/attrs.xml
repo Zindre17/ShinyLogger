@@ -23,5 +23,14 @@
         <attr name="text" format="string"/>
         <attr name="image" format="reference"/>
         <attr name="flipped" format="boolean"/>
+        <attr name="align" format="flags">
+            <flag name="horizontalCenter" value="1"/>
+            <flag name="verticalCenter" value="2"/>
+            <flag name="left" value="4"/>
+            <flag name="right" value="8"/>
+            <flag name="top" value="16"/>
+            <flag name="bottom" value="32"/>
+        </attr>
+        <attr name="paddingOnLimitation" format="dimension"/>
     </declare-styleable>
 </resources>

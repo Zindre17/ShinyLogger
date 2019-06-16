@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.aarstrand.zindre.pokechecklist.data.Launch"/>
+        <variable
+            name="main"
+            type="com.aarstrand.zindre.pokechecklist.data.MainViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/dex"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_weight="2"
+            />
+
+        <com.aarstrand.zindre.pokechecklist.custom.MainButton
+            android:id="@+id/dex"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:flipped="false"
+            app:image="@drawable/pokedex"
+            app:text="Shinydex"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            app:layout_constraintBottom_toTopOf="@id/hunt"
+            app:layout_constraintVertical_weight="1"
+            app:paddingOnLimitation="20dp"
+            />
+        <com.aarstrand.zindre.pokechecklist.custom.MainButton
+            android:id="@+id/hunt"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:flipped="true"
+            app:image="@drawable/hunt"
+            app:text="Hunt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dex"
+            app:layout_constraintBottom_toTopOf="@id/collection"
+            app:layout_constraintVertical_weight="1"
+            app:paddingOnLimitation="20dp"
+            />
+
+        <com.aarstrand.zindre.pokechecklist.custom.MainButton
+            android:id="@+id/collection"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:flipped="false"
+            app:image="@drawable/collection"
+            app:text="Collection"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hunt"
+            app:layout_constraintBottom_toTopOf="@id/progress"
+            app:layout_constraintVertical_weight="1"
+            app:paddingOnLimitation="20dp"
+            />
+
+        <com.aarstrand.zindre.pokechecklist.custom.MainButton
+            android:id="@+id/progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:flipped="true"
+            app:image="@drawable/pokeball"
+            app:text="Progress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/collection"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_weight="1"
+            app:paddingOnLimitation="20dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

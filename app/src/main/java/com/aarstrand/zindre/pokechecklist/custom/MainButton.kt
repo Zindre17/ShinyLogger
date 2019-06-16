@@ -15,10 +15,13 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var mFlipped: Boolean
     private var mText: String?
     private var mImage: Int
+    private var mPosition: Int
+    private var mPadding: Float
+
+    private var mBitmap: Bitmap? = null
 
 
-    private var image: Bitmap? = null
-
+    private val mRoot2: Double = Math.sqrt(2.0)
 
     init{
         context.theme.obtainStyledAttributes(
@@ -29,6 +32,9 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 mFlipped = getBoolean(R.styleable.MainButton_flipped, false)
                 mText = getString(R.styleable.MainButton_text)
                 mImage = getResourceId(R.styleable.MainButton_image, 0)
+                mPosition = getInteger(R.styleable.MainButton_align, 3) //horCenter & verCenter
+                mPadding = getDimension(R.styleable.MainButton_paddingOnLimitation, 0f)
+                setupImage()
             } finally {
                 recycle()
             }
@@ -69,9 +75,21 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
 
     private fun setupImage(){
-
+        if(mImage !=0)
+            mBitmap = BitmapFactory.decodeResource(resources, mImage)
     }
 
+    private fun RescaleImage(im: Bitmap?, newWidth: Float, newHeight: Float ): Bitmap?{
+        im?: return null
+        val matrix = Matrix()
+
+        val src = RectF(0f,0f,im.width.toFloat(), im.height.toFloat())
+        val dst = RectF(0f, 0f, newWidth, newHeight)
+
+        matrix.setRectToRect(src,dst, Matrix.ScaleToFit.CENTER)
+
+        return Bitmap.createBitmap(im, 0,0, im.width, im.height, matrix, true)
+    }
 
     //for the positioning the circle
     private var circleRadius: Float = 0f
@@ -88,10 +106,15 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var textX: Float = 0f
     private var textY: Float = 0f
 
+    private var imageX: Float = 0f
+    private var imageY: Float = 0f
+
     //path for the box with semi-circle at the end
     private var path: Path = Path()
     //path for the circle with spike
     private var circle: Path = Path()
+    //path for the border of the circle
+    private var circleBorder: Path = Path()
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -100,27 +123,92 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val xpad = (paddingStart + paddingEnd).toFloat()
         val ypad = (paddingTop + paddingBottom).toFloat()
 
-        val ww = w.toFloat() - xpad
-        val hh = h.toFloat() - ypad
+        var ww = w.toFloat() - xpad
+        var hh = h.toFloat() - ypad
 
         // Figure out how big we can make the pie. minimum of entire height or 1/4 of width
-        val diameter = Math.min(ww/4f, hh)
+        val diameter: Float
 
-        circleRadius = diameter/2f
-        cy = paddingTop.toFloat() + circleRadius
-        bt = diameter / 4f + paddingTop.toFloat()
+        val addPadding = paddingStart == 0 && paddingEnd == 0 && paddingTop == 0 && paddingBottom == 0
+        if(ww/4f < hh){
+            //width is limitation
+            if(addPadding) {
+                ww -= mPadding*2
+                setPadding(mPadding.toInt(), 0, mPadding.toInt(), 0)
+            }
+            diameter = ww / 4f
+            circleRadius = diameter/2f
+            cx = if(mFlipped){
+                w - paddingEnd.toFloat() - circleRadius
+            }else{
+                paddingStart.toFloat() + circleRadius
+            }
+
+
+            cy = when {
+                mPosition and 2 == 2 -> //vertical center
+                    paddingTop.toFloat() + hh/2f
+                mPosition and 16 == 16 -> //top
+                    paddingTop.toFloat() + circleRadius
+                mPosition and 32 == 32 -> //bottom
+                    h - paddingBottom.toFloat() - circleRadius
+                else -> paddingTop.toFloat() + hh/2f
+            }
+        }else{
+            //height is limitation
+            if(addPadding){
+                hh -= mPadding*2
+                setPadding(0,mPadding.toInt(), 0, mPadding.toInt())
+            }
+            diameter = hh
+            circleRadius = diameter/2f
+            cy = paddingTop.toFloat() + hh/2f
+            cx = when {
+                mPosition and 1 == 1 -> //horizontal center
+                    if(mFlipped){
+                        w/2f + 3*circleRadius
+                    }else{
+                        w/2f - 3*circleRadius
+                    }
+                mPosition and 4 == 4 -> //left
+                    if(mFlipped){
+                        paddingStart.toFloat() + 7*circleRadius
+                    }else{
+                        paddingStart.toFloat() + circleRadius
+                    }
+                mPosition and 8 == 8 -> //right
+                    if(mFlipped){
+                        w - paddingEnd.toFloat() - circleRadius
+                    }else{
+                        w - paddingEnd.toFloat() - 7*circleRadius
+                    }
+                else -> if(mFlipped) {
+                    w / 2f + 3 * circleRadius
+                }else {
+                    w / 2f - 3 * circleRadius
+                }
+            }
+        }
+        bt = cy - circleRadius / 2f
         bb = bt + circleRadius
 
-        textX = w/2f
+        val imageSize: Float = circleRadius * mRoot2.toFloat()
+        mBitmap = RescaleImage(mBitmap, imageSize, imageSize)
+
+        textX = if(mFlipped){
+            cx - 3.5f*circleRadius
+        }else{
+            cx + 3.5f*circleRadius
+        }
         textY = cy
         textPaint.textSize = diameter / 4f
 
         strokePaint.strokeWidth = diameter/20f
+        val bwidth = strokePaint.strokeWidth/2f
 
         textY += textPaint.textSize/3f
 
         if(mFlipped){
-            cx = w - paddingEnd.toFloat() - circleRadius
 
             br = cx
             bl = br - 3*diameter
@@ -133,11 +221,18 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
             path.close()
 
             circle.reset()
-            circle.arcTo(cx - circleRadius, paddingTop.toFloat(), cx + circleRadius, cy + circleRadius, 135f, -270f, false)
+            circle.arcTo(cx - circleRadius, cy - circleRadius, cx + circleRadius, cy + circleRadius, 135f, -270f, false)
             circle.lineTo(cx - circleRadius * 1.5f, cy)
             circle.close()
+
+
+            circleBorder.reset()
+            circleBorder.arcTo(cx - circleRadius + bwidth, cy - circleRadius + bwidth, cx + circleRadius - bwidth, cy + circleRadius - bwidth, 135f, -270f, false)
+            circleBorder.lineTo(cx - circleRadius * 1.5f + bwidth, cy)
+            circleBorder.close()
+
+
         }else {
-            cx = paddingStart.toFloat() + circleRadius
 
             bl = cx
             br = bl + 3 * diameter
@@ -150,10 +245,19 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
             path.close()
 
             circle.reset()
-            circle.arcTo(paddingStart.toFloat(), paddingTop.toFloat(), cx + circleRadius, cy + circleRadius, 45f, 270f, false)
+            circle.arcTo(cx - circleRadius, cy - circleRadius, cx + circleRadius, cy + circleRadius, 45f, 270f, false)
             circle.lineTo(cx + circleRadius * 1.5f, cy)
             circle.close()
+
+            circleBorder.reset()
+            circleBorder.arcTo(cx - circleRadius + bwidth, cy - circleRadius + bwidth, cx + circleRadius - bwidth, cy + circleRadius - bwidth, 45f, 270f, false)
+            circleBorder.lineTo(cx + circleRadius * 1.5f - bwidth, cy)
+            circleBorder.close()
+
         }
+
+        imageX = cx - imageSize/2f
+        imageY = cy - imageSize/2f
     }
 
 
@@ -191,8 +295,9 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
             //drawCircle(cx,cy,circleRadius, boxPaint)
             //drawCircle(cx,cy,circleRadius, strokePaint)
             drawPath(circle, circlePaint)
-            drawPath(circle, strokePaint)
-            drawText(mText,textX, textY, textPaint)
+            drawPath(circleBorder, strokePaint)
+            drawText(mText?:"" ,textX, textY, textPaint)
+            if(mBitmap!=null) drawBitmap(mBitmap,imageX, imageY,null)
         }
 
     }
