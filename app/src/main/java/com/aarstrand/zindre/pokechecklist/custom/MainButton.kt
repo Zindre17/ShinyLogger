@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.tools.Tools
-import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.getSizedBitmap
+import com.aarstrand.zindre.pokechecklist.tools.Tools.getSizedBitmap
 
 class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
 

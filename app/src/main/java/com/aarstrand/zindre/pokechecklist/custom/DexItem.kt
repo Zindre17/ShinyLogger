@@ -8,8 +8,8 @@ import android.util.AttributeSet
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.tools.Tools
-import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.getSizedBitmap
-import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.root2
+import com.aarstrand.zindre.pokechecklist.tools.Tools.getSizedBitmap
+import com.aarstrand.zindre.pokechecklist.tools.Tools.root2
 
 class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
 

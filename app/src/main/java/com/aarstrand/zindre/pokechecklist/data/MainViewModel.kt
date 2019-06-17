@@ -8,17 +8,21 @@ class MainViewModel: ViewModel(){
 
     var launchEvent = MutableLiveData<Launch>()
 
-    var b1Text: String = "Shinydex"
-    var b1Image: Int = R.drawable.pokedex
+    val b1Text: String = "Shinydex"
+    val b1Image: Int = R.drawable.pokedex
+    val b1Launch: Launch = Launch.DEX
 
-    var b2Text: String = "Hunt"
-    var b2Image: Int = R.drawable.hunt
+    val b2Text: String = "Hunt"
+    val b2Image: Int = R.drawable.hunt
+    val b2Launch: Launch = Launch.HUNT
 
-    var b3Text: String = "Collection"
-    var b3Image: Int = R.drawable.collection
+    val b3Text: String = "Collection"
+    val b3Image: Int = R.drawable.collection
+    val b3Launch: Launch = Launch.COLL
 
-    var b4Text: String = "Progress"
-    var b4Image: Int = 0
+    val b4Text: String = "Progress"
+    val b4Image: Int = 0
+    val b4Launch: Launch = Launch.PROG
 
     fun onClick(item : Launch){
         launchEvent.value = item

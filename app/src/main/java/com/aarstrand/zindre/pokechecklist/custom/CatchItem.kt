@@ -7,7 +7,7 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
-import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.getSizedBitmap
+import com.aarstrand.zindre.pokechecklist.tools.Tools.getSizedBitmap
 
 class CatchItem(context: Context, attrs: AttributeSet): View(context, attrs){
 
