@@ -18,6 +18,14 @@
     />
 
 
+    <com.aarstrand.zindre.pokechecklist.custom.DexItem
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
+
+
+
     <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

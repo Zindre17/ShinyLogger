@@ -40,4 +40,12 @@
         <attr name="nickname" format="string"/>
         <attr name="game" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="DexItem">
+        <attr name="image"/>
+        <attr name="count" format="integer"/>
+        <attr name="name" format="string"/>
+        <attr name="number" format="integer"/>
+        <attr name="type1" format="integer" />
+        <attr name="type2" format="integer" />
+    </declare-styleable>
 </resources>

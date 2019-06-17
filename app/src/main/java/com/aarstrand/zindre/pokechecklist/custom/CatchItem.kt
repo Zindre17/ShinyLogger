@@ -7,6 +7,7 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
+import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.getSizedBitmap
 
 class CatchItem(context: Context, attrs: AttributeSet): View(context, attrs){
 
@@ -34,18 +35,6 @@ class CatchItem(context: Context, attrs: AttributeSet): View(context, attrs){
                 recycle()
             }
         }
-    }
-
-    private fun getImage(id:Int, width: Float, height: Float):Bitmap?{
-        val b = BitmapFactory.decodeResource(resources, id) ?: return null
-        val matrix: Matrix = Matrix()
-
-        val src = RectF(0f,0f, b.width.toFloat(), b.height.toFloat())
-        val dst = RectF(0f, 0f, width, height)
-
-        matrix.setRectToRect(src,dst, Matrix.ScaleToFit.CENTER)
-
-        return Bitmap.createBitmap(b, 0,0, b.width, b.height, matrix, true)
     }
 
     var nameBox: Path = Path()
@@ -103,19 +92,20 @@ class CatchItem(context: Context, attrs: AttributeSet): View(context, attrs){
         imageX = paddingStart + unit
         imageY = paddingTop + unit
         imageSize = 3*unit
-        mImageBitmap = getImage(mImage, imageSize, imageSize)
+        mImageBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
 
-        ballX = paddingStart + unit/2f
-        ballY = paddingTop + unit/2f
-        ballSize = unit
-        mBallBitmap = getImage(mBall, ballSize, ballSize)
+        ballX = paddingStart.toFloat()
+        ballY = paddingTop.toFloat()
+        ballSize = unit*1.2f
+        mBallBitmap = getSizedBitmap(this.context, R.drawable.pokeball, ballSize, ballSize)
 
-        gameX = w - paddingEnd - 3*unit/2f
+        gameX = w - paddingEnd - unit*1.2f
         gameY = ballY
-        gameSize = unit
-        mGameBitmap = getImage(mGame, gameSize, gameSize)
+        gameSize = unit*1.2f
+        mGameBitmap = getSizedBitmap(this.context, R.drawable.pokeball_gray, gameSize, gameSize)
 
         nameTextPaint.textSize = unit/3f * 2f
+        if(mNick!=null)
         while(nameTextPaint.measureText(mNick) > unit*3)
             nameTextPaint.textSize *= .9f
         nameX = w - paddingEnd - size/2f

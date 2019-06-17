@@ -6,8 +6,9 @@ import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.AnticipateInterpolator
 import com.aarstrand.zindre.pokechecklist.R
+import com.aarstrand.zindre.pokechecklist.tools.Tools
+import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.getSizedBitmap
 
 class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -20,9 +21,6 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var mBitmap: Bitmap? = null
 
-
-    private val mRoot2: Double = Math.sqrt(2.0)
-
     init{
         context.theme.obtainStyledAttributes(
                 attrs,
@@ -34,7 +32,6 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 mImage = getResourceId(R.styleable.MainButton_image, 0)
                 mPosition = getInteger(R.styleable.MainButton_align, 3) //horCenter & verCenter
                 mPadding = getDimension(R.styleable.MainButton_paddingOnLimitation, 0f)
-                setupImage()
             } finally {
                 recycle()
             }
@@ -68,30 +65,9 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     public fun setImage(imageId:Int){
         mImage = imageId
-        setupImage()
+        mBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
         invalidate()
         requestLayout()
-    }
-
-
-    private fun setupImage(){
-        if(mImage !=0) {
-            mBitmap = BitmapFactory.decodeResource(resources, mImage)
-            mBitmap = RescaleImage(mBitmap, imageSize, imageSize)
-        }
-    }
-
-    private fun RescaleImage(im: Bitmap?, newWidth: Float, newHeight: Float ): Bitmap?{
-        im?: return null
-        if(newWidth == 0f || newHeight == 0f) return im
-        val matrix = Matrix()
-
-        val src = RectF(0f,0f,im.width.toFloat(), im.height.toFloat())
-        val dst = RectF(0f, 0f, newWidth, newHeight)
-
-        matrix.setRectToRect(src,dst, Matrix.ScaleToFit.CENTER)
-
-        return Bitmap.createBitmap(im, 0,0, im.width, im.height, matrix, true)
     }
 
     //for the positioning the circle
@@ -196,8 +172,8 @@ class MainButton(context: Context, attrs: AttributeSet) : View(context, attrs) {
         bt = cy - circleRadius / 2f
         bb = bt + circleRadius
 
-        imageSize = circleRadius * mRoot2.toFloat()
-        mBitmap = RescaleImage(mBitmap, imageSize, imageSize)
+        imageSize = circleRadius * Tools.root2
+        mBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
 
         textX = if(mFlipped){
             cx - 3.5f*circleRadius
