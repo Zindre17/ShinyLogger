@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.aarstrand.zindre.pokechecklist.PokedexActivity;
 import com.aarstrand.zindre.pokechecklist.R;
 import com.aarstrand.zindre.pokechecklist.db.models.Pokemon;
-import com.aarstrand.zindre.pokechecklist.tools.Tools;
+import com.aarstrand.zindre.pokechecklist.tools.old.Tools;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
 

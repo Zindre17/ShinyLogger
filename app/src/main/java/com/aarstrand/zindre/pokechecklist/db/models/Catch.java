@@ -2,8 +2,7 @@ package com.aarstrand.zindre.pokechecklist.db.models;
 
 import android.graphics.Bitmap;
 
-import com.aarstrand.zindre.pokechecklist.tools.Tools;
-
+import com.aarstrand.zindre.pokechecklist.tools.old.Tools;
 public class Catch {
 
     private int _id;

@@ -19,7 +19,7 @@ import com.aarstrand.zindre.pokechecklist.db.PokeCheckListContract;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
 import com.aarstrand.zindre.pokechecklist.db.models.Catch;
 import com.aarstrand.zindre.pokechecklist.db.models.Pokemon;
-import com.aarstrand.zindre.pokechecklist.tools.Tools;
+import com.aarstrand.zindre.pokechecklist.tools.old.Tools;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;

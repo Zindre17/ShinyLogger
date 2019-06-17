@@ -8,6 +8,8 @@ import android.util.AttributeSet
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.tools.Tools
+import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.getSizedBitmap
+import com.aarstrand.zindre.pokechecklist.tools.Tools.Companion.root2
 
 class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
 
@@ -16,6 +18,8 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
     private var mCount: Int
     private var mType1: Int
     private var mType2: Int
+    private var mNumber: Int
+    private var mNumString: String
 
     private var mBallBitmap: Bitmap? = null
     private var mImageBitmap: Bitmap? = null
@@ -23,7 +27,7 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
     private var mType2Bitmap: Bitmap? = null
 
     init {
-        context.obtainStyledAttributes(
+        context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.DexItem,
                 0, 0).apply {
@@ -33,57 +37,61 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
                 mCount = getInteger(R.styleable.DexItem_count,0)
                 mType1 = getInteger(R.styleable.DexItem_type1, 0)
                 mType2 = getInteger(R.styleable.DexItem_type2, 0)
-
+                mNumber = getInteger(R.styleable.DexItem_number, 0)
+                mNumString = String.format("#%03d",mNumber)
             } finally {
                 recycle()
             }
         }
     }
-
-    private fun getImage(id:Int, width: Float, height: Float):Bitmap?{
-        val b = BitmapFactory.decodeResource(resources, id) ?: return null
-        val matrix: Matrix = Matrix()
-
-        val src = RectF(0f,0f, b.width.toFloat(), b.height.toFloat())
-        val dst = RectF(0f, 0f, width, height)
-
-        matrix.setRectToRect(src,dst, Matrix.ScaleToFit.CENTER)
-
-        return Bitmap.createBitmap(b, 0,0, b.width, b.height, matrix, true)
-    }
-
-    var box: Path = Path()
+    
+    private var box: Path = Path()
     private val nameBoxPaint: Paint = Paint(ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#ff3e00")
         style = Paint.Style.FILL
     }
 
-    var nameX: Float = 0f
-    var nameY: Float = 0f
+    private var nameX: Float = 0f
+    private var nameY: Float = 0f
     private var nameTextPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
-        textAlign = Paint.Align.CENTER
+        textAlign = Paint.Align.LEFT
         typeface = Typeface.DEFAULT
     }
+    private var numX: Float = 0f
+    private var numY: Float = 0f
+    private var numPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
+        textAlign = Paint.Align.LEFT
+        typeface = Typeface.DEFAULT
+        color = Color.parseColor("#353535")
+    }
 
-    var imageX: Float = 0f
-    var imageY: Float = 0f
-    var imageSize: Float = 0f
+    private var countX: Float = 0f
+    private var countY: Float = 0f
+    private var countPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
+        textAlign = Paint.Align.CENTER
+        typeface = Typeface.create(Typeface.DEFAULT, Typeface.ITALIC)
+        color = Color.WHITE
+    }
 
-    var ballX: Float = 0f
-    var ballY: Float = 0f
-    var ballSize: Float = 0f
+    private var imageX: Float = 0f
+    private var imageY: Float = 0f
+    private var imageSize: Float = 0f
 
-    var type1X: Float = 0f
-    var type1Y: Float = 0f
-    var type1Size: Float = 0f
+    private var ballX: Float = 0f
+    private var ballY: Float = 0f
+    private var ballSize: Float = 0f
 
-    var type2X: Float = 0f
-    var type2Y: Float = 0f
-    var type2Size: Float = 0f
+    private var type1X: Float = 0f
+    private var type1Y: Float = 0f
+    private var type1Size: Float = 0f
 
-    var circleX: Float = 0f
-    var circleY: Float = 0f
-    var circleRadius: Float = 0f
+    private var type2X: Float = 0f
+    private var type2Y: Float = 0f
+    private var type2Size: Float = 0f
+
+    private var circleX: Float = 0f
+    private var circleY: Float = 0f
+    private var circleRadius: Float = 0f
     private val circlePaint: Paint = Paint(ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         style = Paint.Style.FILL
@@ -109,31 +117,37 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         circleX = paddingStart + circleRadius
         circleY = paddingTop + circleRadius
 
-        imageX = paddingStart + unit
-        imageY = paddingTop + unit
-        imageSize = Tools.root2 * circleRadius
-        mImageBitmap = getImage(mImage, imageSize, imageSize)
+        imageX = paddingStart + circleRadius - circleRadius * .95f / root2
+        imageY = paddingTop + circleRadius - circleRadius * .95f / root2
+        imageSize = Tools.root2 * circleRadius*.95f
+        mImageBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
 
         ballX = paddingStart.toFloat()
         ballY = paddingTop.toFloat()
-        ballSize = unit
-        mBallBitmap = getImage(R.drawable.pokeball, ballSize, ballSize)
+        ballSize = unit*1.2f
+        mBallBitmap = getSizedBitmap(this.context, R.drawable.pokeball, ballSize, ballSize)
+
+        countPaint.textSize = unit/2f
+        countY = paddingTop.toFloat() + countPaint.textSize/2f
+        countX = paddingStart + unit*1.25f
 
         type1X = w - paddingEnd - 3*unit/2f
         type1Y = ballY
         type1Size = unit
-        mType1Bitmap = getImage(mType1, type1Size, type1Size)
+        mType1Bitmap = getSizedBitmap(this.context, mType1, type1Size, type1Size)
 
         type2X = 0f
         type2Y = 0f
         type2Size = type1Size
-        mType2Bitmap = getImage(mType2, type2Size, type2Size)
-        nameTextPaint.textSize = unit/3f * 2f
-        if(mName!=null)
-        while(nameTextPaint.measureText(mName) > unit*3)
-            nameTextPaint.textSize *= .9f
-        nameX = w - paddingEnd - size/2f
-        nameY = h - paddingBottom - unit/5f
+        mType2Bitmap = getSizedBitmap(this.context, mType2, type2Size, type2Size)
+        nameTextPaint.textSize = unit
+
+        nameX = paddingStart + unit*6
+        nameY = paddingTop + unit*1.5f
+
+        numX = nameX
+        numY = nameY + unit *1.5f
+        numPaint.textSize = unit*.8f
 
         box.reset()
         box.moveTo(paddingStart.toFloat(), h - paddingBottom.toFloat())
@@ -155,6 +169,8 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
             if(mType1Bitmap!=null)drawBitmap(mType1Bitmap, type1X, type1Y, null)
             if(mType2Bitmap!=null)drawBitmap(mType2Bitmap, type2X, type2Y, null)
             drawText(mName?:"", nameX, nameY, nameTextPaint)
+            drawText(mNumString, numX, numY, numPaint)
+            if(mCount>0)drawText(String.format("x%d", mCount), countX, countY, countPaint)
         }
     }
 }

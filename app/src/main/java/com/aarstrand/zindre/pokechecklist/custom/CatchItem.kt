@@ -21,7 +21,7 @@ class CatchItem(context: Context, attrs: AttributeSet): View(context, attrs){
     private var mGameBitmap: Bitmap? = null
 
     init {
-        context.obtainStyledAttributes(
+        context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.CatchItem,
                 0, 0).apply {

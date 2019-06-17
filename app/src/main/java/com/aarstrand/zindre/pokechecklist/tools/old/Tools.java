@@ -1,4 +1,4 @@
-package com.aarstrand.zindre.pokechecklist.tools;
+package com.aarstrand.zindre.pokechecklist.tools.old;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

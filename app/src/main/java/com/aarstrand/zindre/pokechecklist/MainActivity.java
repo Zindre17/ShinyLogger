@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.aarstrand.zindre.pokechecklist.db.PokeCheckListDbHelper;
-import com.aarstrand.zindre.pokechecklist.tools.Tools;
+import com.aarstrand.zindre.pokechecklist.tools.old.Tools;
 import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;

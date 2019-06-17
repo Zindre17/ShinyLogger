@@ -10,7 +10,7 @@ import android.widget.Toolbar;
 
 import com.aarstrand.zindre.pokechecklist.db.models.Catch;
 import com.aarstrand.zindre.pokechecklist.db.models.Pokemon;
-import com.aarstrand.zindre.pokechecklist.tools.Tools;
+import com.aarstrand.zindre.pokechecklist.tools.old.Tools;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -21,8 +21,11 @@
     <com.aarstrand.zindre.pokechecklist.custom.DexItem
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        />
+        android:padding="20dp"
+        app:count="1"
+        app:image="@drawable/pokedex"
+        app:name="Feraligatr"
+        app:number="30" />
 
 
 
