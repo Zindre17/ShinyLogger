@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.aarstrand.zindre.pokechecklist.data.Launch"/>
+        <import type="com.aarstrand.zindre.pokechecklist.viewmodels.Launch"/>
         <variable
             name="main"
-            type="com.aarstrand.zindre.pokechecklist.data.MainViewModel" />
+            type="com.aarstrand.zindre.pokechecklist.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

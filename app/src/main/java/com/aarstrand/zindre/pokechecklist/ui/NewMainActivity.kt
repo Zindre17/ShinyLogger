@@ -9,12 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.aarstrand.zindre.pokechecklist.HuntActivity
 import com.aarstrand.zindre.pokechecklist.MyShiniesActivity
-import com.aarstrand.zindre.pokechecklist.PokedexActivity
 import com.aarstrand.zindre.pokechecklist.R
-import com.aarstrand.zindre.pokechecklist.data.Launch
-import com.aarstrand.zindre.pokechecklist.data.MainViewModel
+import com.aarstrand.zindre.pokechecklist.viewmodels.Launch
+import com.aarstrand.zindre.pokechecklist.viewmodels.MainViewModel
 import com.aarstrand.zindre.pokechecklist.databinding.MainBinding
-import com.aarstrand.zindre.pokechecklist.databinding.NewMainBinding
 
 class NewMainActivity: AppCompatActivity() {
 
@@ -29,7 +27,7 @@ class NewMainActivity: AppCompatActivity() {
         binding.main = viewModel
         viewModel.launchEvent.observe(this, Observer {
             when (it){
-                Launch.DEX -> context.startActivity(Intent(this, PokedexActivity::class.java))
+                Launch.DEX -> context.startActivity(Intent(this, DexActivity::class.java))
                 Launch.HUNT -> context.startActivity(Intent(this, HuntActivity::class.java))
                 Launch.COLL -> context.startActivity(Intent(this, MyShiniesActivity::class.java))
                 Launch.NONE -> return@Observer

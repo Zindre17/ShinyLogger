@@ -19,12 +19,14 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
     private var mType1: Int
     private var mType2: Int
     private var mNumber: Int
+
     private var mNumString: String
 
     private var mBallBitmap: Bitmap? = null
     private var mImageBitmap: Bitmap? = null
     private var mType1Bitmap: Bitmap? = null
     private var mType2Bitmap: Bitmap? = null
+
 
     init {
         context.theme.obtainStyledAttributes(
@@ -44,7 +46,43 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
             }
         }
     }
-    
+
+    fun getName(): String? { return mName}
+    fun setName(name: String?){
+        mName = name
+        invalidate()
+    }
+
+    fun getImage(): Int {return mImage}
+    fun setImage(imageId: Int){
+        mImage = imageId
+        invalidate()
+    }
+
+    fun getNumber(): Int {return mNumber}
+    fun setNumber(number: Int){
+        mNumber= number
+        invalidate()
+    }
+
+    fun getCount(): Int {return mCount}
+    fun setCount(count: Int){
+        mCount = count
+        invalidate()
+    }
+
+    fun getType1(): Int {return mType1}
+    fun setType1(type: Int){
+        mType1 = type
+        invalidate()
+    }
+
+    fun getType2(): Int {return mType2}
+    fun setType2(type: Int){
+        mType2 = type
+        invalidate()
+    }
+
     private var box: Path = Path()
     private val nameBoxPaint: Paint = Paint(ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#ff3e00")

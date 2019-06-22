@@ -1,4 +1,4 @@
-package com.aarstrand.zindre.pokechecklist.data
+package com.aarstrand.zindre.pokechecklist.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
