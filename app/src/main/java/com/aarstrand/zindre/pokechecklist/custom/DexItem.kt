@@ -5,11 +5,13 @@ import android.graphics.*
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.tools.Tools
 import com.aarstrand.zindre.pokechecklist.tools.Tools.getSizedBitmap
 import com.aarstrand.zindre.pokechecklist.tools.Tools.root2
+import kotlin.math.min
 
 class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
 
@@ -47,37 +49,37 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         }
     }
 
-    fun getName(): String? { return mName}
+    fun getName() = mName
     fun setName(name: String?){
         mName = name
         invalidate()
     }
 
-    fun getImage(): Int {return mImage}
+    fun getImage() = mImage
     fun setImage(imageId: Int){
         mImage = imageId
         invalidate()
     }
 
-    fun getNumber(): Int {return mNumber}
+    fun getNumber() = mNumber
     fun setNumber(number: Int){
         mNumber= number
         invalidate()
     }
 
-    fun getCount(): Int {return mCount}
+    fun getCount() = mCount
     fun setCount(count: Int){
         mCount = count
         invalidate()
     }
 
-    fun getType1(): Int {return mType1}
+    fun getType1() = mType1
     fun setType1(type: Int){
         mType1 = type
         invalidate()
     }
 
-    fun getType2(): Int {return mType2}
+    fun getType2() = mType2
     fun setType2(type: Int){
         mType2 = type
         invalidate()
@@ -135,6 +137,58 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         style = Paint.Style.FILL
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val wMode = MeasureSpec.getMode(widthMeasureSpec)
+        var w = MeasureSpec.getSize(widthMeasureSpec)
+
+        val hMode = MeasureSpec.getMode(heightMeasureSpec)
+        var h = MeasureSpec.getSize(heightMeasureSpec)
+
+        if(wMode == MeasureSpec.EXACTLY && hMode == MeasureSpec.EXACTLY){
+            //both are specified, no need to measure
+        }else if(wMode == MeasureSpec.EXACTLY && hMode == MeasureSpec.UNSPECIFIED){
+            //width set, height can be whatever
+            val contentWidth = w - paddingStart - paddingEnd
+            h = (contentWidth/2.4f).toInt() + paddingBottom + paddingTop
+        }else if(hMode == MeasureSpec.EXACTLY && wMode == MeasureSpec.UNSPECIFIED){
+            //height set, width can be whatever
+            val contentHeight = h - paddingTop - paddingBottom
+            w = (contentHeight * 2.4f).toInt() + paddingStart + paddingEnd
+        }else if(wMode == MeasureSpec.EXACTLY && hMode == MeasureSpec.AT_MOST){
+            //width set, height has a maximum
+            val maxContentWidth = w - paddingStart - paddingEnd
+            val maxContentHeight = h - paddingTop - paddingBottom
+            val recHeight = (maxContentWidth/2.4f).toInt()
+            if(maxContentHeight < recHeight){
+                val diff = ((maxContentWidth - maxContentHeight * 2.4f)/2f).toInt()
+                setPadding(paddingLeft+diff, paddingTop, paddingRight+diff, paddingBottom)
+            }else{
+                h = recHeight + paddingBottom + paddingTop
+            }
+
+        }else if(hMode == MeasureSpec.EXACTLY && wMode == MeasureSpec.AT_MOST){
+            //height set, width has a maximum
+            val maxContentWidth = w - paddingStart - paddingEnd
+            val maxContentHeight = h - paddingTop - paddingBottom
+            val recWidth= (maxContentHeight * 2.4f).toInt()
+            if(maxContentWidth < recWidth){
+                val diff = ((maxContentHeight - maxContentWidth/2.4f)/2f).toInt()
+                setPadding(paddingLeft, paddingTop+diff, paddingRight, paddingBottom+diff)
+            }else{
+                w = recWidth+ paddingStart+ paddingEnd
+            }
+        }else {
+
+        }
+        Log.v("Chart onMeasure w",MeasureSpec.toString(widthMeasureSpec))
+        Log.v("Chart onMeasure h",MeasureSpec.toString(heightMeasureSpec))
+
+        Log.v("SuggestedMinimumHeight", suggestedMinimumHeight.toString())
+        Log.v("SuggestedMinimumWidth", suggestedMinimumWidth.toString())
+        setMeasuredDimension(w,h)
+
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
@@ -144,20 +198,20 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         val ww = w.toFloat() - xpad
         val hh = h.toFloat() - ypad
 
-        val size = Math.min(ww/2.4f, hh)
-        val horPad = (w - size*2.4f) /2f
-        val verPad = (h - size) /2f
-        setPadding(horPad.toInt(), verPad.toInt(), horPad.toInt(), verPad.toInt())
+        //val size =  hh
+        //val horPad = (w - size*2.4f) /2f
+        //val verPad = (h - size) /2f
+        //setPadding(horPad.toInt(), verPad.toInt(), horPad.toInt(), verPad.toInt())
 
-        val unit = size/5f
+        val unit = hh/5f
 
-        circleRadius = size/2f
+        circleRadius = hh/2f
         circleX = paddingStart + circleRadius
         circleY = paddingTop + circleRadius
 
         imageX = paddingStart + circleRadius - circleRadius * .95f / root2
         imageY = paddingTop + circleRadius - circleRadius * .95f / root2
-        imageSize = Tools.root2 * circleRadius*.95f
+        imageSize = root2 * circleRadius*.95f
         mImageBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
 
         ballX = paddingStart.toFloat()
@@ -203,12 +257,14 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
             drawPath(box, nameBoxPaint)
             drawCircle(circleX, circleY, circleRadius*.95f,circlePaint)
             if(mImageBitmap!=null)drawBitmap(mImageBitmap, imageX, imageY, null)
-            if(mBallBitmap!=null)drawBitmap(mBallBitmap, ballX, ballY, null)
+            if(mCount!=0){
+                if(mBallBitmap!=null)drawBitmap(mBallBitmap, ballX, ballY, null)
+                drawText(String.format("x%d", mCount), countX, countY, countPaint)
+            }
             if(mType1Bitmap!=null)drawBitmap(mType1Bitmap, type1X, type1Y, null)
             if(mType2Bitmap!=null)drawBitmap(mType2Bitmap, type2X, type2Y, null)
             drawText(mName?:"", nameX, nameY, nameTextPaint)
             drawText(mNumString, numX, numY, numPaint)
-            if(mCount>0)drawText(String.format("x%d", mCount), countX, countY, countPaint)
         }
     }
 }

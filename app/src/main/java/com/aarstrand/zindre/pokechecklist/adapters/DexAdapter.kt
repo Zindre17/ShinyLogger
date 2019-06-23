@@ -32,7 +32,7 @@ class DexAdapter internal constructor(
         //holder.dexItemView.setImage(current.image)
         holder.dexItemView.setType1(current.type1)
         holder.dexItemView.setType2(current.type2)
-        //holder.dexItemView.setCount()
+        holder.dexItemView.setCount(0)
     }
 
     internal fun setPokemon(pokemon: List<Pokemon>){
