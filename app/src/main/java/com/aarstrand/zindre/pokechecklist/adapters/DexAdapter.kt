@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.custom.DexItem
@@ -14,7 +16,7 @@ class DexAdapter internal constructor(
 ): RecyclerView.Adapter<DexAdapter.PokemonViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var pokemon = emptyList<Pokemon>()
+    private var pokemon: List<Pokemon> = emptyList<Pokemon>()
 
     inner class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val dexItemView: DexItem = itemView.findViewById(R.id.item)
@@ -29,7 +31,7 @@ class DexAdapter internal constructor(
         val current = pokemon[position]
         holder.dexItemView.setName(current.name)
         holder.dexItemView.setNumber(current.number)
-        //holder.dexItemView.setImage(current.image)
+        holder.dexItemView.setImage(current.image)
         holder.dexItemView.setType1(current.type1)
         holder.dexItemView.setType2(current.type2)
         holder.dexItemView.setCount(0)

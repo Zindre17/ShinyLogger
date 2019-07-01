@@ -10,7 +10,7 @@ data class Pokemon(
         val name: String,
         val type1: Int,
         val type2: Int,
-        val image: String,
+        val image: ByteArray,
         val gen: Int
 ){
 }

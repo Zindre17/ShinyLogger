@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.aarstrand.zindre.pokechecklist.HuntActivity
 import com.aarstrand.zindre.pokechecklist.MyShiniesActivity
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.viewmodels.Launch
 import com.aarstrand.zindre.pokechecklist.viewmodels.MainViewModel
 import com.aarstrand.zindre.pokechecklist.databinding.MainBinding
+import com.aarstrand.zindre.pokechecklist.tools.PokedexCreator
 
 class NewMainActivity: AppCompatActivity() {
 
@@ -35,5 +38,8 @@ class NewMainActivity: AppCompatActivity() {
                 else -> return@Observer
             }
         })
+
+        val worker = OneTimeWorkRequestBuilder<PokedexCreator>().build()
+        WorkManager.getInstance(this).enqueue(worker)
     }
 }

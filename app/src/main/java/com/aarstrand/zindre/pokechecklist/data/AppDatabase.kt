@@ -6,8 +6,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 
-@Database (entities = [Pokemon::class, Catch::class], version = 1, exportSchema = false)
+@Database (entities = [Pokemon::class, Catch::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun pokemonDao(): PokemonDao
     abstract fun catchDao(): CatchDao
@@ -21,7 +22,7 @@ abstract class AppDatabase : RoomDatabase(){
                         context.applicationContext,
                         AppDatabase::class.java,
                         "shiny_database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 instance = i
                 return i
             }

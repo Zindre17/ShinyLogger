@@ -8,10 +8,9 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
-import com.aarstrand.zindre.pokechecklist.tools.Tools
 import com.aarstrand.zindre.pokechecklist.tools.Tools.getSizedBitmap
 import com.aarstrand.zindre.pokechecklist.tools.Tools.root2
-import kotlin.math.min
+
 
 class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
 
@@ -256,13 +255,13 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         canvas.apply {
             drawPath(box, nameBoxPaint)
             drawCircle(circleX, circleY, circleRadius*.95f,circlePaint)
-            if(mImageBitmap!=null)drawBitmap(mImageBitmap, imageX, imageY, null)
+            if(mImageBitmap!=null)drawBitmap(mImageBitmap!!, imageX, imageY, null)
             if(mCount!=0){
-                if(mBallBitmap!=null)drawBitmap(mBallBitmap, ballX, ballY, null)
+                if(mBallBitmap!=null)drawBitmap(mBallBitmap!!, ballX, ballY, null)
                 drawText(String.format("x%d", mCount), countX, countY, countPaint)
             }
-            if(mType1Bitmap!=null)drawBitmap(mType1Bitmap, type1X, type1Y, null)
-            if(mType2Bitmap!=null)drawBitmap(mType2Bitmap, type2X, type2Y, null)
+            if(mType1Bitmap!=null)drawBitmap(mType1Bitmap!!, type1X, type1Y, null)
+            if(mType2Bitmap!=null)drawBitmap(mType2Bitmap!!, type2X, type2Y, null)
             drawText(mName?:"", nameX, nameY, nameTextPaint)
             drawText(mNumString, numX, numY, numPaint)
         }
