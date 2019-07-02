@@ -19,11 +19,10 @@ import java.io.ByteArrayOutputStream
 class PokedexCreator(context: Context, params: WorkerParameters): CoroutineWorker(context, params){
 
     override suspend fun doWork(): Result {
-        if(pokemonRepository.count < 100) {
+        if(pokemonRepository.getCount() < 100) {
             return try {
                 println(AppDatabase.getInstance(applicationContext).query("select * from pokemon",null).count)
                 createAndFillInDB(applicationContext)
-                println(pokemonRepository.count)
                 println(AppDatabase.getInstance(applicationContext).query("select * from pokemon",null).count)
 
                 Result.success()
@@ -39,7 +38,6 @@ class PokedexCreator(context: Context, params: WorkerParameters): CoroutineWorke
     private val dbHelper: PokeCheckListDbHelper = PokeCheckListDbHelper.getInstance(context)
     private val pokemonRepository: PokemonRepository = PokemonRepository(AppDatabase.getInstance(context).pokemonDao())
     init {
-        println(pokemonRepository.count)
 
         try {
             pokemonArray = JSONArray(context.resources.getString(R.string.pokemons))

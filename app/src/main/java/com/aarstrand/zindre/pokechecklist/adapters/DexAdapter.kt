@@ -1,46 +1,54 @@
 package com.aarstrand.zindre.pokechecklist.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.custom.DexItem
 import com.aarstrand.zindre.pokechecklist.data.Pokemon
 
-class DexAdapter internal constructor(
-        context: Context
-): RecyclerView.Adapter<DexAdapter.PokemonViewHolder>(){
-
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var pokemon: List<Pokemon> = emptyList<Pokemon>()
-
-    inner class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val dexItemView: DexItem = itemView.findViewById(R.id.item)
-    }
+class DexAdapter : PagedListAdapter<Pokemon, DexAdapter.PokemonViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val itemView = inflater.inflate(R.layout.dex_item, parent, false)
+        val itemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.dex_item, parent, false)
         return PokemonViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        val current = pokemon[position]
-        holder.dexItemView.setName(current.name)
-        holder.dexItemView.setNumber(current.number)
-        holder.dexItemView.setImage(current.image)
-        holder.dexItemView.setType1(current.type1)
-        holder.dexItemView.setType2(current.type2)
-        holder.dexItemView.setCount(0)
+    inner class PokemonViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        private val dexItemView: DexItem = itemView.findViewById(R.id.item)
+
+        fun bindTo(pokemon:Pokemon?){
+            if(pokemon!=null){
+                dexItemView.setName(pokemon.name)
+                dexItemView.setNumber(pokemon.number)
+                dexItemView.setImage(pokemon.image)
+                dexItemView.setType1(pokemon.type1)
+                dexItemView.setType2(pokemon.type2)
+                dexItemView.setCount(0)
+            }
+        }
     }
 
-    internal fun setPokemon(pokemon: List<Pokemon>){
-        this.pokemon = pokemon
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: PokemonViewHolder, position: Int){
+        val pokemon: Pokemon? = getItem(position)
+        holder.bindTo(pokemon)
     }
 
-    override fun getItemCount() = pokemon.size
+    companion object{
+        private val DIFF_CALLBACK = object:
+            DiffUtil.ItemCallback<Pokemon>() {
+
+            override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
+                return oldItem.number == newItem.number
+            }
+
+            override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 }

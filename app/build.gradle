@@ -52,6 +52,10 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidxArchVersion"
 
+    // paging
+    implementation "androidx.paging:paging-runtime-ktx:2.1.0" // For Kotlin use paging-runtime-ktx
+
+
     // ViewModel Kotlin support
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.archLifecycleVersion"
 

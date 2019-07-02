@@ -3,34 +3,22 @@ package com.aarstrand.zindre.pokechecklist.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
-import com.aarstrand.zindre.pokechecklist.adapters.DexAdapter
-import com.aarstrand.zindre.pokechecklist.data.AppDatabase
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.aarstrand.zindre.pokechecklist.data.Pokemon
 import com.aarstrand.zindre.pokechecklist.data.PokemonRepository
-import kotlinx.coroutines.launch
+import com.aarstrand.zindre.pokechecklist.tools.Injector
 
 class PokedexViewModel(application: Application) : AndroidViewModel(application){
 
-    private val repository: PokemonRepository
-    private var allPokemon: List<Pokemon>
-    val adapter: DexAdapter
+    private val repository: PokemonRepository = Injector.getPokemonRepository(application)
 
-    init{
-        val pokemonDao = AppDatabase.getInstance(application).pokemonDao()
-        repository = PokemonRepository(pokemonDao)
-        viewModelScope.launch {
-            repository.get()
-            allPokemon = repository.allPokemon;
-            update()
-        }
-        allPokemon = repository.allPokemon
-        adapter = DexAdapter(application)
-        update()
-    }
+    val pokemon: LiveData<PagedList<Pokemon>> =
+            repository.getAllPokemon().toLiveData(pageSize = 10)
 
-    private fun update(){
-        adapter.setPokemon(allPokemon)
+
+    init {
+
     }
 
 }

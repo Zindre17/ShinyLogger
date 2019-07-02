@@ -8,17 +8,20 @@ import kotlinx.coroutines.withContext
 
 class PokemonRepository(private val pokemonDao: PokemonDao){
 
+    companion object {
+        @Volatile private var instance: PokemonRepository? = null
 
-    var allPokemon: List<Pokemon> = emptyList()
-    var count: Int = 0
+        fun getInstance(pokemonDao: PokemonDao) =
+                instance ?: synchronized(this){
+                    instance ?: PokemonRepository(pokemonDao).also {instance = it}
+                }
+    }
 
     @WorkerThread
-    suspend fun get(){
-        withContext(IO) {
-            allPokemon = pokemonDao.get5Pokemon()
-            count = pokemonDao.getCount()
-        }
-    }
+    fun getCount() = pokemonDao.getCount()
+
+    @WorkerThread
+    fun getAllPokemon() = pokemonDao.getAllPokemon()
 
     @WorkerThread
     suspend fun insert(pokemon: List<Pokemon>){

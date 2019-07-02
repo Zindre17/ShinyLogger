@@ -10,9 +10,12 @@ import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
 import com.aarstrand.zindre.pokechecklist.tools.Tools.getSizedBitmap
 import com.aarstrand.zindre.pokechecklist.tools.Tools.root2
+import kotlin.math.min
 
 
 class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
+
+    private val NO_RESOURCE: Int = -1
 
     private var mImage: Int
     private var mName: String?
@@ -59,10 +62,15 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         mImage = imageId
         invalidate()
     }
+    fun setImage(array: ByteArray){
+        mImage = NO_RESOURCE
+        mImageBitmap = BitmapFactory.decodeByteArray(array, 0, array.size)
+    }
 
     fun getNumber() = mNumber
     fun setNumber(number: Int){
         mNumber= number
+        mNumString = String.format("#%03d",mNumber)
         invalidate()
     }
 
@@ -145,6 +153,12 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
 
         if(wMode == MeasureSpec.EXACTLY && hMode == MeasureSpec.EXACTLY){
             //both are specified, no need to measure
+            val contentWidth = w - paddingStart - paddingEnd
+            val contentHeight = h - paddingTop - paddingBottom
+            val unit = min((contentWidth/2.4f).toInt(), contentHeight)
+            val verticalPad = ((h - unit)/2f).toInt()
+            val horPad = ((w - unit * 2.4f)/2f).toInt()
+            setPadding(horPad, verticalPad, horPad, verticalPad)
         }else if(wMode == MeasureSpec.EXACTLY && hMode == MeasureSpec.UNSPECIFIED){
             //width set, height can be whatever
             val contentWidth = w - paddingStart - paddingEnd
@@ -211,7 +225,10 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         imageX = paddingStart + circleRadius - circleRadius * .95f / root2
         imageY = paddingTop + circleRadius - circleRadius * .95f / root2
         imageSize = root2 * circleRadius*.95f
-        mImageBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
+        if(mImage==NO_RESOURCE && mImageBitmap!=null)
+            mImageBitmap = getSizedBitmap(this.context, mImageBitmap!!, imageSize, imageSize)
+        else
+            mImageBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
 
         ballX = paddingStart.toFloat()
         ballY = paddingTop.toFloat()
