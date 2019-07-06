@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.aarstrand.zindre.pokechecklist.R
+import com.aarstrand.zindre.pokechecklist.tools.Tools
 import com.aarstrand.zindre.pokechecklist.tools.Tools.getSizedBitmap
 import com.aarstrand.zindre.pokechecklist.tools.Tools.root2
 import kotlin.math.min
@@ -65,6 +66,12 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
     fun setImage(array: ByteArray){
         mImage = NO_RESOURCE
         mImageBitmap = BitmapFactory.decodeByteArray(array, 0, array.size)
+        if(imageSize!=0f)
+            mImageBitmap = getSizedBitmap(context, mImageBitmap!!, imageSize, imageSize)
+    }
+    fun setImage(name: String){
+        mImage = resources.getIdentifier(name, "raw", context.packageName)
+        invalidate()
     }
 
     fun getNumber() = mNumber
@@ -222,13 +229,14 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
         circleX = paddingStart + circleRadius
         circleY = paddingTop + circleRadius
 
-        imageX = paddingStart + circleRadius - circleRadius * .95f / root2
-        imageY = paddingTop + circleRadius - circleRadius * .95f / root2
-        imageSize = root2 * circleRadius*.95f
-        if(mImage==NO_RESOURCE && mImageBitmap!=null)
-            mImageBitmap = getSizedBitmap(this.context, mImageBitmap!!, imageSize, imageSize)
-        else
-            mImageBitmap = getSizedBitmap(this.context, mImage, imageSize, imageSize)
+        imageX = paddingStart.toFloat() //circleRadius - circleRadius * .95f / root2
+        imageY = paddingTop.toFloat() //circleRadius - circleRadius * .95f / root2
+        imageSize = circleRadius*2f//root2 * circleRadius*.95f
+        mImageBitmap =
+                if(mImage==NO_RESOURCE && mImageBitmap!=null)
+                    getSizedBitmap(this.context, mImageBitmap!!, imageSize, imageSize)
+                else
+                    getSizedBitmap(this.context, mImage, imageSize, imageSize)
 
         ballX = paddingStart.toFloat()
         ballY = paddingTop.toFloat()
@@ -266,6 +274,12 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
 
     }
 
+    val borderPaint = Paint(ANTI_ALIAS_FLAG).apply{
+        style = Paint.Style.STROKE
+        strokeWidth = 5f
+        color = Color.BLACK
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -273,6 +287,7 @@ class DexItem(context: Context, attrs: AttributeSet): View(context, attrs){
             drawPath(box, nameBoxPaint)
             drawCircle(circleX, circleY, circleRadius*.95f,circlePaint)
             if(mImageBitmap!=null)drawBitmap(mImageBitmap!!, imageX, imageY, null)
+            //drawRect(imageX, imageY, imageX+imageSize, imageY + imageSize, borderPaint)
             if(mCount!=0){
                 if(mBallBitmap!=null)drawBitmap(mBallBitmap!!, ballX, ballY, null)
                 drawText(String.format("x%d", mCount), countX, countY, countPaint)

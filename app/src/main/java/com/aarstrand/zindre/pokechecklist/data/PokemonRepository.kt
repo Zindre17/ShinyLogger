@@ -1,9 +1,7 @@
 package com.aarstrand.zindre.pokechecklist.data
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 class PokemonRepository(private val pokemonDao: PokemonDao){
@@ -22,6 +20,11 @@ class PokemonRepository(private val pokemonDao: PokemonDao){
 
     @WorkerThread
     fun getAllPokemon() = pokemonDao.getAllPokemon()
+
+    @WorkerThread
+    suspend fun getPokemon(number: Int):Pokemon {
+        return pokemonDao.getPokemon(number)
+    }
 
     @WorkerThread
     suspend fun insert(pokemon: List<Pokemon>){

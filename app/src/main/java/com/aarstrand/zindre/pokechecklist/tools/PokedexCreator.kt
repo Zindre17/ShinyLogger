@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream
 class PokedexCreator(context: Context, params: WorkerParameters): CoroutineWorker(context, params){
 
     override suspend fun doWork(): Result {
-        if(pokemonRepository.getCount() < 100) {
+        if(pokemonRepository.getCount() < 100f) {
             return try {
                 println(AppDatabase.getInstance(applicationContext).query("select * from pokemon",null).count)
                 createAndFillInDB(applicationContext)
@@ -115,7 +115,19 @@ class PokedexCreator(context: Context, params: WorkerParameters): CoroutineWorke
                                 dexNumber,
                                 pokemonArray!!.getString(dexNumber-1),
                                 0,0,
-                                getByteArrayImage(row,col, spriteSheet!!),genSwitchListPos +1))
+                                getByteArrayImage(row,col, spriteSheet!!)
+
+                                /*
+                                pokemonArray!!.getString(dexNumber-1)
+                                        .toLowerCase()
+                                        .replace(" ","_")
+                                        .replace(".", "_")
+                                        .replace("-", "_")
+                                        */
+                                ,genSwitchListPos+1,
+                                0
+                        )
+                )
                 /*
                 dbHelper.insertPokemon(
                         pokemonArray?.getString(dexNumber - 1),

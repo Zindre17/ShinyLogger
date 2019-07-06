@@ -26,6 +26,12 @@
             >
 
         </activity>
+        <activity
+            android:name=".ui.RegActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
+
+        </activity>
 
         <activity
                 android:name=".PokedexActivity"

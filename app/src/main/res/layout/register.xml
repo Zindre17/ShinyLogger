@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="register"
+            type="com.aarstrand.zindre.pokechecklist.viewmodels.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/image"
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toEndOf="@id/image"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="@{register.pokemon.name}"
+            />
+
+        <TextView
+            android:id="@+id/encounters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:text="Encounters"
+            />
+
+        <EditText
+            android:id="@+id/encounters_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintStart_toEndOf="@id/image"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="@{register.encounters}"
+            />
+
+
+
+        <TextView
+            android:id="@+id/game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/encounters"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:text="Game"
+            />
+        <TextView
+            android:id="@+id/ball"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/game"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:text="ball"
+            />
+        <TextView
+            android:id="@+id/method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ball"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:text="method"
+            />
+        <TextView
+            android:id="@+id/shiny"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/method"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:text="shiny charm"
+            />
+        <TextView
+            android:id="@+id/chain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shiny"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:text="chain"
+            />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="30dp"
+            android:text="@{register.buttonLabel}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

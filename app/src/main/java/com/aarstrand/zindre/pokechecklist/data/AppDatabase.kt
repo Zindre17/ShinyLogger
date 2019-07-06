@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 
-@Database (entities = [Pokemon::class, Catch::class], version = 2, exportSchema = false)
+@Database (entities = [Pokemon::class, Catch::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun pokemonDao(): PokemonDao
     abstract fun catchDao(): CatchDao

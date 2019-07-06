@@ -1,6 +1,5 @@
 package com.aarstrand.zindre.pokechecklist.data
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,6 +10,7 @@ data class Pokemon(
         val type1: Int,
         val type2: Int,
         val image: ByteArray,
-        val gen: Int
+        val gen: Int,
+        val collected: Int
 ){
 }

@@ -31,7 +31,7 @@ class NewMainActivity: AppCompatActivity() {
         viewModel.launchEvent.observe(this, Observer {
             when (it){
                 Launch.DEX -> context.startActivity(Intent(this, DexActivity::class.java))
-                Launch.HUNT -> context.startActivity(Intent(this, HuntActivity::class.java))
+                Launch.HUNT -> return@Observer
                 Launch.COLL -> context.startActivity(Intent(this, MyShiniesActivity::class.java))
                 Launch.NONE -> return@Observer
                 Launch.PROG -> return@Observer

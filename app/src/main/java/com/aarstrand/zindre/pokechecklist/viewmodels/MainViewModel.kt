@@ -6,7 +6,7 @@ import com.aarstrand.zindre.pokechecklist.R
 
 class MainViewModel: ViewModel(){
 
-    var launchEvent = MutableLiveData<Launch>()
+    val launchEvent = MutableLiveData<Launch>()
 
     val b1Text: String = "Shinydex"
     val b1Image: Int = R.drawable.pokedex
